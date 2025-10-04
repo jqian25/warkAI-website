@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - 市场应用与路线图</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/market.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div class="content-page">
+        <div class="hex-background"></div>
+        
+        <div class="page-header">
+            <img src="../images/warkai_logo.png" alt="WarkAI Logo" class="page-logo">
+            <h1 class="page-title">市场应用与路线图</h1>
+            <button class="back-button">返回主页</button>
+        </div>
+        
+        <div class="content-container">
+            <div class="content-section">
+                <h2 class="section-title">市场痛点分析</h2>
+                <div class="eva-terminal">
+                    <div class="eva-terminal-content">
+                        当前纺织行业面临着劳动力短缺、技术传承困难、生产效率低下等多重挑战。WarkAI通过AI+AR+机器人技术的深度融合，为纺织企业提供全流程的智能化升级服务，解决行业痛点，推动传统制造业的数字化转型。
+                    </div>
+                </div>
+                
+                <div class="market-challenges">
+                    <div class="challenge-card">
+                        <div class="challenge-icon labor-icon"></div>
+                        <div class="challenge-title">劳动力短缺</div>
+                        <div class="challenge-desc">
+                            <p>纺织行业面临严重的劳动力短缺问题，年轻人不愿从事纺织工作，老龄化趋势明显。</p>
+                            <div class="challenge-stat">
+                                <div class="stat-value">-18.7%</div>
+                                <div class="stat-label">近五年纺织业从业人员减少率</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="challenge-icon skill-icon"></div>
+                        <div class="challenge-title">技术传承困难</div>
+                        <div class="challenge-desc">
+                            <p>纺织工艺复杂，技术传承依赖经验丰富的老师傅，但缺乏有效的知识沉淀和传递机制。</p>
+                            <div class="challenge-stat">
+                                <div class="stat-value">8.2年</div>
+                                <div class="stat-label">纺织技术工人平均培养周期</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="challenge-icon efficiency-icon"></div>
+                        <div class="challenge-title">生产效率低下</div>
+                        <div class="challenge-desc">
+                            <p>传统纺织生产方式依赖人工操作和经验判断，生产效率低，质量波动大。</p>
+                            <div class="challenge-stat">
+                                <div class="stat-value">35%</div>
+                                <div class="stat-label">国内纺织企业平均设备利用率</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="market-data">
+                    <h3 class="data-title">纺织行业市场规模</h3>
+                    <div class="data-container">
+                        <div class="chart-container">
+                            <canvas id="marketSizeChart"></canvas>
+                        </div>
+                        <div class="data-insights">
+                            <div class="insight-item">
+                                <div class="insight-value">7.2万亿</div>
+                                <div class="insight-label">2024年中国纺织行业总产值</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-value">4.8%</div>
+                                <div class="insight-label">年复合增长率(2025-2030)</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-value">1.2万亿</div>
+                                <div class="insight-label">智能纺织市场潜在规模</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">纺织领域应用场景</h2>
+                <div class="application-scenarios">
+                    <div class="scenario-tabs">
+                        <div class="tab-buttons">
+                            <button class="tab-button active" data-tab="production">生产制造</button>
+                            <button class="tab-button" data-tab="quality">质量控制</button>
+                            <button class="tab-button" data-tab="training">技能培训</button>
+                            <button class="tab-button" data-tab="management">智能管理</button>
+                        </div>
+                        
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="production-tab">
+                                <div class="scenario-showcase">
+                                    <div class="scenario-image">
+                                        <img src="../images/textile_production.png" alt="纺织生产场景" class="scenario-img">
+                                        <div class="image-overlay">
+                                            <div class="overlay-text">智能生产制造</div>
+                                        </div>
+                                    </div>
+                                    <div class="scenario-details">
+                                        <div class="scenario-description">
+                                            <p>WarkAI在纺织生产制造环节提供全流程的智能化解决方案，通过AR眼镜为操作工人提供实时指导，通过协作机器人完成重复性工作，通过AI系统优化生产参数和工艺流程。</p>
+                                        </div>
+                                        <div class="scenario-features">
+                                            <div class="feature-item">
+                                                <div class="feature-icon guidance-icon"></div>
+                                                <div class="feature-title">AR实时工艺指导</div>
+                                                <div class="feature-desc">通过AR眼镜为操作工人提供实时的工艺参数和操作指导</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon robot-icon"></div>
+                                                <div class="feature-title">协作机器人应用</div>
+                                                <div class="feature-desc">协作机器人完成重复性、危险性工作，提高生产效率</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon process-icon"></div>
+                                                <div class="feature-title">工艺参数优化</div>
+                                                <div class="feature-desc">AI系统实时分析生产数据，优化工艺参数，提高产品质量</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon remote-icon"></div>
+                                                <div class="feature-title">远程专家协作</div>
+                                                <div class="feature-desc">通过头戴式通讯设备连接远程专家，解决复杂问题</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane" id="quality-tab">
+                                <div class="scenario-showcase">
+                                    <div class="scenario-image">
+                                        <img src="../images/textile_quality.png" alt="纺织质量控制场景" class="scenario-img">
+                                        <div class="image-overlay">
+                                            <div class="overlay-text">智能质量控制</div>
+                                        </div>
+                                    </div>
+                                    <div class="scenario-details">
+                                        <div class="scenario-description">
+                                            <p>WarkAI在纺织质量控制环节提供基于AI视觉的疵点检测系统，实现全自动、高精度的质量检测，大幅降低人工检测的劳动强度和错检率，提高产品质量和一致性。</p>
+                                        </div>
+                                        <div class="scenario-features">
+                                            <div class="feature-item">
+                                                <div class="feature-icon vision-icon"></div>
+                                                <div class="feature-title">AI视觉疵点检测</div>
+                                                <div class="feature-desc">基于深度学习的视觉系统，自动检测面料疵点</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon realtime-icon"></div>
+                                                <div class="feature-title">实时质量监控</div>
+                                                <div class="feature-desc">实时监控生产线质量状况，及时预警异常情况</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon analysis-icon"></div>
+                                                <div class="feature-title">质量数据分析</div>
+                                                <div class="feature-desc">深入分析质量数据，找出质量问题根源</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon trace-icon"></div>
+                                                <div class="feature-title">全流程质量追溯</div>
+                                                <div class="feature-desc">建立质量数据库，实现全流程质量追溯</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane" id="training-tab">
+                                <div class="scenario-showcase">
+                                    <div class="scenario-image">
+                                        <img src="../images/textile_training.png" alt="纺织技能培训场景" class="scenario-img">
+                                        <div class="image-overlay">
+                                            <div class="overlay-text">智能技能培训</div>
+                                        </div>
+                                    </div>
+                                    <div class="scenario-details">
+                                        <div class="scenario-description">
+                                            <p>WarkAI在纺织技能培训环节提供基于AR/VR的沉浸式培训系统，结合AI教学助手，实现技能的快速学习和有效传承，大幅缩短培训周期，提高培训效果。</p>
+                                        </div>
+                                        <div class="scenario-features">
+                                            <div class="feature-item">
+                                                <div class="feature-icon ar-icon"></div>
+                                                <div class="feature-title">AR/VR沉浸式培训</div>
+                                                <div class="feature-desc">通过AR/VR技术提供沉浸式的技能培训体验</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon ai-icon"></div>
+                                                <div class="feature-title">AI教学助手</div>
+                                                <div class="feature-desc">AI系统提供个性化的学习指导和反馈</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon knowledge-icon"></div>
+                                                <div class="feature-title">知识库构建</div>
+                                                <div class="feature-desc">记录和沉淀专家经验，形成结构化知识库</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon assessment-icon"></div>
+                                                <div class="feature-title">技能评估系统</div>
+                                                <div class="feature-desc">客观评估学习效果，提供针对性改进建议</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane" id="management-tab">
+                                <div class="scenario-showcase">
+                                    <div class="scenario-image">
+                                        <img src="../images/textile_management.png" alt="纺织智能管理场景" class="scenario-img">
+                                        <div class="image-overlay">
+                                            <div class="overlay-text">智能管理系统</div>
+                                        </div>
+                                    </div>
+                                    <div class="scenario-details">
+                                        <div class="scenario-description">
+                                            <p>WarkAI在纺织管理环节提供基于AI的智能排产、库存管理、能耗管理等系统，实现生产资源的优化配置，提高管理效率和决策水平，降低运营成本。</p>
+                                        </div>
+                                        <div class="scenario-features">
+                                            <div class="feature-item">
+                                                <div class="feature-icon schedule-icon"></div>
+                                                <div class="feature-title">智能排产系统</div>
+                                                <div class="feature-desc">基于AI算法的生产排程优化，提高设备利用率</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon inventory-icon"></div>
+                                                <div class="feature-title">智能库存管理</div>
+                                                <div class="feature-desc">预测性库存管理，降低库存成本，提高周转率</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon energy-icon"></div>
+                                                <div class="feature-title">能耗管理系统</div>
+                                                <div class="feature-desc">实时监控和优化能源使用，降低能耗成本</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon decision-icon"></div>
+                                                <div class="feature-title">AI辅助决策</div>
+                                                <div class="feature-desc">基于数据分析的管理决策支持系统</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">客户价值与ROI分析</h2>
+                <div class="value-analysis">
+                    <div class="value-metrics">
+                        <div class="metric-card">
+                            <div class="metric-icon productivity-icon"></div>
+                            <div class="metric-title">生产效率提升</div>
+                            <div class="metric-value">41%</div>
+                            <div class="metric-desc">通过AR辅助操作和协作机器人应用，显著提高生产效率</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon quality-icon"></div>
+                            <div class="metric-title">次品率降低</div>
+                            <div class="metric-value">67%</div>
+                            <div class="metric-desc">通过AI视觉检测和工艺参数优化，大幅降低产品次品率</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon training-icon"></div>
+                            <div class="metric-title">培训周期缩短</div>
+                            <div class="metric-value">53%</div>
+                            <div class="metric-desc">通过AR/VR培训和AI教学助手，显著缩短技能培训周期</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon cost-icon"></div>
+                            <div class="metric-title">运营成本降低</div>
+                            <div class="metric-value">28%</div>
+                            <div class="metric-desc">通过智能管理系统，优化资源配置，降低运营成本</div>
+                        </div>
+                    </div>
+                    
+                    <div class="roi-analysis">
+                        <h3 class="roi-title">投资回报周期</h3>
+                        <div class="roi-chart-container">
+                            <canvas id="roiChart"></canvas>
+                        </div>
+                        <div class="roi-insights">
+                            <div class="insight-item">
+                                <div class="insight-value">9-15个月</div>
+                                <div class="insight-label">平均投资回报周期</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-value">3.8倍</div>
+                                <div class="insight-label">三年累计投资回报率</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">发展路线图</h2>
+                <div class="roadmap">
+                    <div class="roadmap-timeline">
+                        <div class="timeline-track"></div>
+                        
+                        <div class="timeline-node current">
+                            <div class="node-year">2025</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">纺织领域突破</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>推出纺织专用AR眼镜和头戴式记录仪</li>
+                                        <li>发布纺织行业AI视觉检测系统</li>
+                                        <li>建立首批纺织企业示范应用</li>
+                                        <li>完成A轮融资</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-node">
+                            <div class="node-year">2026</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">产品线扩展与市场拓展</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>推出协作机器人产品线</li>
+                                        <li>升级WarkAI OS 2.0版本</li>
+                                        <li>拓展冷链物流和助残就业场景</li>
+                                        <li>建立全国销售渠道网络</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-node">
+                            <div class="node-year">2027</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">技术升级与国际化</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>推出新一代轻量化AR眼镜</li>
+                                        <li>发布边缘计算版WarkAI OS</li>
+                                        <li>拓展东南亚和欧洲市场</li>
+                                        <li>完成B轮融资</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-node">
+                            <div class="node-year">2028</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">生态系统构建</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>建立开发者平台和应用商店</li>
+                                        <li>推出行业解决方案合作伙伴计划</li>
+                                        <li>拓展更多垂直行业应用</li>
+                                        <li>建立全球研发中心</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-node">
+                            <div class="node-year">2030</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">全球领导者</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>成为工业元宇宙领域全球领导者</li>
+                                        <li>实现年营收50亿元</li>
+                                        <li>服务全球10,000+企业客户</li>
+                                        <li>完成IPO上市</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">其他行业拓展</h2>
+                <div class="industry-expansion">
+                    <div class="expansion-card">
+                        <div class="expansion-icon coldchain-icon"></div>
+                        <div class="expansion-title">冷链物流</div>
+                        <div class="expansion-desc">
+                            <p>通过AI+AR+IoT技术的深度融合，为冷链企业提供全流程的温控管理和物流优化服务，确保食品、药品等温控产品的质量安全。</p>
+                            <div class="expansion-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">15%</div>
+                                    <div class="stat-label">货物损耗率降低</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">23%</div>
+                                    <div class="stat-label">能耗降低</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="expansion-card">
+                        <div class="expansion-icon disability-icon"></div>
+                        <div class="expansion-title">助残就业</div>
+                        <div class="expansion-desc">
+                            <p>通过AR眼镜和AI辅助系统，为残障人士提供工作辅助和技能培训服务，帮助残障人士克服工作障碍，提高就业率和工作效率。</p>
+                            <div class="expansion-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">47%</div>
+                                    <div class="stat-label">就业率提升</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">62%</div>
+                                    <div class="stat-label">工作效率提升</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="expansion-card">
+                        <div class="expansion-icon elderly-icon"></div>
+                        <div class="expansion-title">养老服务</div>
+                        <div class="expansion-desc">
+                            <p>通过AR眼镜和AI辅助系统，为老年人提供远程照护和再就业支持服务，帮助老年人克服年龄障碍，实现远程照护和技能延续。</p>
+                            <div class="expansion-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">38%</div>
+                                    <div class="stat-label">银发再就业率</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">65%</div>
+                                    <div class="stat-label">照护成本降低</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+        </div>
+    </div>
+    
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="transition-animation">
+            <div class="gear-large gear-transition-1"></div>
+            <div class="gear-large gear-transition-2"></div>
+            <div class="gear-large gear-transition-3"></div>
+            <div class="part-transform" id="transformingPart"></div>
+        </div>
+    </div>
+    
+    <script src="../js/script.js"></script>
+    <script src="../js/market.js"></script>
+</body>
+</html>

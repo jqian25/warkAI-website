@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - 执行摘要与商业模式</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/summary.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div class="content-page">
+        <div class="hex-background"></div>
+        
+        <div class="page-header">
+            <img src="../images/warkai_logo.png" alt="WarkAI Logo" class="page-logo">
+            <h1 class="page-title">执行摘要与商业模式</h1>
+            <button class="back-button">返回主页</button>
+        </div>
+        
+        <div class="content-container">
+            <div class="content-section">
+                <h2 class="section-title">公司使命</h2>
+                <div class="eva-terminal">
+                    <div class="eva-terminal-content">
+                        WarkAI致力于通过整合AR、AI及机器人技术，系统性解决全球劳动力市场的结构性危机，打造下一代人机协作平台，释放"超级个体"的潜能。我们的核心理念是"以善致善"，实现技术平权，让每个人都能通过科技提升自身能力，创造更大价值。
+                    </div>
+                </div>
+                
+                <div class="hologram-container" id="missionHologram">
+                    <div class="hologram-content">
+                        <div class="hologram-title">WarkAI 使命</div>
+                        <div class="hologram-item">整合AR、AI及机器人技术</div>
+                        <div class="hologram-item">解决劳动力市场结构性危机</div>
+                        <div class="hologram-item">打造人机协作平台</div>
+                        <div class="hologram-item">释放"超级个体"潜能</div>
+                        <div class="hologram-item">"以善致善"，技术平权</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">核心产品线</h2>
+                <div class="data-grid">
+                    <div class="data-card product-card" data-product="os">
+                        <div class="product-icon"><i class="product-os-icon"></i></div>
+                        <h3 class="data-card-title">智能平台 (WarkAI OS)</h3>
+                        <p>以AI大模型为核心的操作系统，提供人岗匹配、任务管理、技能培训等服务。</p>
+                        <div class="card-hover-effect"></div>
+                    </div>
+                    
+                    <div class="data-card product-card" data-product="hardware">
+                        <div class="product-icon"><i class="product-hardware-icon"></i></div>
+                        <h3 class="data-card-title">智能硬件</h3>
+                        <p>AR眼镜、头戴式通讯拍摄设备、智能机器人（含机械臂）。</p>
+                        <div class="card-hover-effect"></div>
+                    </div>
+                    
+                    <div class="data-card product-card" data-product="solutions">
+                        <div class="product-icon"><i class="product-solutions-icon"></i></div>
+                        <h3 class="data-card-title">行业解决方案</h3>
+                        <p>聚焦纺织、冷链、助残、养老等领域的垂直应用。</p>
+                        <div class="card-hover-effect"></div>
+                    </div>
+                    
+                    <div class="data-card product-card" data-product="seal">
+                        <div class="product-icon"><i class="product-seal-icon"></i></div>
+                        <h3 class="data-card-title">创新应用</h3>
+                        <p>AI小海豹算命大模型，探索C端市场。</p>
+                        <div class="card-hover-effect"></div>
+                    </div>
+                </div>
+                
+                <div class="product-detail-modal" id="productDetailModal">
+                    <div class="modal-content">
+                        <span class="close-modal">&times;</span>
+                        <div class="modal-body" id="productModalBody">
+                            <!-- Content will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">市场机遇</h2>
+                <div class="chart-container">
+                    <canvas id="marketSizeChart"></canvas>
+                </div>
+                
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h3 class="data-card-title">全球性挑战</h3>
+                        <ul class="challenge-list">
+                            <li><span class="challenge-icon labor-icon"></span>劳动力短缺：日本护工缺口61万，全球制造业生产力下降</li>
+                            <li><span class="challenge-icon aging-icon"></span>人口老龄化：银发族再就业困难，社会抚养比持续增高</li>
+                            <li><span class="challenge-icon disability-icon"></span>残障就业鸿沟：就业率远低于健全人士，缺乏有效辅助工具</li>
+                            <li><span class="challenge-icon skills-icon"></span>技能错配：青年失业率高企，传统培训模式周期长、效率低</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="data-card">
+                        <h3 class="data-card-title">技术窗口期</h3>
+                        <div class="tech-window">
+                            <div class="tech-timeline">
+                                <div class="timeline-point" style="left: 20%;">
+                                    <div class="point-label">现在</div>
+                                </div>
+                                <div class="timeline-point" style="left: 50%;">
+                                    <div class="point-label">3-5年</div>
+                                </div>
+                                <div class="timeline-point" style="left: 80%;">
+                                    <div class="point-label">5-10年</div>
+                                </div>
+                                <div class="timeline-tech ar" style="left: 20%; width: 30%;">
+                                    <div class="tech-label">AR眼镜黄金期</div>
+                                </div>
+                                <div class="timeline-tech ai" style="left: 10%; width: 70%;">
+                                    <div class="tech-label">AI大模型应用普及</div>
+                                </div>
+                                <div class="timeline-tech bci" style="left: 50%; width: 30%;">
+                                    <div class="tech-label">脑机接口成熟</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">商业模式</h2>
+                <div class="business-model-container">
+                    <div class="business-model-visual">
+                        <div class="model-center">WarkAI</div>
+                        <div class="model-item hardware">
+                            <div class="model-icon"></div>
+                            <div class="model-label">硬件销售/租赁</div>
+                            <div class="model-value">70%</div>
+                        </div>
+                        <div class="model-item software">
+                            <div class="model-icon"></div>
+                            <div class="model-label">软件订阅 (SaaS)</div>
+                            <div class="model-value">20%</div>
+                        </div>
+                        <div class="model-item subsidy">
+                            <div class="model-icon"></div>
+                            <div class="model-label">政府补贴与合作分成</div>
+                            <div class="model-value">10%</div>
+                        </div>
+                        <div class="model-item services">
+                            <div class="model-icon"></div>
+                            <div class="model-label">生态增值服务</div>
+                            <div class="model-value">增长点</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <h3 class="data-card-title">财务亮点</h3>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    <div class="financial-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-label">毛利率</div>
+                            <div class="highlight-value">57%-61%</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-label">盈亏平衡</div>
+                            <div class="highlight-value">11个月</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-label">2028年收入</div>
+                            <div class="highlight-value">7亿元</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-label">2028年净利润</div>
+                            <div class="highlight-value">3.45亿元</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-label">估值增长</div>
+                            <div class="highlight-value">38倍</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">融资计划</h2>
+                <div class="funding-container">
+                    <div class="funding-round">
+                        <div class="round-label">本轮融资</div>
+                        <div class="round-value">A轮，800-1000万美元</div>
+                    </div>
+                    
+                    <div class="funding-allocation">
+                        <div class="allocation-item research">
+                            <div class="allocation-percentage">40%</div>
+                            <div class="allocation-bar"><div class="allocation-fill" style="width: 40%;"></div></div>
+                            <div class="allocation-label">研发</div>
+                            <div class="allocation-detail">AI模型优化、新硬件开发</div>
+                        </div>
+                        
+                        <div class="allocation-item marketing">
+                            <div class="allocation-percentage">30%</div>
+                            <div class="allocation-bar"><div class="allocation-fill" style="width: 30%;"></div></div>
+                            <div class="allocation-label">市场与销售</div>
+                            <div class="allocation-detail">渠道建设、标杆客户拓展</div>
+                        </div>
+                        
+                        <div class="allocation-item supply">
+                            <div class="allocation-percentage">20%</div>
+                            <div class="allocation-bar"><div class="allocation-fill" style="width: 20%;"></div></div>
+                            <div class="allocation-label">供应链与生产</div>
+                            <div class="allocation-detail">核心元器件采购、产能提升</div>
+                        </div>
+                        
+                        <div class="allocation-item operations">
+                            <div class="allocation-percentage">10%</div>
+                            <div class="allocation-bar"><div class="allocation-fill" style="width: 10%;"></div></div>
+                            <div class="allocation-label">运营</div>
+                            <div class="allocation-detail">团队建设、日常开支</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+        </div>
+    </div>
+    
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="transition-animation">
+            <div class="gear-large gear-transition-1"></div>
+            <div class="gear-large gear-transition-2"></div>
+            <div class="gear-large gear-transition-3"></div>
+            <div class="part-transform" id="transformingPart"></div>
+        </div>
+    </div>
+    
+    <script src="../js/script.js"></script>
+    <script src="../js/summary.js"></script>
+</body>
+</html>

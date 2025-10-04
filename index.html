@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - 人机智能新纪元</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-container">
+            <div class="loading-mecha">
+                <img src="images/warkai_logo.png" alt="WarkAI Logo" class="logo-loading">
+            </div>
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+            <div class="loading-text">系统启动中...</div>
+        </div>
+    </div>
+
+    <div class="main-container" id="mainContainer">
+        <header>
+            <div class="logo-container">
+                <img src="images/warkai_logo.png" alt="WarkAI Logo" class="logo">
+            </div>
+            <h1 class="main-title">WarkAI: 人机智能新纪元</h1>
+            <div class="subtitle">融合AI、AR与机器人技术，重塑未来生产力</div>
+        </header>
+
+        <div class="mecha-navigator">
+            <div class="mecha-container">
+                <div class="mecha-part head" id="navHead" data-target="team.html">
+                    <div class="part-highlight"></div>
+                    <div class="part-label">团队介绍与愿景</div>
+                    <div class="gear gear-1"></div>
+                    <div class="gear gear-2"></div>
+                </div>
+                
+                <div class="mecha-part core" id="navCore" data-target="summary.html">
+                    <div class="part-highlight"></div>
+                    <div class="part-label">执行摘要与商业模式</div>
+                    <div class="gear gear-3"></div>
+                    <div class="gear gear-4"></div>
+                </div>
+                
+                <div class="mecha-part arms" id="navArms" data-target="products.html">
+                    <div class="part-highlight"></div>
+                    <div class="part-label">核心产品线</div>
+                    <div class="gear gear-5"></div>
+                    <div class="gear gear-6"></div>
+                </div>
+                
+                <div class="mecha-part legs" id="navLegs" data-target="market.html">
+                    <div class="part-highlight"></div>
+                    <div class="part-label">市场应用与路线图</div>
+                    <div class="gear gear-7"></div>
+                    <div class="gear gear-8"></div>
+                </div>
+                
+                <div class="mecha-part platform" id="navPlatform" data-target="technology.html">
+                    <div class="part-highlight"></div>
+                    <div class="part-label">WarkAI OS 核心技术与AI平台</div>
+                    <div class="gear gear-9"></div>
+                    <div class="gear gear-10"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instruction-text">
+            <p>点击机器人各部位，探索 WarkAI 商业计划</p>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="transition-animation">
+            <div class="gear-large gear-transition-1"></div>
+            <div class="gear-large gear-transition-2"></div>
+            <div class="gear-large gear-transition-3"></div>
+            <div class="part-transform" id="transformingPart"></div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
