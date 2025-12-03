@@ -1,0 +1,798 @@
+/* 高达风格CSS - WarkAI商业计划书 */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* 高达配色方案 */
+    --gundam-white: #f0f0f0;
+    --gundam-blue: #0f3b7d;
+    --gundam-dark-blue: #051d40;
+    --gundam-red: #c41e3a;
+    --gundam-yellow: #ffd700;
+    --gundam-gray: #3a3a3a;
+    --gundam-light-gray: #d0d0d0;
+    
+    /* 界面颜色 */
+    --bg-primary: #020a14;
+    --bg-secondary: #041020;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0a0;
+    --accent-blue: #00a3ff;
+    --accent-red: #ff3c3c;
+    --accent-yellow: #ffd700;
+    
+    /* 特效 */
+    --blue-glow: 0 0 10px rgba(0, 163, 255, 0.7);
+    --red-glow: 0 0 10px rgba(255, 60, 60, 0.7);
+    --yellow-glow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image: 
+        linear-gradient(to right, rgba(4, 16, 32, 0.9) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(4, 16, 32, 0.9) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* 启动序列样式 */
+.startup-sequence {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    background-image: 
+        linear-gradient(135deg, rgba(2, 10, 20, 0.7), rgba(0, 163, 255, 0.1)),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,163,255,0.1)" stroke-width="1"/></pattern></defs><rect width="1200" height="800" fill="url(%23grid)"/></svg>');
+    background-size: cover, 40px 40px;
+    background-attachment: fixed;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.startup-container {
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    background: rgba(2, 10, 20, 0.6);
+    padding: 40px;
+    border: 2px solid var(--accent-blue);
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 163, 255, 0.3), inset 0 0 20px rgba(0, 163, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.startup-logo {
+    margin-bottom: 30px;
+}
+
+.logo-startup {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0 0 15px var(--accent-blue));
+    margin-bottom: 20px;
+}
+
+.startup-progress-container {
+    width: 100%;
+    height: 4px;
+    background-color: rgba(0, 163, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.startup-progress {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-yellow));
+    box-shadow: var(--blue-glow);
+    transition: width 0.3s ease;
+}
+
+.startup-text {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent-blue);
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.startup-details {
+    text-align: left;
+    font-family: 'Rajdhani', monospace;
+    color: var(--text-secondary);
+    font-size: 14px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.detail-line {
+    margin-bottom: 5px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* 主容器样式 */
+.main-container {
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0; /* 初始不可见 */
+    transition: opacity 1s ease;
+    position: relative;
+}
+
+/* 主容器显示状态 */
+.main-container.show {
+    opacity: 1 !important;
+}
+
+/* HUD界面样式 */
+.hud-top, .hud-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgba(4, 16, 32, 0.7);
+    border: 1px solid var(--accent-blue);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 10px rgba(0, 163, 255, 0.3);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: var(--accent-blue);
+}
+
+.hud-bottom {
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.hud-element {
+    display: flex;
+    align-items: center;
+}
+
+.hud-time {
+    letter-spacing: 1px;
+}
+
+.status-online {
+    color: #4caf50;
+}
+
+.energy-bar {
+    width: 100px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin: 0 10px;
+    overflow: hidden;
+}
+
+.energy-level {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #4caf50, #8bc34a);
+    border-radius: 4px;
+}
+
+.energy-label, .energy-percentage {
+    font-size: 12px;
+}
+
+.hud-coordinates {
+    display: flex;
+    gap: 15px;
+}
+
+.coordinate {
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* 标题区域样式 */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px 0;
+    position: relative;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    filter: drop-shadow(0 0 10px var(--accent-blue));
+}
+
+.main-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, var(--gundam-white), var(--accent-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    text-shadow: 0 0 5px rgba(0, 163, 255, 0.5);
+}
+
+.main-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(to right, var(--accent-blue), var(--accent-yellow));
+    box-shadow: var(--blue-glow);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-top: 20px;
+}
+
+/* 高达机器人导航区域 */
+.gundam-navigator {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+    position: relative;
+    min-height: 700px;
+    width: 100%;
+    overflow: visible;
+}
+
+.gundam-container {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+}
+
+.gundam-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.gundam-part {
+    position: absolute;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--accent-blue);
+    border-radius: 5px;
+    padding: 15px 20px;
+    min-width: 150px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 163, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 163, 255, 0.3);
+}
+
+.gundam-part:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 20px var(--accent-blue);
+    background-color: rgba(0, 163, 255, 0.2);
+}
+
+.part-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0, 163, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.gundam-part:hover .part-highlight {
+    opacity: 1;
+}
+
+.target-reticle {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--accent-blue);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.target-reticle::before, .target-reticle::after {
+    content: '';
+    position: absolute;
+    background-color: var(--accent-blue);
+}
+
+.target-reticle::before {
+    top: 50%;
+    left: -5px;
+    right: -5px;
+    height: 1px;
+    transform: translateY(-50%);
+}
+
+.target-reticle::after {
+    left: 50%;
+    top: -5px;
+    bottom: -5px;
+    width: 1px;
+    transform: translateX(-50%);
+}
+
+.gundam-part:hover .target-reticle {
+    opacity: 1;
+}
+
+.part-label {
+    position: absolute;
+    background-color: rgba(4, 16, 32, 0.95);
+    color: var(--accent-blue);
+    padding: 8px 15px;
+    border-radius: 3px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: all 0.3s ease;
+    z-index: 10;
+    border-left: 3px solid var(--accent-blue);
+    box-shadow: 0 0 15px rgba(0, 163, 255, 0.5);
+    font-weight: 500;
+    display: block !important;
+}
+
+.gundam-part:hover .part-label {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 0 20px rgba(0, 163, 255, 0.8);
+}
+
+/* 高达部件定位 */
+.head {
+    top: 10%;
+    left: 50%;
+    width: 15%;
+    height: 15%;
+    transform: translateX(-50%);
+}
+
+.head .target-reticle {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.head .part-label {
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+}
+
+.head:hover .part-label {
+    transform: translateX(-50%) translateY(0);
+}
+
+.core {
+    top: 30%;
+    left: 50%;
+    width: 20%;
+    height: 20%;
+    transform: translateX(-50%);
+}
+
+.core .target-reticle {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.core .part-label {
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+}
+
+.core:hover .part-label {
+    transform: translateX(-50%) translateY(0);
+}
+
+.arms {
+    top: 35%;
+    left: 25%;
+    width: 15%;
+    height: 30%;
+}
+
+.arms .target-reticle {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.arms .part-label {
+    top: 50%;
+    left: -120%;
+    transform: translateY(-50%) translateX(10px);
+}
+
+.arms:hover .part-label {
+    transform: translateY(-50%) translateX(0);
+}
+
+.legs {
+    top: 60%;
+    left: 50%;
+    width: 30%;
+    height: 30%;
+    transform: translateX(-50%);
+}
+
+.legs .target-reticle {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.legs .part-label {
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.legs:hover .part-label {
+    transform: translateX(-50%) translateY(0);
+}
+
+.platform {
+    top: 20%;
+    right: 20%;
+    width: 15%;
+    height: 40%;
+}
+
+.platform .target-reticle {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.platform .part-label {
+    top: 50%;
+    right: -120%;
+    transform: translateY(-50%) translateX(-10px);
+}
+
+.platform:hover .part-label {
+    transform: translateY(-50%) translateX(0);
+}
+
+/* 操作指引样式 */
+.instruction-text {
+    text-align: center;
+    margin: 20px 0;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent-blue);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background-color: rgba(4, 16, 32, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 3px solid var(--accent-blue);
+    border-right: 3px solid var(--accent-blue);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 驾驶舱终端样式 */
+.cockpit-terminal {
+    background-color: rgba(4, 16, 32, 0.8);
+    border: 1px solid var(--accent-blue);
+    border-radius: 5px;
+    margin: 30px auto;
+    max-width: 90%;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    box-shadow: 0 0 20px rgba(0, 163, 255, 0.3);
+}
+
+.terminal-header {
+    background-color: rgba(0, 163, 255, 0.1);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 163, 255, 0.3);
+}
+
+.terminal-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: var(--accent-blue);
+    letter-spacing: 2px;
+}
+
+.terminal-status {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    color: #4caf50;
+    background-color: rgba(76, 175, 80, 0.1);
+    padding: 3px 8px;
+    border-radius: 3px;
+}
+
+.terminal-content {
+    padding: 15px;
+    font-family: 'Rajdhani', monospace;
+    font-size: 1rem;
+    color: var(--accent-blue);
+    max-height: auto;
+    min-height: 150px;
+    overflow-y: visible;
+    overflow-x: hidden;
+    width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.terminal-line {
+    margin-bottom: 5px;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.terminal-cursor {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+/* 页脚样式 */
+footer {
+    margin-top: 50px;
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid rgba(0, 163, 255, 0.2);
+}
+
+.footer-content {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* 变形过渡动画覆盖层 */
+.transform-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    z-index: 9000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.transform-container {
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.transform-part {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 30px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 20px var(--accent-blue));
+}
+
+.transform-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    color: var(--accent-blue);
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.transform-details {
+    display: flex;
+    justify-content: space-between;
+    max-width: 400px;
+    margin: 0 auto 20px;
+}
+
+.detail-item {
+    text-align: left;
+}
+
+.detail-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    color: var(--accent-blue);
+}
+
+.transform-progress-container {
+    width: 100%;
+    height: 4px;
+    background-color: rgba(0, 163, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.transform-progress {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-yellow));
+    box-shadow: var(--blue-glow);
+    transition: width 0.3s ease;
+}
+
+/* 动画效果 */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .gundam-container {
+        max-width: 100%;
+    }
+    
+    .part-label {
+        font-size: 0.8rem;
+    }
+    
+    .cockpit-terminal {
+        max-width: 100%;
+    }
+    
+    .terminal-content {
+        font-size: 0.9rem;
+    }
+    
+    .hud-top, .hud-bottom {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+    
+    .energy-bar {
+        width: 60px;
+    }
+    
+    .coordinate {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-title {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .instruction-text {
+        font-size: 0.9rem;
+    }
+    
+    .terminal-content {
+        font-size: 0.8rem;
+    }
+    
+    .transform-text {
+        font-size: 1.2rem;
+    }
+    
+    .detail-value {
+        font-size: 0.9rem;
+    }
+    
+    .hud-element {
+        font-size: 10px;
+    }
+    
+    .hud-coordinates {
+        gap: 8px;
+    }
+}

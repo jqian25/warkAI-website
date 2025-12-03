@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   WarkAI - Executive SummaryExecutive Summary and Business Model
+  </title>
+  <link href="../css/style.css" rel="stylesheet"/>
+  <link href="../css/summary.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+  </script>
+ </head>
+ <body>
+  <div class="content-page">
+   <div class="hex-background">
+   </div>
+   <div class="page-header">
+    <img alt="WarkAI Logo" class="page-logo" src="../images/warkai_logo.png"/>
+    <h1 class="page-title">
+     Executive SummaryExecutive Summary and Business Model
+    </h1>
+    <button class="back-button" onclick="window.location.href='../index-en.html'">
+     Back to Home
+    </button>
+   </div>
+   <div class="content-container">
+    <div class="content-section">
+     <h2 class="section-title">
+      Company Mission
+     </h2>
+     <div class="eva-terminal">
+      <div class="eva-terminal-content">
+       WarkAI is committed to systematically addressing the structural crisis in the global labor market by integrating AR, AI, and robotics technologies to build the next-generation human-machine collaboration platform, unleashing the potential of "super individuals." Our core philosophy is "doing good to achieve good," promoting technological equality so that everyone can enhance their capabilities through technology and create greater value.
+      </div>
+     </div>
+     <div class="hologram-container" id="missionHologram">
+      <div class="hologram-content">
+       <div class="hologram-title">
+        WarkAI Mission
+       </div>
+       <div class="hologram-item">
+        Integration of AR, AI, and Robotics Technologies
+       </div>
+       <div class="hologram-item">
+        Address Structural Crisis in the Labor Market
+       </div>
+       <div class="hologram-item">
+        Build Human-Machine Collaboration Platform
+       </div>
+       <div class="hologram-item">
+        Unleash the Potential of "Super Individuals"
+       </div>
+       <div class="hologram-item">
+        "Doing Good to Achieve Good," Technological Equality
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="content-section">
+     <h2 class="section-title">
+      Core Product Lines
+     </h2>
+     <div class="data-grid">
+      <div class="data-card product-card" data-product="os">
+       <div class="product-icon">
+        <i class="product-os-icon">
+        </i>
+       </div>
+       <h3 class="data-card-title">
+        Intelligent Platform (WarkAI OS)
+       </h3>
+       <p>
+        An operating system centered on AI large models, providing services such as human-job matching, task management, and skill training.
+       </p>
+       <div class="card-hover-effect">
+       </div>
+      </div>
+      <div class="data-card product-card" data-product="hardware">
+       <div class="product-icon">
+        <i class="product-hardware-icon">
+        </i>
+       </div>
+       <h3 class="data-card-title">
+        Intelligent Hardware
+       </h3>
+       <p>
+        AR glasses, head-mounted communication and recording devices, smart robots (including robotic arms).
+       </p>
+       <div class="card-hover-effect">
+       </div>
+      </div>
+      <div class="data-card product-card" data-product="solutions">
+       <div class="product-icon">
+        <i class="product-solutions-icon">
+        </i>
+       </div>
+       <h3 class="data-card-title">
+        Industry Solutions
+       </h3>
+       <p>
+        Vertical applications focused on textile, cold chain, disability support, elderly care, and other sectors.
+       </p>
+       <div class="card-hover-effect">
+       </div>
+      </div>
+      <div class="data-card product-card" data-product="seal">
+       <div class="product-icon">
+        <i class="product-seal-icon">
+        </i>
+       </div>
+       <h3 class="data-card-title">
+        Innovative Applications
+       </h3>
+       <p>
+        AI Little Seal Fortune-telling Large Model, exploring the consumer (C-end) market.
+       </p>
+       <div class="card-hover-effect">
+       </div>
+      </div>
+     </div>
+     <div class="product-detail-modal" id="productDetailModal">
+      <div class="modal-content">
+       <span class="close-modal">
+        ×
+       </span>
+       <div class="modal-body" id="productModalBody">
+        <!-- Content will be dynamically inserted here -->
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="content-section">
+     <h2 class="section-title">
+      Market Opportunities
+     </h2>
+     <div class="chart-container">
+      <canvas id="marketSizeChart">
+      </canvas>
+     </div>
+     <div class="data-grid">
+      <div class="data-card">
+       <h3 class="data-card-title">
+        Global Challenges
+       </h3>
+       <ul class="challenge-list">
+        <li>
+         <span class="challenge-icon labor-icon">
+         </span>
+         Labor Shortage: 610,000 care worker gap in Japan, declining productivity in global manufacturing.
+        </li>
+        <li>
+         <span class="challenge-icon aging-icon">
+         </span>
+         Population Aging: Employment difficulties for the silver generation, continuously rising social dependency ratio.
+        </li>
+        <li>
+         <span class="challenge-icon disability-icon">
+         </span>
+         Disability Employment Gap: Employment rate far below able-bodied individuals, lack of effective assistive tools.
+        </li>
+        <li>
+         <span class="challenge-icon skills-icon">
+         </span>
+         Skills Mismatch: High youth unemployment rate, traditional training models have long cycles and low efficiency.
+        </li>
+       </ul>
+      </div>
+      <div class="data-card">
+       <h3 class="data-card-title">
+        Technology Window Period
+       </h3>
+       <div class="tech-window">
+        <div class="tech-timeline">
+         <div class="timeline-point" style="left: 20%;">
+          <div class="point-label">
+           Present
+          </div>
+         </div>
+         <div class="timeline-point" style="left: 50%;">
+          <div class="point-label">
+           3-5 Years
+          </div>
+         </div>
+         <div class="timeline-point" style="left: 80%;">
+          <div class="point-label">
+           5-10 Years
+          </div>
+         </div>
+         <div class="timeline-tech ar" style="left: 20%; width: 30%;">
+          <div class="tech-label">
+           Golden Era of AR Glasses
+          </div>
+         </div>
+         <div class="timeline-tech ai" style="left: 10%; width: 70%;">
+          <div class="tech-label">
+           Popularization of AI Large Model Applications
+          </div>
+         </div>
+         <div class="timeline-tech bci" style="left: 50%; width: 30%;">
+          <div class="tech-label">
+           Maturation of Brain-Computer Interfaces
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="content-section">
+     <h2 class="section-title">
+      Business Model
+     </h2>
+     <div class="business-model-container">
+      <div class="business-model-visual">
+       <div class="model-center">
+        WarkAI
+       </div>
+       <div class="model-item hardware">
+        <div class="model-icon">
+        </div>
+        <div class="model-label">
+         Hardware Sales/Rental
+        </div>
+        <div class="model-value">
+         70%
+        </div>
+       </div>
+       <div class="model-item software">
+        <div class="model-icon">
+        </div>
+        <div class="model-label">
+         Software Subscription (SaaS)
+        </div>
+        <div class="model-value">
+         20%
+        </div>
+       </div>
+       <div class="model-item subsidy">
+        <div class="model-icon">
+        </div>
+        <div class="model-label">
+         Government Subsidies and Partnership Revenue Sharing
+        </div>
+        <div class="model-value">
+         10%
+        </div>
+       </div>
+       <div class="model-item services">
+        <div class="model-icon">
+        </div>
+        <div class="model-label">
+         Ecosystem Value-Added Services
+        </div>
+        <div class="model-value">
+         Growth Drivers
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="data-card">
+      <h3 class="data-card-title">
+       Financial Highlights
+      </h3>
+      <div class="chart-container">
+       <canvas id="revenueChart">
+       </canvas>
+      </div>
+      <div class="financial-highlights">
+       <div class="highlight-item">
+        <div class="highlight-label">
+         Gross Margin
+        </div>
+        <div class="highlight-value">
+         57%-61%
+        </div>
+       </div>
+       <div class="highlight-item">
+        <div class="highlight-label">
+         Break-even Point
+        </div>
+        <div class="highlight-value">
+         11 Months
+        </div>
+       </div>
+       <div class="highlight-item">
+        <div class="highlight-label">
+         2028 Revenue
+        </div>
+        <div class="highlight-value">
+         700 million RMB
+        </div>
+       </div>
+       <div class="highlight-item">
+        <div class="highlight-label">
+         2028 Net Profit
+        </div>
+        <div class="highlight-value">
+         345 million RMB
+        </div>
+       </div>
+       <div class="highlight-item">
+        <div class="highlight-label">
+         Valuation Growth
+        </div>
+        <div class="highlight-value">
+         38x
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="content-section">
+     <h2 class="section-title">
+      Funding Plan
+     </h2>
+     <div class="funding-container">
+      <div class="funding-round">
+       <div class="round-label">
+        Current Round
+       </div>
+       <div class="round-value">
+        Series A, 8–10 million USD
+       </div>
+      </div>
+      <div class="funding-allocation">
+       <div class="allocation-item research">
+        <div class="allocation-percentage">
+         40%
+        </div>
+        <div class="allocation-bar">
+         <div class="allocation-fill" style="width: 40%;">
+         </div>
+        </div>
+        <div class="allocation-label">
+         R&amp;D
+        </div>
+        <div class="allocation-detail">
+         AI Model Optimization, New Hardware Development
+        </div>
+       </div>
+       <div class="allocation-item marketing">
+        <div class="allocation-percentage">
+         30%
+        </div>
+        <div class="allocation-bar">
+         <div class="allocation-fill" style="width: 30%;">
+         </div>
+        </div>
+        <div class="allocation-label">
+         Marketing and Sales
+        </div>
+        <div class="allocation-detail">
+         Channel Development, Benchmark Customer Expansion
+        </div>
+       </div>
+       <div class="allocation-item supply">
+        <div class="allocation-percentage">
+         20%
+        </div>
+        <div class="allocation-bar">
+         <div class="allocation-fill" style="width: 20%;">
+         </div>
+        </div>
+        <div class="allocation-label">
+         Supply Chain and Production
+        </div>
+        <div class="allocation-detail">
+         Core Component Procurement, Capacity Enhancement
+        </div>
+       </div>
+       <div class="allocation-item operations">
+        <div class="allocation-percentage">
+         10%
+        </div>
+        <div class="allocation-bar">
+         <div class="allocation-fill" style="width: 10%;">
+         </div>
+        </div>
+        <div class="allocation-label">
+         Operations
+        </div>
+        <div class="allocation-detail">
+         Team Building, Daily Expenses
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="page-footer">
+    <p>
+     © 2025 WarkAI Technology Co., Ltd. All Rights Reserved.
+    </p>
+   </div>
+  </div>
+  <div class="transition-overlay" id="transitionOverlay">
+   <div class="transition-animation">
+    <div class="gear-large gear-transition-1">
+    </div>
+    <div class="gear-large gear-transition-2">
+    </div>
+    <div class="gear-large gear-transition-3">
+    </div>
+    <div class="part-transform" id="transformingPart">
+    </div>
+   </div>
+  </div>
+  <script src="../js/script.js">
+  </script>
+  <script src="../js/summary.js">
+  </script>
+ </body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WarkAI - Pilot Authentication System</title>
+<link href="css/gundam-style.css" rel="stylesheet"/>
+<link href="css/login.css" rel="stylesheet"/>
+<link href="css/language-switcher.css" rel="stylesheet"/>
+<link href="css/pilot-module.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+<!-- Startup Sequence Overlay -->
+<div class="startup-sequence" id="startupSequence">
+<div class="startup-container">
+<div class="startup-logo">
+<img alt="WarkAI Logo" class="logo-startup" src="images/warkai_logo.png"/>
+</div>
+<div class="startup-progress-container">
+<div class="startup-progress" id="startupProgress"></div>
+</div>
+<div class="startup-text" id="startupText">Authentication System Starting...</div>
+<div class="startup-details" id="startupDetails">
+<div class="detail-line">Initializing Security Protocol...</div>
+<div class="detail-line">Loading Pilot Database...</div>
+<div class="detail-line">Calibrating Biometric Scanner...</div>
+<div class="detail-line">Activating Neural Interface...</div>
+<div class="detail-line">WarkAI Authentication Ready...</div>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="main-container" id="mainContainer">
+<!-- Top HUD Interface -->
+<div class="hud-top">
+<div class="hud-left">
+<div class="hud-element hud-time" id="hudTime">00:00:00</div>
+<div class="hud-element hud-status">Auth Status: <span class="status-online">Ready</span></div>
+</div>
+<div class="hud-center">
+<div class="hud-element hud-energy">
+<div class="energy-label">Security</div>
+<div class="energy-bar">
+<div class="energy-level"></div>
+</div>
+<div class="energy-percentage">100%</div>
+</div>
+</div>
+<div class="hud-right">
+<!-- Language Switcher -->
+<div class="language-switcher">
+<div class="lang-current" id="langCurrent">
+<span class="lang-flag">🇺🇸</span>
+<span class="lang-name">English</span>
+<span class="lang-arrow">▼</span>
+</div>
+<div class="lang-dropdown" id="langDropdown">
+<div class="lang-option" onclick="window.location.href='login.html'">
+<span class="lang-flag">🇨🇳</span>
+<span class="lang-name">Chinese</span>
+</div>
+<div class="lang-option" onclick="window.location.href='login-en.html'">
+<span class="lang-flag">🇺🇸</span>
+<span class="lang-name">English</span>
+</div>
+<div class="lang-option" onclick="window.location.href='login-ja.html'">
+<span class="lang-flag">🇯🇵</span>
+<span class="lang-name">Japanese language</span>
+</div>
+</div>
+</div>
+<!-- Back to Main -->
+<div class="pilot-module">
+<div class="pilot-trigger" onclick="window.location.href='index-en.html'">
+<div class="pilot-avatar">
+<div class="avatar-ring"></div>
+<div class="avatar-icon">🏠</div>
+</div>
+<span class="pilot-text">Back to Main</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Login Container -->
+<div class="login-container">
+<!-- Login Header -->
+<div class="login-header">
+<div class="logo-container">
+<img alt="WarkAI Logo" class="login-logo" src="images/warkai_logo.png"/>
+</div>
+<h1 class="login-title">PILOT AUTHENTICATION SYSTEM</h1>
+<div class="login-subtitle">Access WarkAI Command Center</div>
+</div>
+<!-- Login Form -->
+<div class="login-form-container">
+<div class="login-form-wrapper">
+<div class="form-header">
+<div class="form-title">PILOT LOGIN</div>
+<div class="form-status" id="formStatus">Ready for Authentication</div>
+</div>
+<form class="login-form" id="loginForm">
+<div class="input-group">
+<div class="input-label">Pilot ID</div>
+<div class="input-wrapper">
+<input class="login-input" id="pilotId" placeholder="Enter your pilot identification" required="" type="text"/>
+<div class="input-scanner"></div>
+</div>
+</div>
+<div class="input-group">
+<div class="input-label">Access Code</div>
+<div class="input-wrapper">
+<input class="login-input" id="accessCode" placeholder="Enter your access code" required="" type="password"/>
+<div class="input-scanner"></div>
+</div>
+</div>
+<div class="form-options">
+<label class="checkbox-wrapper">
+<input id="rememberMe" type="checkbox"/>
+<span class="checkmark"></span>
+<span class="checkbox-text">Remember this device</span>
+</label>
+<a class="forgot-link" href="#">Forgot access code?</a>
+</div>
+<button class="login-button" id="loginButton" type="submit">
+<span class="button-text">AUTHENTICATE</span>
+<div class="button-scanner"></div>
+</button>
+</form>
+<div class="form-footer">
+<div class="register-prompt">
+                            New pilot? <a class="register-link" href="#" id="registerLink">Request access clearance</a>
+</div>
+</div>
+</div>
+<!-- Zaku Transformer -->
+<div class="zaku-container" data-zaku-transformer="" id="zakuContainer">
+ The Zaku transformer will be initialized here. 
+</div>
+</div>
+</div>
+<!-- Security Terminal -->
+<div class="security-terminal">
+<div class="terminal-header">
+<div class="terminal-title">SECURITY-TERMINAL</div>
+<div class="terminal-status">ACTIVE</div>
+</div>
+<div class="terminal-content" id="terminalContent">
+<div class="terminal-line">// WarkAI Security System v3.1.0</div>
+<div class="terminal-line">// Authentication Protocol Initialized</div>
+<div class="terminal-line">// Biometric Scanner: Online</div>
+<div class="terminal-line">// Neural Interface: Ready</div>
+<div class="terminal-line">// Awaiting pilot credentials...</div>
+<div class="terminal-line terminal-cursor">_</div>
+</div>
+</div>
+<!-- Bottom HUD Interface -->
+<div class="hud-bottom">
+<div class="hud-element hud-coordinates">
+<span class="coordinate">SEC: 256</span>
+<span class="coordinate">AUTH: RSA</span>
+<span class="coordinate">ENC: AES</span>
+</div>
+<div class="hud-element hud-system">WarkAI Security v3.1.0</div>
+</div>
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+</div>
+</footer>
+</div>
+<!-- Registration Modal -->
+<div class="modal-overlay" id="registrationModal">
+<div class="modal-container">
+<div class="modal-header">
+<h2 class="modal-title">
+<span class="menu-icon">🛡️</span>
+                    Pilot Registration
+                </h2>
+<p class="modal-subtitle">Request access clearance to WarkAI system</p>
+<button class="modal-close" onclick="closeRegistrationModal()">✕</button>
+</div>
+<div class="modal-body">
+<form id="registrationForm">
+<div class="form-group">
+<label class="form-label">Full Name</label>
+<input class="form-input" id="regName" placeholder="Enter your full name" required="" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Email Address</label>
+<input class="form-input" id="regEmail" placeholder="Enter your email address" required="" type="email"/>
+</div>
+<div class="form-group">
+<label class="form-label">Organization</label>
+<input class="form-input" id="regOrg" placeholder="Enter your organization" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Position</label>
+<input class="form-input" id="regPosition" placeholder="Enter your position" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Access Level Request</label>
+<select class="form-input" id="regAccessLevel">
+<option value="guest">Guest Access</option>
+<option value="standard">Standard Access</option>
+<option value="premium">Premium Access</option>
+</select>
+</div>
+<div class="modal-footer">
+<button class="form-button secondary" onclick="closeRegistrationModal()" type="button">Cancel</button>
+<button class="form-button" type="submit">Submit Request</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<link href="css/zaku-transform.css" rel="stylesheet"/>
+<script src="js/language-config.js"></script>
+<script src="js/login.js"></script>
+
+<script src="js/pilot-module-en.js"></script>
+<script src="js/zaku-transform.js"></script>
+
+<!-- Force show mainContainer after 3 seconds -->
+<script>
+(function() {
+    function showMainContainer() {
+        const mainContainer = document.getElementById('mainContainer');
+        const startupSequence = document.getElementById('startupSequence');
+        
+        if (mainContainer) {
+            mainContainer.style.cssText = `
+                opacity: 1 !important;
+                display: flex !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
+                z-index: 1 !important;
+            `;
+            mainContainer.classList.add('active');
+        }
+        
+        if (startupSequence) {
+            startupSequence.style.cssText = `
+                opacity: 0 !important;
+                display: none !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+                z-index: -1 !important;
+            `;
+        }
+    }
+    
+    // 3秒后显示主容器
+    setTimeout(showMainContainer, 3000);
+    
+    // 同时监听 DOMContentLoaded 事件
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', showMainContainer);
+    }
+})()
+</script>
+</body>
+</html>

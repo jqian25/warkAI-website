@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - 用户仪表板</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646425229/hands.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.4.1646425229/drawing_utils.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.4.1646425229/camera_utils.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            overflow-x: hidden;
+        }
+
+        .dashboard-container {
+            min-height: 100vh;
+            padding: 20px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="%23003300" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="%230a0e27" /><rect width="100" height="100" fill="url(%23grid)" /></svg>');
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .user-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ff88, #00ccff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #0a0e27;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: rgba(255, 0, 100, 0.2);
+            border: 2px solid #ff0064;
+            color: #ff0064;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 0, 100, 0.4);
+            box-shadow: 0 0 15px #ff0064;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .search-box::placeholder {
+            color: rgba(0, 255, 136, 0.5);
+        }
+
+        .search-results {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 3px solid #00ff88;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .result-item:hover {
+            background: rgba(0, 255, 136, 0.2);
+            transform: translateX(5px);
+        }
+
+        .result-title {
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 5px;
+        }
+
+        .result-desc {
+            font-size: 12px;
+            color: rgba(0, 255, 136, 0.7);
+        }
+
+        .gesture-section {
+            grid-column: 1 / -1;
+        }
+
+        .gesture-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #webcam {
+            width: 100%;
+            height: auto;
+            transform: scaleX(-1);
+        }
+
+        .gesture-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 5px;
+            border: 2px solid #00ff88;
+        }
+
+        .gesture-status {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .gesture-action {
+            font-size: 12px;
+            color: #00ccff;
+        }
+
+        #gundam-canvas {
+            width: 100%;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .data-list {
+            list-style: none;
+        }
+
+        .data-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 3px solid #00ff88;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .data-item-title {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            background: rgba(255, 0, 100, 0.2);
+            border: 1px solid #ff0064;
+            color: #ff0064;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: rgba(255, 0, 100, 0.4);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .input-group button {
+            padding: 10px 20px;
+            background: rgba(0, 255, 136, 0.2);
+            border: 2px solid #00ff88;
+            color: #00ff88;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .input-group button:hover {
+            background: rgba(0, 255, 136, 0.4);
+            box-shadow: 0 0 15px #00ff88;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(0, 255, 136, 0.7);
+            margin-top: 5px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gesture-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #00ff88;
+        }
+
+        .spinner {
+            border: 3px solid rgba(0, 255, 136, 0.3);
+            border-top: 3px solid #00ff88;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🤖 WarkAI 用户仪表板</h1>
+            <div class="user-info">
+                <div class="user-avatar">👤</div>
+                <div>
+                    <div style="font-size: 14px;">欢迎回来</div>
+                    <div style="font-size: 12px; color: rgba(0, 255, 136, 0.7);">高级驾驶员</div>
+                </div>
+                <button class="logout-btn" onclick="logout()">退出登录</button>
+            </div>
+        </div>
+
+        <!-- 主内容区域 -->
+        <div class="main-grid">
+            <!-- 数据可视化 -->
+            <div class="card">
+                <h2>📊 数据可视化</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-papers">2,847</div>
+                        <div class="stat-label">科学论文</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-favorites">156</div>
+                        <div class="stat-label">收藏夹</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-views">12.5K</div>
+                        <div class="stat-label">浏览次数</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <svg id="d3-chart"></svg>
+                </div>
+            </div>
+
+            <!-- 知识库搜索 -->
+            <div class="card">
+                <h2>🔍 知识库搜索</h2>
+                <input type="text" class="search-box" id="search-input" placeholder="搜索科学论文、资源...">
+                <div class="search-results" id="search-results">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>准备搜索引擎...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 个人数据管理 -->
+            <div class="card">
+                <h2>💾 个人数据管理</h2>
+                <div class="input-group">
+                    <input type="text" id="data-input" placeholder="输入研究兴趣或标签...">
+                    <button onclick="addData()">添加</button>
+                </div>
+                <ul class="data-list" id="data-list">
+                    <li class="data-item">
+                        <span class="data-item-title">AI与机器学习</span>
+                        <button class="delete-btn" onclick="deleteData(this)">删除</button>
+                    </li>
+                    <li class="data-item">
+                        <span class="data-item-title">人机交互</span>
+                        <button class="delete-btn" onclick="deleteData(this)">删除</button>
+                    </li>
+                    <li class="data-item">
+                        <span class="data-item-title">计算机视觉</span>
+                        <button class="delete-btn" onclick="deleteData(this)">删除</button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 手势控制与高达交互 -->
+            <div class="card gesture-section">
+                <h2>🎮 手势控制 & 高达交互</h2>
+                <div class="gesture-container">
+                    <div class="video-container">
+                        <video id="webcam" autoplay playsinline></video>
+                        <div class="gesture-info">
+                            <div class="gesture-status">
+                                左手: <span id="left-hand-status">未检测</span>
+                            </div>
+                            <div class="gesture-status">
+                                右手: <span id="right-hand-status">未检测</span>
+                            </div>
+                            <div class="gesture-action" id="gesture-action">
+                                等待手势...
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <canvas id="gundam-canvas"></canvas>
+                        <div style="margin-top: 10px; padding: 10px; background: rgba(0, 255, 136, 0.1); border-radius: 5px; font-size: 12px;">
+                            <p>💡 提示：</p>
+                            <p>• 张开手掌 = 旋转高达</p>
+                            <p>• 握拳 = 缩放高达</p>
+                            <p>• 竖起大拇指 = 变形动画</p>
+                            <p>• 点击"启动手势识别"开始</p>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="toggleGestureRecognition()" style="margin-top: 15px; padding: 10px 20px; background: rgba(0, 255, 136, 0.2); border: 2px solid #00ff88; color: #00ff88; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold;">
+                    🎥 启动手势识别
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ 数据可视化 ============
+        function initD3Chart() {
+            const data = [
+                { month: '1月', value: 65 },
+                { month: '2月', value: 78 },
+                { month: '3月', value: 90 },
+                { month: '4月', value: 81 },
+                { month: '5月', value: 95 },
+                { month: '6月', value: 107 }
+            ];
+
+            const margin = { top: 20, right: 30, bottom: 30, left: 60 };
+            const width = 400 - margin.left - margin.right;
+            const height = 300 - margin.top - margin.bottom;
+
+            const svg = d3.select('#d3-chart')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.month))
+                .range([0, width])
+                .padding(0.1);
+
+            const y = d3.scaleLinear()
+                .domain([0, 120])
+                .range([height, 0]);
+
+            // 绘制柱子
+            svg.selectAll('.bar')
+                .data(data)
+                .enter()
+                .append('rect')
+                .attr('class', 'bar')
+                .attr('x', d => x(d.month))
+                .attr('y', d => y(d.value))
+                .attr('width', x.bandwidth())
+                .attr('height', d => height - y(d.value))
+                .attr('fill', '#00ff88')
+                .attr('opacity', 0.7)
+                .transition()
+                .duration(800)
+                .attr('opacity', 0.9);
+
+            // 绘制X轴
+            svg.append('g')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(x))
+                .attr('color', '#00ff88');
+
+            // 绘制Y轴
+            svg.append('g')
+                .call(d3.axisLeft(y))
+                .attr('color', '#00ff88');
+        }
+
+        // ============ 知识库搜索 ============
+        const knowledgeBase = [
+            { title: '深度学习基础', desc: '神经网络和深度学习的基础概念' },
+            { title: '计算机视觉进阶', desc: '图像处理和视觉识别技术' },
+            { title: '自然语言处理', desc: 'NLP技术和应用' },
+            { title: '强化学习', desc: '机器学习的强化学习分支' },
+            { title: '迁移学习', desc: '跨域学习和模型迁移' },
+            { title: '生成对抗网络', desc: 'GAN技术和应用' },
+            { title: '图神经网络', desc: '图结构数据处理' },
+            { title: '注意力机制', desc: 'Transformer和注意力模型' }
+        ];
+
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const resultsContainer = document.getElementById('search-results');
+
+            if (query.length === 0) {
+                resultsContainer.innerHTML = '<div class="loading"><p>输入关键词开始搜索...</p></div>';
+                return;
+            }
+
+            const results = knowledgeBase.filter(item =>
+                item.title.toLowerCase().includes(query) ||
+                item.desc.toLowerCase().includes(query)
+            );
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<div class="loading"><p>未找到相关结果</p></div>';
+                return;
+            }
+
+            resultsContainer.innerHTML = results.map(result => `
+                <div class="result-item" onclick="selectResult('${result.title}')">
+                    <div class="result-title">${result.title}</div>
+                    <div class="result-desc">${result.desc}</div>
+                </div>
+            `).join('');
+        });
+
+        function selectResult(title) {
+            alert('已选择: ' + title + '\n\n在完整版本中，这里会显示详细的论文和资源。');
+        }
+
+        // ============ 个人数据管理 ============
+        function addData() {
+            const input = document.getElementById('data-input');
+            const value = input.value.trim();
+
+            if (value === '') {
+                alert('请输入内容');
+                return;
+            }
+
+            const list = document.getElementById('data-list');
+            const item = document.createElement('li');
+            item.className = 'data-item';
+            item.innerHTML = `
+                <span class="data-item-title">${value}</span>
+                <button class="delete-btn" onclick="deleteData(this)">删除</button>
+            `;
+            list.appendChild(item);
+            input.value = '';
+
+            // 更新统计
+            updateStats();
+        }
+
+        function deleteData(btn) {
+            btn.parentElement.remove();
+            updateStats();
+        }
+
+        function updateStats() {
+            const itemCount = document.querySelectorAll('.data-item').length;
+            document.getElementById('stat-favorites').textContent = itemCount;
+        }
+
+        // ============ 手势识别与高达控制 ============
+        let gestureEnabled = false;
+        let hands = null;
+        let camera = null;
+        let gundamScene = null;
+        let gundamMesh = null;
+
+        async function initGestureRecognition() {
+            try {
+                const video = document.getElementById('webcam');
+                
+                // 初始化MediaPipe Hands
+                hands = new Hands({
+                    locateFile: (file) => {
+                        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646425229/${file}`;
+                    }
+                });
+
+                hands.setOptions({
+                    maxNumHands: 2,
+                    modelComplexity: 1,
+                    minDetectionConfidence: 0.5,
+                    minTrackingConfidence: 0.5
+                });
+
+                hands.onResults(onHandsResults);
+
+                // 初始化摄像头
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { width: { ideal: 640 }, height: { ideal: 480 } }
+                });
+                video.srcObject = stream;
+
+                // 初始化Three.js高达
+                initGundamScene();
+
+                // 开始处理
+                const canvasElement = document.createElement('canvas');
+                canvasElement.width = video.videoWidth;
+                canvasElement.height = video.videoHeight;
+
+                const canvasCtx = canvasElement.getContext('2d');
+                
+                async function processFrame() {
+                    if (!gestureEnabled) return;
+
+                    canvasCtx.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+                    await hands.send({ image: canvasElement });
+                    requestAnimationFrame(processFrame);
+                }
+
+                video.onloadedmetadata = () => {
+                    processFrame();
+                };
+
+                gestureEnabled = true;
+                document.querySelector('button[onclick="toggleGestureRecognition()"]').textContent = '⏹️ 停止手势识别';
+            } catch (error) {
+                console.error('手势识别初始化失败:', error);
+                alert('无法访问摄像头，请检查权限设置');
+            }
+        }
+
+        function onHandsResults(results) {
+            const leftHandStatus = document.getElementById('left-hand-status');
+            const rightHandStatus = document.getElementById('right-hand-status');
+            const gestureAction = document.getElementById('gesture-action');
+
+            if (results.multiHandedness && results.multiHandedness.length > 0) {
+                results.multiHandedness.forEach((hand, index) => {
+                    const landmarks = results.landmarks[index];
+                    const handedness = hand.label;
+                    const confidence = hand.score;
+
+                    if (handedness === 'Left') {
+                        leftHandStatus.textContent = `✓ 已检测 (${(confidence * 100).toFixed(0)}%)`;
+                    } else {
+                        rightHandStatus.textContent = `✓ 已检测 (${(confidence * 100).toFixed(0)}%)`;
+                    }
+
+                    // 识别手势
+                    const gesture = recognizeGesture(landmarks);
+                    gestureAction.textContent = `检测到手势: ${gesture}`;
+
+                    // 控制高达
+                    controlGundam(gesture);
+                });
+            } else {
+                leftHandStatus.textContent = '未检测';
+                rightHandStatus.textContent = '未检测';
+                gestureAction.textContent = '等待手势...';
+            }
+        }
+
+        function recognizeGesture(landmarks) {
+            // 简单的手势识别逻辑
+            const thumbTip = landmarks[4];
+            const indexTip = landmarks[8];
+            const middleTip = landmarks[12];
+            const ringTip = landmarks[16];
+            const pinkyTip = landmarks[20];
+            const wrist = landmarks[0];
+
+            // 计算手指距离
+            const thumbToIndex = Math.hypot(
+                thumbTip.x - indexTip.x,
+                thumbTip.y - indexTip.y
+            );
+
+            const allFingersUp = [indexTip, middleTip, ringTip, pinkyTip].every(tip =>
+                tip.y < wrist.y
+            );
+
+            if (thumbToIndex < 0.05 && allFingersUp) {
+                return '👍 竖起大拇指';
+            } else if (thumbTip.y > wrist.y && indexTip.y > wrist.y) {
+                return '✊ 握拳';
+            } else if (allFingersUp) {
+                return '✋ 张开手掌';
+            }
+
+            return '❓ 未知手势';
+        }
+
+        function initGundamScene() {
+            const canvas = document.getElementById('gundam-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            renderer.setClearColor(0x000000, 0.1);
+
+            // 创建简单的高达形状
+            const geometry = new THREE.BoxGeometry(1, 2, 0.5);
+            const material = new THREE.MeshPhongMaterial({ color: 0x00ff88, emissive: 0x00ff88 });
+            gundamMesh = new THREE.Mesh(geometry, material);
+            scene.add(gundamMesh);
+
+            // 添加灯光
+            const light = new THREE.PointLight(0x00ff88, 1);
+            light.position.set(5, 5, 5);
+            scene.add(light);
+
+            const ambientLight = new THREE.AmbientLight(0x0066ff, 0.5);
+            scene.add(ambientLight);
+
+            camera.position.z = 3;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+
+            animate();
+            gundamScene = scene;
+        }
+
+        function controlGundam(gesture) {
+            if (!gundamMesh) return;
+
+            if (gesture.includes('张开')) {
+                gundamMesh.rotation.y += 0.05;
+                gundamMesh.rotation.x += 0.02;
+            } else if (gesture.includes('握拳')) {
+                gundamMesh.scale.x += 0.01;
+                gundamMesh.scale.y += 0.01;
+                gundamMesh.scale.z += 0.01;
+                if (gundamMesh.scale.x > 2) {
+                    gundamMesh.scale.set(1, 1, 1);
+                }
+            } else if (gesture.includes('竖起')) {
+                gundamMesh.position.y += 0.02;
+                if (gundamMesh.position.y > 1) {
+                    gundamMesh.position.y = -1;
+                }
+            }
+        }
+
+        function toggleGestureRecognition() {
+            if (!gestureEnabled) {
+                initGestureRecognition();
+            } else {
+                gestureEnabled = false;
+                const video = document.getElementById('webcam');
+                if (video.srcObject) {
+                    video.srcObject.getTracks().forEach(track => track.stop());
+                }
+                document.querySelector('button[onclick="toggleGestureRecognition()"]').textContent = '🎥 启动手势识别';
+            }
+        }
+
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // 页面加载时初始化
+        window.addEventListener('load', function() {
+            initD3Chart();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - Gundam Simulation Game</title>
+    <link rel="stylesheet" href="css/gundam-style.css">
+    <link rel="stylesheet" href="css/language-switcher.css">
+    <link rel="stylesheet" href="css/pilot-module.css">
+    <link rel="stylesheet" href="css/game-page.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+    <!-- Startup Sequence Overlay -->
+    <div class="startup-sequence" id="startupSequence">
+        <div class="startup-container">
+            <div class="startup-logo">
+                <img src="images/warkai_logo.png" alt="WarkAI Logo" class="logo-startup">
+            </div>
+            <div class="startup-progress-container">
+                <div class="startup-progress" id="startupProgress"></div>
+            </div>
+            <div class="startup-text" id="startupText">System Starting...</div>
+            <div class="startup-details" id="startupDetails">
+                <div class="detail-line">Initializing Game Engine...</div>
+                <div class="detail-line">Loading Gundam Model...</div>
+                <div class="detail-line">Calibrating Combat System...</div>
+                <div class="detail-line">Connecting Multiplayer Mode...</div>
+                <div class="detail-line">Activating Game Mode...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-container" id="mainContainer">
+        <!-- Top HUD Interface -->
+        <div class="hud-top">
+            <div class="hud-left">
+                <div class="hud-element hud-time" id="hudTime">00:00:00</div>
+                <div class="hud-element hud-status">System Status: <span class="status-online">Online</span></div>
+            </div>
+            
+            <div class="hud-center">
+                <div class="hud-element hud-energy">
+                    <div class="energy-label">Energy</div>
+                    <div class="energy-bar">
+                        <div class="energy-level"></div>
+                    </div>
+                    <div class="energy-percentage">100%</div>
+                </div>
+            </div>
+            
+            <div class="hud-right">
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <div class="lang-current" id="langCurrent">
+                        <span class="lang-flag">🇺🇸</span>
+                        <span class="lang-name">English</span>
+                        <span class="lang-arrow">▼</span>
+                    </div>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <div class="lang-option" onclick="switchLanguage('zh')">
+                            <span class="lang-flag">🇨🇳</span>
+                            <span class="lang-name">Chinese</span>
+                        </div>
+                        <div class="lang-option" onclick="switchLanguage('en')">
+                            <span class="lang-flag">🇺🇸</span>
+                            <span class="lang-name">English</span>
+                        </div>
+                        <div class="lang-option" onclick="switchLanguage('ja')">
+                            <span class="lang-flag">🇯🇵</span>
+                            <span class="lang-name">Japanese</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pilot Module -->
+                <div class="pilot-module">
+                    <div class="pilot-trigger" id="pilotTrigger">
+                        <div class="pilot-avatar">
+                            <div class="avatar-ring"></div>
+                            <div class="avatar-icon">👤</div>
+                        </div>
+                        <span class="pilot-text">Pilot Module</span>
+                        <span class="pilot-arrow">▼</span>
+                    </div>
+                    <div class="pilot-dropdown" id="pilotDropdown">
+                        <div class="dropdown-header">
+                            <div class="pilot-info">
+                                <div class="pilot-name" id="pilotName">Test Pilot</div>
+                                <div class="pilot-status" id="pilotStatus">Authenticated</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu">
+                            <div class="menu-item" onclick="showProfile()">
+                                <span class="menu-icon">👤</span>
+                                <span class="menu-text">Profile</span>
+                            </div>
+                            <div class="menu-item" onclick="showFeedback()">
+                                <span class="menu-icon">💬</span>
+                                <span class="menu-text">Feedback</span>
+                            </div>
+                            <div class="menu-item" onclick="showCooperation()">
+                                <span class="menu-icon">🤝</span>
+                                <span class="menu-text">Cooperation</span>
+                            </div>
+                            <div class="menu-item" onclick="goHome()">
+                                <span class="menu-icon">🏠</span>
+                                <span class="menu-text">Home</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Title Area -->
+        <header>
+            <h1 class="main-title">Gundam Simulation Battle Game</h1>
+            <div class="subtitle">Pilot the RX-78-2 Gundam and Battle Enemy Zakus in Space</div>
+        </header>
+
+        <!-- Game Container -->
+        <div class="game-container">
+            <div class="game-frame">
+                <iframe 
+                    id="gameFrame" 
+                    src="game-simulation.html" 
+                    frameborder="0" 
+                    allowfullscreen
+                    allow="fullscreen; accelerometer; gyroscope; magnetometer">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Game Instructions -->
+        <div class="game-instructions">
+            <div class="instructions-header">
+                <h2>Game Instructions</h2>
+            </div>
+            <div class="instructions-content">
+                <div class="instruction-section">
+                    <h3>Game Objective</h3>
+                    <p>Pilot the RX-78-2 Gundam in space combat and defeat enemy Zaku mobile suits.</p>
+                </div>
+                <div class="instruction-section">
+                    <h3>Controls</h3>
+                    <ul>
+                        <li><strong>WASD</strong> - Move Gundam</li>
+                        <li><strong>Mouse Movement</strong> - Adjust Camera View</li>
+                        <li><strong>Left Click</strong> - Fire Weapons</li>
+                        <li><strong>Space</strong> - Jump/Boost</li>
+                        <li><strong>Shift</strong> - Sprint</li>
+                    </ul>
+                </div>
+                <div class="instruction-section">
+                    <h3>Game Features</h3>
+                    <ul>
+                        <li>3D Gundam Piloting Experience</li>
+                        <li>Real-time Space Combat</li>
+                        <li>Realistic Physics Engine</li>
+                        <li>Multiple Weapon Systems</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom HUD Interface -->
+        <div class="hud-bottom">
+            <div class="hud-element hud-coordinates">
+                <span class="coordinate">X: 42.195</span>
+                <span class="coordinate">Y: 13.114</span>
+                <span class="coordinate">Z: 08.848</span>
+            </div>
+            <div class="hud-element hud-system">WarkAI OS v2.5.0</div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal Container -->
+    <div id="modalContainer"></div>
+
+    <!-- Scripts -->
+    <script src="js/hud-clock.js"></script>
+    <script src="js/language-switcher.js"></script>
+    <script src="js/pilot-module-en.js"></script>
+    <script src="js/startup.js"></script>
+    <script>
+        // Go Home Function
+        function goHome() {
+            const currentLang = localStorage.getItem('selectedLanguage') || 'en';
+            if (currentLang === 'zh') {
+                window.location.href = 'index.html';
+            } else if (currentLang === 'en') {
+                window.location.href = 'index-en.html';
+            } else if (currentLang === 'ja') {
+                window.location.href = 'index-ja.html';
+            }
+        }
+    </script>
+</body>
+</html>

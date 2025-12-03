@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Navigate back to main page after animation
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = '../index.html';
             }, 2000);
         });
     }

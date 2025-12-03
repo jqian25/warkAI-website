@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WarkAI - Market Applications and Roadmap</title>
+<link href="../css/style.css" rel="stylesheet"/>
+<link href="../css/market.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+<div class="content-page">
+<div class="hex-background"></div>
+<div class="page-header">
+<img alt="WarkAI Logo" class="page-logo" src="../images/warkai_logo.png"/>
+<h1 class="page-title">Market Applications and Roadmap</h1>
+<button class="back-button" onclick="window.location.href='../index-en.html'">Back to Home</button>
+</div>
+<div class="content-container">
+<div class="content-section">
+<h2 class="section-title">Market Pain Point Analysis</h2>
+<div class="eva-terminal">
+<div class="eva-terminal-content">The textile industry currently faces multiple challenges, including labor shortages, difficulties in skill transfer, and low production efficiency. WarkAI leverages the deep integration of AI, AR, and robotics technologies to provide textile enterprises with comprehensive intelligent upgrade services, addressing industry pain points and driving the digital transformation of traditional manufacturing.</div>
+</div>
+<div class="market-challenges">
+<div class="challenge-card">
+<div class="challenge-icon labor-icon"></div>
+<div class="challenge-title">Labor Shortage</div>
+<div class="challenge-desc">
+<p>The textile industry is facing a severe labor shortage, with young people unwilling to work in textile jobs and a clear trend of aging within the workforce.</p>
+<div class="challenge-stat">
+<div class="stat-value">-18.7%</div>
+<div class="stat-label">Reduction Rate of Textile Industry Workforce in the Past Five Years</div>
+</div>
+</div>
+</div>
+<div class="challenge-card">
+<div class="challenge-icon skill-icon"></div>
+<div class="challenge-title">Challenges in Technology Transfer</div>
+<div class="challenge-desc">
+<p>The textile process is complex, and the transmission of skills relies on experienced master craftsmen; however, there is a lack of effective mechanisms for knowledge preservation and transfer.</p>
+<div class="challenge-stat">
+<div class="stat-value">8.2年</div>
+<div class="stat-label">Average Training Duration for Textile Technicians</div>
+</div>
+</div>
+</div>
+<div class="challenge-card">
+<div class="challenge-icon efficiency-icon"></div>
+<div class="challenge-title">Low production efficiency</div>
+<div class="challenge-desc">
+<p>Traditional textile production methods rely on manual operations and experiential judgment, resulting in low production efficiency and significant quality fluctuations.</p>
+<div class="challenge-stat">
+<div class="stat-value">35%</div>
+<div class="stat-label">Average Equipment Utilization Rate of Domestic Textile Enterprises</div>
+</div>
+</div>
+</div>
+</div>
+<div class="market-data">
+<h3 class="data-title">Market Size of the Textile Industry</h3>
+<div class="data-container">
+<div class="chart-container">
+<canvas id="marketSizeChart"></canvas>
+</div>
+<div class="data-insights">
+<div class="insight-item">
+<div class="insight-value">7.2万亿</div>
+<div class="insight-label">Total Output Value of China's Textile Industry in 2024</div>
+</div>
+<div class="insight-item">
+<div class="insight-value">4.8%</div>
+<div class="insight-label">Compound Annual Growth Rate (2025-2030)</div>
+</div>
+<div class="insight-item">
+<div class="insight-value">1.2万亿</div>
+<div class="insight-label">Potential Market Size of Smart Textiles</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="content-section">
+<h2 class="section-title">Application Scenarios in the Textile Industry</h2>
+<div class="application-scenarios">
+<div class="scenario-tabs">
+<div class="tab-buttons">
+<button class="tab-button active" data-tab="production">Manufacturing and Production</button>
+<button class="tab-button" data-tab="quality">Quality Control</button>
+<button class="tab-button" data-tab="training">Skills Training</button>
+<button class="tab-button" data-tab="management">Intelligent Management</button>
+</div>
+<div class="tab-content">
+<div class="tab-pane active" id="production-tab">
+<div class="scenario-showcase">
+<div class="scenario-image">
+<img alt="纺织生产场景" class="scenario-img" src="../images/textile_production.png"/>
+<div class="image-overlay">
+<div class="overlay-text">Intelligent Manufacturing</div>
+</div>
+</div>
+<div class="scenario-details">
+<div class="scenario-description">
+<p>WarkAI provides comprehensive intelligent solutions for the textile manufacturing process, offering real-time guidance to operators through AR glasses, utilizing collaborative robots to perform repetitive tasks, and optimizing production parameters and workflows through AI systems.</p>
+</div>
+<div class="scenario-features">
+<div class="feature-item">
+<div class="feature-icon guidance-icon"></div>
+<div class="feature-title">AR Real-Time Process Guidance</div>
+<div class="feature-desc">Provide operators with real-time process parameters and operational guidance through AR glasses.</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon robot-icon"></div>
+<div class="feature-title">Collaborative Robot Applications</div>
+<div class="feature-desc">Collaborative robots perform repetitive and hazardous tasks, enhancing production efficiency.</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon process-icon"></div>
+<div class="feature-title">Process Parameter Optimization</div>
+<div class="feature-desc">The AI system analyzes production data in real time to optimize process parameters and enhance product quality.</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon remote-icon"></div>
+<div class="feature-title">Remote Expert Collaboration</div>
+<div class="feature-desc">Connect with remote experts through head-mounted communication devices to resolve complex issues.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="quality-tab">
+<div class="scenario-showcase">
+<div class="scenario-image">
+<img alt="纺织质量控制场景" class="scenario-img" src="../images/textile_quality.png"/>
+<div class="image-overlay">
+<div class="overlay-text">Intelligent Quality Control</div>
+</div>
+</div>
+<div class="scenario-details">
+<div class="scenario-description">
+<p>WarkAI provides an AI vision-based defect detection system for textile quality control, enabling fully automated, high-precision quality inspection. This significantly reduces the labor intensity and error rate of manual inspections, while enhancing product quality and consistency.</p>
+</div>
+<div class="scenario-features">
+<div class="feature-item">
+<div class="feature-icon vision-icon"></div>
+<div class="feature-title">AI Visual Defect Detection</div>
+<div class="feature-desc">Deep Learning-Based Visual System for Automated Fabric Defect Detection</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon realtime-icon"></div>
+<div class="feature-title">Real-Time Quality Monitoring</div>
+<div class="feature-desc">Real-time monitoring of production line quality status with timely alerts for anomalies.</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon analysis-icon"></div>
+<div class="feature-title">Quality Data Analysis</div>
+<div class="feature-desc">Conduct in-depth analysis of quality data to identify the root causes of quality issues.</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon trace-icon"></div>
+<div class="feature-title">Full-Process Quality Traceability</div>
+<div class="feature-desc">Establish a quality database to achieve full-process quality traceability.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="training-tab">
+<div class="scenario-showcase">
+<div class="scenario-image">
+<img alt="纺织技能培训场景" class="scenario-img" src="../images/textile_training.png"/>
+<div class="image-overlay">
+<div class="overlay-text">Intelligent Skills Training</div>
+</div>
+</div>
+<div class="scenario-details">
+<div class="scenario-description">
+<p>WarkAI provides an AR/VR-based immersive training system for textile skills development, combined with an AI teaching assistant to enable rapid skill acquisition and effective knowledge transfer, significantly shortening training cycles and enhancing training outcomes.</p>
+</div>
+<div class="scenario-features">
+<div class="feature-item">
+<div class="feature-icon ar-icon"></div>
+<div class="feature-title">AR/VR Immersive Training</div>
+<div class="feature-desc">Providing immersive skills training experiences through AR/VR technology</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon ai-icon"></div>
+<div class="feature-title">AI Teaching Assistant</div>
+<div class="feature-desc">The AI system provides personalized learning guidance and feedback.</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon knowledge-icon"></div>
+<div class="feature-title">Knowledge Base Development</div>
+<div class="feature-desc">Document and consolidate expert experience to create a structured knowledge base.</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon assessment-icon"></div>
+<div class="feature-title">Skills Assessment System</div>
+<div class="feature-desc">Objectively evaluate learning outcomes and provide targeted improvement recommendations.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="management-tab">
+<div class="scenario-showcase">
+<div class="scenario-image">
+<img alt="纺织智能管理场景" class="scenario-img" src="../images/textile_management.png"/>
+<div class="image-overlay">
+<div class="overlay-text">Intelligent Management System</div>
+</div>
+</div>
+<div class="scenario-details">
+<div class="scenario-description">
+<p>WarkAI provides AI-based intelligent scheduling, inventory management, and energy consumption management systems in textile management processes, enabling optimized allocation of production resources, enhancing management efficiency and decision-making, and reducing operational costs.</p>
+</div>
+<div class="scenario-features">
+<div class="feature-item">
+<div class="feature-icon schedule-icon"></div>
+<div class="feature-title">Intelligent Scheduling System</div>
+<div class="feature-desc">AI Algorithm-Based Production Scheduling Optimization to Enhance Equipment Utilization</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon inventory-icon"></div>
+<div class="feature-title">Intelligent Inventory Management</div>
+<div class="feature-desc">Predictive inventory management to reduce inventory costs and improve turnover rates.</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon energy-icon"></div>
+<div class="feature-title">Energy Consumption Management System</div>
+<div class="feature-desc">Real-time monitoring and optimization of energy usage to reduce energy costs.</div>
+</div>
+<div class="feature-item">
+<div class="feature-icon decision-icon"></div>
+<div class="feature-title">AI-Assisted Decision Making</div>
+<div class="feature-desc">Management Decision Support System Based on Data Analysis</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="content-section">
+<h2 class="section-title">Customer Value and ROI Analysis</h2>
+<div class="value-analysis">
+<div class="value-metrics">
+<div class="metric-card">
+<div class="metric-icon productivity-icon"></div>
+<div class="metric-title">Improvement in Production Efficiency</div>
+<div class="metric-value">41%</div>
+<div class="metric-desc">Significantly enhance production efficiency through AR-assisted operations and collaborative robot applications.</div>
+</div>
+<div class="metric-card">
+<div class="metric-icon quality-icon"></div>
+<div class="metric-title">Defect Rate Reduction</div>
+<div class="metric-value">67%</div>
+<div class="metric-desc">Significantly reduce product defect rates through AI visual inspection and process parameter optimization.</div>
+</div>
+<div class="metric-card">
+<div class="metric-icon training-icon"></div>
+<div class="metric-title">Reduced Training Cycle</div>
+<div class="metric-value">53%</div>
+<div class="metric-desc">通过AR/VR培训和AI教学助手，显著缩短技能培训周期</div>
+</div>
+<div class="metric-card">
+<div class="metric-icon cost-icon"></div>
+<div class="metric-title">Reduced Operating Costs</div>
+<div class="metric-value">28%</div>
+<div class="metric-desc">Optimize resource allocation and reduce operating costs through an intelligent management system.</div>
+</div>
+</div>
+<div class="roi-analysis">
+<h3 class="roi-title">Investment Return Period</h3>
+<div class="roi-chart-container">
+<canvas id="roiChart"></canvas>
+</div>
+<div class="roi-insights">
+<div class="insight-item">
+<div class="insight-value">9-15个月</div>
+<div class="insight-label">Average Investment Return Period</div>
+</div>
+<div class="insight-item">
+<div class="insight-value">3.8倍</div>
+<div class="insight-label">Three-Year Cumulative Investment Return Rate</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="content-section">
+<h2 class="section-title">Development Roadmap</h2>
+<div class="roadmap">
+<div class="roadmap-timeline">
+<div class="timeline-track"></div>
+<div class="timeline-node current">
+<div class="node-year">2025</div>
+<div class="node-dot"></div>
+<div class="node-content">
+<div class="node-title">Breakthroughs in the Textile Industry</div>
+<div class="node-desc">
+<ul>
+<li>Launch of AR Glasses and Head-Mounted Recorders Specifically for the Textile Industry</li>
+<li>Launch of AI Visual Inspection System for the Textile Industry</li>
+<li>Establish the First Batch of Demonstration Applications for Textile Enterprises</li>
+<li>Completed Series A Financing</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="timeline-node">
+<div class="node-year">2026</div>
+<div class="node-dot"></div>
+<div class="node-content">
+<div class="node-title">Product Line Expansion and Market Development</div>
+<div class="node-desc">
+<ul>
+<li>Launch of Collaborative Robot Product Line</li>
+<li>Upgrade to WarkAI OS Version 2.0</li>
+<li>Expand cold chain logistics and employment opportunities for people with disabilities.</li>
+<li>Establish a nationwide sales channel network.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="timeline-node">
+<div class="node-year">2027</div>
+<div class="node-dot"></div>
+<div class="node-content">
+<div class="node-title">Technological Advancement and Internationalization</div>
+<div class="node-desc">
+<ul>
+<li>Launch of the New Generation Lightweight AR Glasses</li>
+<li>Release of the Edge Computing Edition of WarkAI OS</li>
+<li>Expanding into Southeast Asian and European Markets</li>
+<li>Completed Series B Financing</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="timeline-node">
+<div class="node-year">2028</div>
+<div class="node-dot"></div>
+<div class="node-content">
+<div class="node-title">Ecosystem Development</div>
+<div class="node-desc">
+<ul>
+<li>Establish Developer Platform and App Store</li>
+<li>Launch of Industry Solutions Partner Program</li>
+<li>Expand Applications Across More Vertical Industries</li>
+<li>Establish a Global Research and Development Center</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="timeline-node">
+<div class="node-year">2030</div>
+<div class="node-dot"></div>
+<div class="node-content">
+<div class="node-title">Global Leader</div>
+<div class="node-desc">
+<ul>
+<li>Becoming a Global Leader in the Industrial Metaverse Sector</li>
+<li>Achieve an annual revenue of 5 billion yuan.</li>
+<li>Serving over 10,000 corporate clients worldwide</li>
+<li>Completed IPO listing</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="content-section">
+<h2 class="section-title">Expansion into Other Industries</h2>
+<div class="industry-expansion">
+<div class="expansion-card">
+<div class="expansion-icon coldchain-icon"></div>
+<div class="expansion-title">Cold Chain Logistics</div>
+<div class="expansion-desc">
+<p>Through the deep integration of AI, AR, and IoT technologies, we provide cold chain enterprises with comprehensive temperature control management and logistics optimization services, ensuring the quality and safety of temperature-sensitive products such as food and pharmaceuticals.</p>
+<div class="expansion-stats">
+<div class="stat-item">
+<div class="stat-value">15%</div>
+<div class="stat-label">Reduction in Goods Loss Rate</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">23%</div>
+<div class="stat-label">Energy Consumption Reduction</div>
+</div>
+</div>
+</div>
+</div>
+<div class="expansion-card">
+<div class="expansion-icon disability-icon"></div>
+<div class="expansion-title">Employment Support for People with Disabilities</div>
+<div class="expansion-desc">
+<p>Providing work assistance and skills training services for people with disabilities through AR glasses and AI-assisted systems, helping them overcome workplace challenges and improve employment rates and work efficiency.</p>
+<div class="expansion-stats">
+<div class="stat-item">
+<div class="stat-value">47%</div>
+<div class="stat-label">Increase in Employment Rate</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">62%</div>
+<div class="stat-label">Improvement in Work Efficiency</div>
+</div>
+</div>
+</div>
+</div>
+<div class="expansion-card">
+<div class="expansion-icon elderly-icon"></div>
+<div class="expansion-title">Elderly Care Services</div>
+<div class="expansion-desc">
+<p>Through AR glasses and AI-assisted systems, we provide remote care and reemployment support services for the elderly, helping them overcome age-related barriers and achieve remote caregiving and skill continuity.</p>
+<div class="expansion-stats">
+<div class="stat-item">
+<div class="stat-value">38%</div>
+<div class="stat-label">Reemployment Rate of Senior Citizens</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">65%</div>
+<div class="stat-label">Reduced Care Costs</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="page-footer">
+<p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+</div>
+</div>
+<div class="transition-overlay" id="transitionOverlay">
+<div class="transition-animation">
+<div class="gear-large gear-transition-1"></div>
+<div class="gear-large gear-transition-2"></div>
+<div class="gear-large gear-transition-3"></div>
+<div class="part-transform" id="transformingPart"></div>
+</div>
+</div>
+<script src="../js/script.js"></script>
+<script src="../js/market.js"></script>
+</body>
+</html>

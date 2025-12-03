@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - 高达模拟游戏</title>
+    <link rel="stylesheet" href="css/gundam-style.css">
+    <link rel="stylesheet" href="css/language-switcher.css">
+    <link rel="stylesheet" href="css/pilot-module.css">
+    <link rel="stylesheet" href="css/game-page.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+    <!-- 启动序列覆盖层 -->
+    <div class="startup-sequence" id="startupSequence">
+        <div class="startup-container">
+            <div class="startup-logo">
+                <img src="images/warkai_logo.png" alt="WarkAI Logo" class="logo-startup">
+            </div>
+            <div class="startup-progress-container">
+                <div class="startup-progress" id="startupProgress"></div>
+            </div>
+            <div class="startup-text" id="startupText">系统启动中...</div>
+            <div class="startup-details" id="startupDetails">
+                <div class="detail-line">初始化游戏引擎...</div>
+                <div class="detail-line">加载高达模型...</div>
+                <div class="detail-line">校准战斗系统...</div>
+                <div class="detail-line">连接多人模式...</div>
+                <div class="detail-line">激活游戏模式...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="main-container" id="mainContainer">
+        <!-- 顶部HUD界面 -->
+        <div class="hud-top">
+            <div class="hud-left">
+                <div class="hud-element hud-time" id="hudTime">00:00:00</div>
+                <div class="hud-element hud-status">系统状态: <span class="status-online">在线</span></div>
+            </div>
+            
+            <div class="hud-center">
+                <div class="hud-element hud-energy">
+                    <div class="energy-label">能量</div>
+                    <div class="energy-bar">
+                        <div class="energy-level"></div>
+                    </div>
+                    <div class="energy-percentage">100%</div>
+                </div>
+            </div>
+            
+            <div class="hud-right">
+                <!-- 语言切换器 -->
+                <div class="language-switcher">
+                    <div class="lang-current" id="langCurrent">
+                        <span class="lang-flag">🇨🇳</span>
+                        <span class="lang-name">中文</span>
+                        <span class="lang-arrow">▼</span>
+                    </div>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <div class="lang-option" onclick="switchLanguage('zh')">
+                            <span class="lang-flag">🇨🇳</span>
+                            <span class="lang-name">中文</span>
+                        </div>
+                        <div class="lang-option" onclick="switchLanguage('en')">
+                            <span class="lang-flag">🇺🇸</span>
+                            <span class="lang-name">English</span>
+                        </div>
+                        <div class="lang-option" onclick="switchLanguage('ja')">
+                            <span class="lang-flag">🇯🇵</span>
+                            <span class="lang-name">日本語</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 驾驶员模块 -->
+                <div class="pilot-module">
+                    <div class="pilot-trigger" id="pilotTrigger">
+                        <div class="pilot-avatar">
+                            <div class="avatar-ring"></div>
+                            <div class="avatar-icon">👤</div>
+                        </div>
+                        <span class="pilot-text">驾驶员模块</span>
+                        <span class="pilot-arrow">▼</span>
+                    </div>
+                    <div class="pilot-dropdown" id="pilotDropdown">
+                        <div class="dropdown-header">
+                            <div class="pilot-info">
+                                <div class="pilot-name" id="pilotName">测试驾驶员</div>
+                                <div class="pilot-status" id="pilotStatus">已认证</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu">
+                            <div class="menu-item" onclick="showProfile()">
+                                <span class="menu-icon">👤</span>
+                                <span class="menu-text">个人中心</span>
+                            </div>
+                            <div class="menu-item" onclick="showFeedback()">
+                                <span class="menu-icon">💬</span>
+                                <span class="menu-text">意见反馈</span>
+                            </div>
+                            <div class="menu-item" onclick="showCooperation()">
+                                <span class="menu-icon">🤝</span>
+                                <span class="menu-text">合作洽谈</span>
+                            </div>
+                            <div class="menu-item" onclick="goHome()">
+                                <span class="menu-icon">🏠</span>
+                                <span class="menu-text">返回首页</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 游戏标题区域 -->
+        <header>
+            <h1 class="main-title">高达模拟战斗游戏</h1>
+            <div class="subtitle">驾驶RX-78-2高达，在太空中与敌方扎古战斗</div>
+        </header>
+
+        <!-- 游戏容器 -->
+        <div class="game-container">
+            <div class="game-frame">
+                <iframe 
+                    id="gameFrame" 
+                    src="game-simulation.html" 
+                    frameborder="0" 
+                    allowfullscreen
+                    allow="fullscreen; accelerometer; gyroscope; magnetometer">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- 游戏说明 -->
+        <div class="game-instructions">
+            <div class="instructions-header">
+                <h2>游戏说明</h2>
+            </div>
+            <div class="instructions-content">
+                <div class="instruction-section">
+                    <h3>游戏目标</h3>
+                    <p>驾驶RX-78-2高达在太空中战斗，击败敌方扎古机甲。</p>
+                </div>
+                <div class="instruction-section">
+                    <h3>控制方式</h3>
+                    <ul>
+                        <li><strong>WASD</strong> - 移动高达</li>
+                        <li><strong>鼠标移动</strong> - 调整视角</li>
+                        <li><strong>左键点击</strong> - 发射武器</li>
+                        <li><strong>空格</strong> - 跳跃/加速</li>
+                        <li><strong>Shift</strong> - 冲刺</li>
+                    </ul>
+                </div>
+                <div class="instruction-section">
+                    <h3>游戏特点</h3>
+                    <ul>
+                        <li>3D高达驾驶体验</li>
+                        <li>实时太空战斗</li>
+                        <li>逼真的物理引擎</li>
+                        <li>多种武器系统</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部HUD界面 -->
+        <div class="hud-bottom">
+            <div class="hud-element hud-coordinates">
+                <span class="coordinate">X: 42.195</span>
+                <span class="coordinate">Y: 13.114</span>
+                <span class="coordinate">Z: 08.848</span>
+            </div>
+            <div class="hud-element hud-system">WarkAI OS v2.5.0</div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 模态框容器 -->
+    <div id="modalContainer"></div>
+
+    <!-- 脚本 -->
+    <script src="js/hud-clock.js"></script>
+    <script src="js/language-switcher.js"></script>
+    <script src="js/pilot-module.js"></script>
+    <script src="js/startup.js"></script>
+    <script>
+        // 返回首页函数
+        function goHome() {
+            const currentLang = localStorage.getItem('selectedLanguage') || 'zh';
+            if (currentLang === 'zh') {
+                window.location.href = 'index.html';
+            } else if (currentLang === 'en') {
+                window.location.href = 'index-en.html';
+            } else if (currentLang === 'ja') {
+                window.location.href = 'index-ja.html';
+            }
+        }
+    </script>
+</body>
+</html>

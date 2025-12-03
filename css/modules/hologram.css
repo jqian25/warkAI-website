@@ -1,0 +1,355 @@
+/* 全息投影模块 - Hologram Module */
+
+.hologram-container {
+    position: relative;
+    display: inline-block;
+}
+
+.hologram-element {
+    position: relative;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid #00ff88;
+    border-radius: 8px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    animation: hologramFlicker 3s ease-in-out infinite;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 136, 0.3),
+        inset 0 0 20px rgba(0, 255, 136, 0.1);
+}
+
+.hologram-element::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        #00ff88, #00a3ff, #ff0066, #ffaa00, #aa00ff, #00ff88);
+    border-radius: 10px;
+    z-index: -1;
+    animation: hologramBorder 4s linear infinite;
+    opacity: 0.7;
+}
+
+.hologram-element::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        rgba(0, 255, 136, 0.1) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+    border-radius: 8px;
+    animation: hologramScanlines 2s linear infinite;
+    pointer-events: none;
+}
+
+/* 全息闪烁动画 */
+@keyframes hologramFlicker {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    25% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+    50% {
+        opacity: 0.9;
+        transform: scale(0.98);
+    }
+    75% {
+        opacity: 0.85;
+        transform: scale(1.01);
+    }
+}
+
+@keyframes hologramBorder {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 400% 0%;
+    }
+}
+
+@keyframes hologramScanlines {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+/* 全息文字效果 */
+.hologram-text {
+    color: #00ff88;
+    text-shadow: 
+        0 0 10px #00ff88,
+        0 0 20px #00ff88,
+        0 0 30px #00ff88;
+    animation: hologramTextGlow 2s ease-in-out infinite alternate;
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 2px;
+}
+
+.hologram-text.blue {
+    color: #00a3ff;
+    text-shadow: 
+        0 0 10px #00a3ff,
+        0 0 20px #00a3ff,
+        0 0 30px #00a3ff;
+}
+
+.hologram-text.pink {
+    color: #ff0066;
+    text-shadow: 
+        0 0 10px #ff0066,
+        0 0 20px #ff0066,
+        0 0 30px #ff0066;
+}
+
+@keyframes hologramTextGlow {
+    0% {
+        text-shadow: 
+            0 0 10px currentColor,
+            0 0 20px currentColor,
+            0 0 30px currentColor;
+    }
+    100% {
+        text-shadow: 
+            0 0 15px currentColor,
+            0 0 25px currentColor,
+            0 0 35px currentColor,
+            0 0 45px currentColor;
+    }
+}
+
+/* 全息投影面板 */
+.hologram-panel {
+    position: relative;
+    background: rgba(0, 20, 40, 0.8);
+    border: 2px solid #00ff88;
+    border-radius: 12px;
+    padding: 30px;
+    backdrop-filter: blur(15px);
+    animation: hologramPanelFloat 4s ease-in-out infinite;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 136, 0.4),
+        inset 0 0 30px rgba(0, 255, 136, 0.1);
+}
+
+.hologram-panel::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: conic-gradient(
+        from 0deg,
+        #00ff88, #00a3ff, #ff0066, #ffaa00, #aa00ff, #00ff88
+    );
+    border-radius: 15px;
+    z-index: -1;
+    animation: hologramPanelRotate 6s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes hologramPanelFloat {
+    0%, 100% {
+        transform: translateY(0) rotateX(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotateX(2deg);
+    }
+}
+
+@keyframes hologramPanelRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 全息粒子效果 */
+.hologram-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.hologram-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #00ff88;
+    border-radius: 50%;
+    animation: hologramParticleFloat 3s ease-in-out infinite;
+    box-shadow: 0 0 10px #00ff88;
+}
+
+.hologram-particle.blue {
+    background: #00a3ff;
+    box-shadow: 0 0 10px #00a3ff;
+}
+
+.hologram-particle.pink {
+    background: #ff0066;
+    box-shadow: 0 0 10px #ff0066;
+}
+
+@keyframes hologramParticleFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(100%) scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(0%) scale(0);
+    }
+}
+
+/* 日系动漫风格全息效果 */
+.anime-hologram {
+    position: relative;
+    background: linear-gradient(135deg, 
+        rgba(255, 182, 193, 0.2) 0%,
+        rgba(135, 206, 250, 0.2) 25%,
+        rgba(144, 238, 144, 0.2) 50%,
+        rgba(255, 218, 185, 0.2) 75%,
+        rgba(221, 160, 221, 0.2) 100%);
+    border: 2px solid;
+    border-image: linear-gradient(45deg, 
+        #FFB6C1, #87CEEB, #90EE90, #FFDAB9, #DDA0DD) 1;
+    border-radius: 15px;
+    padding: 25px;
+    backdrop-filter: blur(12px);
+    animation: animeHologramGlow 3s ease-in-out infinite;
+    box-shadow: 
+        0 0 25px rgba(255, 182, 193, 0.4),
+        0 0 50px rgba(135, 206, 250, 0.3),
+        inset 0 0 25px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes animeHologramGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 25px rgba(255, 182, 193, 0.4),
+            0 0 50px rgba(135, 206, 250, 0.3),
+            inset 0 0 25px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 35px rgba(255, 182, 193, 0.6),
+            0 0 70px rgba(135, 206, 250, 0.5),
+            inset 0 0 35px rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* 全息投影干扰效果 */
+.hologram-glitch {
+    position: relative;
+    animation: hologramGlitch 5s ease-in-out infinite;
+}
+
+@keyframes hologramGlitch {
+    0%, 90%, 100% {
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+    }
+    91% {
+        transform: translate(-2px, 1px);
+        filter: hue-rotate(90deg);
+    }
+    92% {
+        transform: translate(2px, -1px);
+        filter: hue-rotate(180deg);
+    }
+    93% {
+        transform: translate(-1px, 2px);
+        filter: hue-rotate(270deg);
+    }
+    94% {
+        transform: translate(1px, -2px);
+        filter: hue-rotate(360deg);
+    }
+    95% {
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+    }
+}
+
+/* 全息投影边框动画 */
+.hologram-border-animation {
+    position: relative;
+    overflow: hidden;
+}
+
+.hologram-border-animation::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent, 
+        rgba(0, 255, 136, 0.4), 
+        transparent, 
+        rgba(0, 163, 255, 0.4),
+        transparent,
+        rgba(255, 0, 102, 0.4),
+        transparent
+    );
+    animation: hologramBorderSpin 4s linear infinite;
+    z-index: -1;
+}
+
+@keyframes hologramBorderSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .hologram-element {
+        padding: 15px;
+    }
+    
+    .hologram-panel {
+        padding: 20px;
+    }
+    
+    .anime-hologram {
+        padding: 15px;
+    }
+    
+    .hologram-particle {
+        width: 2px;
+        height: 2px;
+    }
+}

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Control Gundam - WarkAI</title>
+    <link rel="stylesheet" href="css/gundam-style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            margin: 0 0 10px 0;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+        
+        .header p {
+            font-size: 18px;
+            color: #00ffff;
+            margin: 10px 0;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .gundam-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .gundam-section h2 {
+            color: #00ffff;
+            margin-bottom: 20px;
+        }
+        
+        .gundam-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+        
+        .camera-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 0, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+        }
+        
+        .camera-section h2 {
+            color: #ff00ff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        #gestureCanvas {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            background: #000;
+        }
+        
+        #gestureVideo {
+            display: none;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00ffff, #0088ff);
+            color: #000;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff0066, #ff6600);
+            color: #fff;
+        }
+        
+        .btn-danger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
+        }
+        
+        .gesture-guide {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(0, 255, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .gesture-guide h2 {
+            color: #00ff00;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .gesture-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .gesture-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .gesture-item .emoji {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .gesture-item .name {
+            font-size: 18px;
+            color: #00ff00;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .gesture-item .action {
+            font-size: 14px;
+            color: #00ffff;
+        }
+        
+        .stats {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 0, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stats h3 {
+            color: #ffff00;
+            margin-bottom: 15px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .stat-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .stat-item .value {
+            font-size: 32px;
+            color: #ffff00;
+            font-weight: bold;
+        }
+        
+        .stat-item .label {
+            font-size: 14px;
+            color: #fff;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .gesture-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Gesture Control Gundam</h1>
+            <p>Real-time Gesture Recognition with MediaPipe</p>
+            <p>Control RX-78-2 Gundam Actions with Hand Gestures</p>
+        </div>
+        
+        <div class="gesture-guide">
+            <h2>📋 Gesture Guide</h2>
+            <div class="gesture-list">
+                <div class="gesture-item">
+                    <div class="emoji">✊</div>
+                    <div class="name">Fist</div>
+                    <div class="action">→ Fire Weapon</div>
+                </div>
+                <div class="gesture-item">
+                    <div class="emoji">✋</div>
+                    <div class="name">Open Palm</div>
+                    <div class="action">→ Quick Dodge</div>
+                </div>
+                <div class="gesture-item">
+                    <div class="emoji">☝️</div>
+                    <div class="name">Point Up</div>
+                    <div class="action">→ Jump Action</div>
+                </div>
+                <div class="gesture-item">
+                    <div class="emoji">👍</div>
+                    <div class="name">Thumbs Up</div>
+                    <div class="action">→ Beam Sword Attack</div>
+                </div>
+                <div class="gesture-item">
+                    <div class="emoji">✌️</div>
+                    <div class="name">Victory Sign</div>
+                    <div class="action">→ Spin Action</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="gundam-section">
+                <h2>🤖 RX-78-2 Gundam</h2>
+                <img src="images/gundam-animations/shoot/frame_00.png" alt="RX-78-2 Gundam" class="gundam-image" id="gundamImage">
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="testAnimation('shoot')">Test Fire</button>
+                    <button class="btn btn-primary" onclick="testAnimation('dodge')">Test Dodge</button>
+                    <button class="btn btn-primary" onclick="testAnimation('jump')">Test Jump</button>
+                </div>
+            </div>
+            
+            <div class="camera-section">
+                <h2>📹 Camera Gesture Recognition</h2>
+                <video id="gestureVideo" autoplay playsinline></video>
+                <canvas id="gestureCanvas" width="640" height="480"></canvas>
+                <div class="controls">
+                    <button class="btn btn-primary" id="startBtn" onclick="startGesture()">Start Camera</button>
+                    <button class="btn btn-danger" id="stopBtn" onclick="stopGesture()" style="display:none;">Stop Recognition</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <h3>📊 Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="value" id="animationsPlayed">0</div>
+                    <div class="label">Animations Played</div>
+                </div>
+                <div class="stat-item">
+                    <div class="value" id="gesturesDetected">0</div>
+                    <div class="label">Gestures Detected</div>
+                </div>
+                <div class="stat-item">
+                    <div class="value" id="framesProcessed">0</div>
+                    <div class="label">Frames Processed</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/gundam-animation-v2.js"></script>
+    <script src="js/gesture-control.js"></script>
+    <script>
+        let gestureControlInstance = null;
+        let statsInterval = null;
+        
+        // Test animation
+        function testAnimation(animName) {
+            playGundamAnimation(animName);
+            updateStats();
+        }
+        
+        // Start gesture recognition
+        async function startGesture() {
+            const startBtn = document.getElementById('startBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            
+            startBtn.disabled = true;
+            startBtn.textContent = 'Initializing...';
+            
+            try {
+                // Initialize gesture control
+                gestureControlInstance = await initGestureControl({
+                    showVideo: true,
+                    showLandmarks: true,
+                    confidenceThreshold: 0.6
+                });
+                
+                // Wait for MediaPipe to load
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Start camera
+                const success = await startGestureWebcam('gestureVideo', 'gestureCanvas');
+                
+                if (success) {
+                    startBtn.style.display = 'none';
+                    stopBtn.style.display = 'inline-block';
+                    
+                    // Start updating statistics
+                    statsInterval = setInterval(updateStats, 1000);
+                    
+                    alert('✓ Gesture recognition started!\n\nPlace your hand in front of the camera and make gestures to control Gundam.');
+                } else {
+                    throw new Error('Camera startup failed');
+                }
+            } catch (error) {
+                console.error('Startup failed:', error);
+                alert('Startup failed: ' + error.message + '\n\nPlease ensure camera permissions are granted.');
+                startBtn.disabled = false;
+                startBtn.textContent = 'Start Camera';
+            }
+        }
+        
+        // Stop gesture recognition
+        function stopGesture() {
+            stopGestureWebcam();
+            
+            const startBtn = document.getElementById('startBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            
+            startBtn.style.display = 'inline-block';
+            startBtn.disabled = false;
+            stopBtn.style.display = 'none';
+            
+            if (statsInterval) {
+                clearInterval(statsInterval);
+            }
+            
+            alert('✓ Gesture recognition stopped');
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const animStats = getGundamAnimationStats();
+            const gestureStats = getGestureStats();
+            
+            if (animStats) {
+                document.getElementById('animationsPlayed').textContent = animStats.animationsPlayed || 0;
+            }
+            
+            if (gestureStats) {
+                document.getElementById('gesturesDetected').textContent = gestureStats.gesturesDetected || 0;
+                document.getElementById('framesProcessed').textContent = gestureStats.framesProcessed || 0;
+            }
+        }
+        
+        // Initialize after page load
+        window.addEventListener('load', () => {
+            console.log('✓ Gesture control demo page loaded');
+            updateStats();
+        });
+    </script>
+</body>
+</html>

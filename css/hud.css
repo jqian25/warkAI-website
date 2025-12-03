@@ -1,0 +1,427 @@
+/* ==========================================
+   HUD (Heads-Up Display) 界面样式
+   包括顶部HUD、高达导航菜单等
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* 颜色变量 */
+    --accent-blue: #00a3ff;
+    --accent-yellow: #ffd700;
+    --accent-red: #ff3c3c;
+    --bg-primary: #020a14;
+    --bg-secondary: #041020;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0a0a0;
+    --blue-glow: 0 0 10px rgba(0, 163, 255, 0.7);
+    --yellow-glow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+/* ==========================================
+   主容器和基础样式
+   ========================================== */
+
+.main-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+}
+
+/* ==========================================
+   顶部HUD界面
+   ========================================== */
+
+.hud-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, rgba(4, 16, 32, 0.95) 0%, rgba(4, 16, 32, 0.8) 100%);
+    border-bottom: 2px solid var(--accent-blue);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 0 20px rgba(0, 163, 255, 0.3);
+}
+
+.hud-left,
+.hud-center,
+.hud-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.hud-element {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent-blue);
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.hud-time {
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 0 10px var(--accent-blue);
+}
+
+.status-online {
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.hud-energy {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.energy-bar {
+    width: 100px;
+    height: 8px;
+    background-color: rgba(0, 163, 255, 0.2);
+    border: 1px solid var(--accent-blue);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.energy-level {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-yellow));
+    box-shadow: var(--blue-glow);
+}
+
+/* ==========================================
+   标题区域
+   ========================================== */
+
+header {
+    margin-top: 80px;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.main-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent-blue);
+    text-shadow: 0 0 20px var(--accent-blue);
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+/* ==========================================
+   高达导航菜单
+   ========================================== */
+
+.gundam-navigator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 60px 0;
+    position: relative;
+    z-index: 100;
+}
+
+.gundam-container {
+    position: relative;
+    width: 90vw;
+    height: 70vh;
+    max-width: 1200px;
+    max-height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.gundam-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 30px rgba(0, 163, 255, 0.5));
+}
+
+/* 高达部分 */
+.gundam-part {
+    position: absolute;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--accent-blue);
+    border-radius: 5px;
+    background-color: rgba(0, 163, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 163, 255, 0.3);
+}
+
+.gundam-part:hover {
+    filter: brightness(1.3);
+    box-shadow: 0 0 20px var(--accent-blue);
+    background-color: rgba(0, 163, 255, 0.2);
+}
+
+.gundam-part:hover .part-highlight {
+    opacity: 1;
+}
+
+.gundam-part:hover .part-label {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gundam-part .part-label {
+    opacity: 1 !important;
+    display: block !important;
+}
+
+/* 头部 */
+.gundam-part.head {
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+}
+
+/* 核心/躯干 */
+.gundam-part.core {
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+}
+
+/* 手臂 */
+.gundam-part.arms {
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 80px;
+}
+
+/* 腿部 */
+.gundam-part.legs {
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+}
+
+/* 平台 */
+.gundam-part.platform {
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 50px;
+}
+
+.part-highlight {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--accent-blue);
+    border-radius: 4px;
+    box-shadow: inset 0 0 10px var(--accent-blue), 0 0 15px var(--accent-blue);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.target-reticle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px dashed var(--accent-yellow);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.part-label {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    white-space: nowrap;
+    background-color: rgba(4, 16, 32, 0.9);
+    border: 1px solid var(--accent-blue);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--accent-blue);
+    opacity: 0;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px var(--accent-blue);
+}
+
+/* ==========================================
+   操作说明
+   ========================================== */
+
+.instruction-text {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.instruction-line {
+    margin: 10px 0;
+}
+
+/* ==========================================
+   驾驶舱终端
+   ========================================== */
+
+.cockpit-terminal {
+    max-width: 800px;
+    margin: 60px auto;
+    background-color: rgba(4, 16, 32, 0.8);
+    border: 2px solid var(--accent-blue);
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: inset 0 0 20px rgba(0, 163, 255, 0.1), 0 0 30px rgba(0, 163, 255, 0.3);
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--accent-blue);
+}
+
+.terminal-title {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent-blue);
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.terminal-status {
+    color: #00ff00;
+    font-size: 12px;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.terminal-content {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--accent-blue);
+    line-height: 1.8;
+    max-height: none;
+    min-height: 150px;
+    overflow-y: visible;
+    overflow-x: hidden;
+    width: 100%;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.terminal-line {
+    margin: 5px 0;
+    text-shadow: 0 0 5px var(--accent-blue);
+}
+
+.terminal-cursor {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ==========================================
+   响应式设计
+   ========================================== */
+
+@media (max-width: 768px) {
+    .hud-top {
+        height: 60px;
+        padding: 0 10px;
+    }
+
+    .hud-left,
+    .hud-center,
+    .hud-right {
+        gap: 15px;
+    }
+
+    .hud-element {
+        font-size: 12px;
+    }
+
+    .main-title {
+        font-size: 32px;
+    }
+
+    .gundam-container {
+        width: 300px;
+        height: 400px;
+    }
+
+    header {
+        margin-top: 80px;
+        padding: 20px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hud-top {
+        height: 50px;
+        padding: 0 8px;
+        gap: 8px;
+    }
+
+    .hud-left,
+    .hud-center,
+    .hud-right {
+        gap: 8px;
+    }
+
+    .hud-element {
+        font-size: 10px;
+    }
+    
+    .hud-time {
+        font-size: 14px;
+    }
+    
+    .energy-bar {
+        width: 60px;
+        height: 6px;
+    }
+
+    .main-title {
+        font-size: 20px;
+    }
+
+    .gundam-container {
+        width: 150px;
+        height: 250px;
+    }
+    
+    header {
+        margin-top: 60px;
+        padding: 15px 8px;
+    }
+}

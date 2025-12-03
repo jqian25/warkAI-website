@@ -1,0 +1,329 @@
+/* 数据光流模块 - Data Stream Module */
+
+.data-stream-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.data-stream {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(180deg, 
+        transparent 0%,
+        #00ff88 10%,
+        #00a3ff 30%,
+        #ff0066 50%,
+        #ffaa00 70%,
+        #aa00ff 90%,
+        transparent 100%);
+    border-radius: 2px;
+    animation: streamFlow 2s linear infinite;
+    box-shadow: 0 0 10px currentColor;
+}
+
+.data-stream.horizontal {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        #00ff88 10%,
+        #00a3ff 30%,
+        #ff0066 50%,
+        #ffaa00 70%,
+        #aa00ff 90%,
+        transparent 100%);
+    animation: streamFlowHorizontal 3s linear infinite;
+}
+
+/* 数据流动画 */
+@keyframes streamFlow {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px));
+        opacity: 0;
+    }
+}
+
+@keyframes streamFlowHorizontal {
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(100vw + 100px));
+        opacity: 0;
+    }
+}
+
+/* 数据包 */
+.data-packet {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #00ff88;
+    border-radius: 2px;
+    animation: packetMove 4s ease-in-out infinite;
+    box-shadow: 
+        0 0 10px #00ff88,
+        inset 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.data-packet.blue {
+    background: #00a3ff;
+    box-shadow: 
+        0 0 10px #00a3ff,
+        inset 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.data-packet.pink {
+    background: #ff0066;
+    box-shadow: 
+        0 0 10px #ff0066,
+        inset 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.data-packet.orange {
+    background: #ffaa00;
+    box-shadow: 
+        0 0 10px #ffaa00,
+        inset 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes packetMove {
+    0% {
+        transform: translateX(-50px) scale(0);
+        opacity: 0;
+    }
+    10% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    90% {
+        transform: translateX(calc(100vw - 50px)) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100vw) scale(0);
+        opacity: 0;
+    }
+}
+
+/* 数据螺旋 */
+.data-spiral {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    border-top-color: #00ff88;
+    border-right-color: #00a3ff;
+    border-bottom-color: #ff0066;
+    border-left-color: #ffaa00;
+    animation: spiralRotate 3s linear infinite;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 136, 0.5),
+        inset 0 0 20px rgba(0, 163, 255, 0.3);
+}
+
+.data-spiral::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    border-top-color: #aa00ff;
+    border-right-color: #ff0066;
+    border-bottom-color: #00a3ff;
+    border-left-color: #00ff88;
+    transform: translate(-50%, -50%);
+    animation: spiralRotateReverse 2s linear infinite;
+}
+
+@keyframes spiralRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spiralRotateReverse {
+    0% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+}
+
+/* 数据波形 */
+.data-waveform {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg,
+        #00ff88 0%,
+        #00a3ff 25%,
+        #ff0066 50%,
+        #ffaa00 75%,
+        #aa00ff 100%);
+    animation: waveformPulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 15px currentColor;
+}
+
+.data-waveform::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: inherit;
+    opacity: 0.5;
+    filter: blur(2px);
+}
+
+@keyframes waveformPulse {
+    0%, 100% {
+        transform: scaleY(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scaleY(3);
+        opacity: 1;
+    }
+}
+
+/* 数据矩阵 */
+.data-matrix {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #00ff88;
+    text-shadow: 0 0 10px #00ff88;
+    animation: matrixFall 5s linear infinite;
+    white-space: nowrap;
+}
+
+.data-matrix.blue {
+    color: #00a3ff;
+    text-shadow: 0 0 10px #00a3ff;
+}
+
+.data-matrix.pink {
+    color: #ff0066;
+    text-shadow: 0 0 10px #ff0066;
+}
+
+@keyframes matrixFall {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px));
+        opacity: 0;
+    }
+}
+
+/* 日系动漫风格数据流 */
+.anime-data-stream {
+    position: absolute;
+    width: 3px;
+    height: 80px;
+    background: linear-gradient(180deg,
+        transparent 0%,
+        rgba(255, 182, 193, 0.8) 20%,
+        rgba(135, 206, 250, 0.9) 40%,
+        rgba(144, 238, 144, 1) 60%,
+        rgba(255, 218, 185, 0.8) 80%,
+        transparent 100%);
+    border-radius: 3px;
+    animation: animeStreamFlow 2.5s ease-in-out infinite;
+    box-shadow: 
+        0 0 15px currentColor,
+        0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes animeStreamFlow {
+    0% {
+        transform: translateY(-80px) scale(0.5);
+        opacity: 0;
+    }
+    20% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(calc(100vh - 80px)) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .data-stream {
+        width: 1px;
+        height: 50px;
+    }
+    
+    .data-stream.horizontal {
+        width: 50px;
+        height: 1px;
+    }
+    
+    .data-packet {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .data-spiral {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .data-spiral::before {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .data-matrix {
+        font-size: 8px;
+    }
+}

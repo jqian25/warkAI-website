@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - 系统登录</title>
+    <link rel="stylesheet" href="css/gundam-style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/transform-animations.css">
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script src="js/navigation.js"></script>
+</head>
+<body class="login-body">
+    <!-- 启动序列覆盖层 -->
+    <div id="bootSequence" class="boot-sequence active">
+        <div class="boot-container">
+            <div class="boot-logo">
+                <img src="images/warkai_logo.png" alt="WarkAI Logo">
+                <div class="logo-glow"></div>
+            </div>
+            <div class="boot-text">
+                <div class="boot-title">WarkAI OS v2.5.0</div>
+                <div class="boot-subtitle">人机智能新纪元</div>
+                <div class="boot-version">Build 20250105.2300</div>
+            </div>
+            <div class="boot-progress-container">
+                <div class="progress-label">系统启动进度</div>
+                <div class="progress-bar-container">
+                    <div id="bootProgress" class="boot-progress"></div>
+                    <div class="progress-percentage" id="progressPercentage">0%</div>
+                </div>
+            </div>
+            <div class="boot-status-container">
+                <div class="boot-status-item">
+                    <span class="status-icon" id="systemInitIcon">⏳</span>
+                    <span class="status-label">系统初始化</span>
+                    <span class="status-value" id="systemInit">等待中...</span>
+                </div>
+                <div class="boot-status-item">
+                    <span class="status-icon" id="coreModulesIcon">⏳</span>
+                    <span class="status-label">核心模块加载</span>
+                    <span class="status-value" id="coreModules">等待中...</span>
+                </div>
+                <div class="boot-status-item">
+                    <span class="status-icon" id="securityProtocolIcon">⏳</span>
+                    <span class="status-label">安全协议激活</span>
+                    <span class="status-value" id="securityProtocol">等待中...</span>
+                </div>
+                <div class="boot-status-item">
+                    <span class="status-icon" id="uiPreparationIcon">⏳</span>
+                    <span class="status-label">用户界面准备</span>
+                    <span class="status-value" id="uiPreparation">等待中...</span>
+                </div>
+                <div class="boot-status-item">
+                    <span class="status-icon" id="authSystemIcon">⏳</span>
+                    <span class="status-label">认证系统就绪</span>
+                    <span class="status-value" id="authSystem">等待中...</span>
+                </div>
+            </div>
+            <div class="boot-scan-lines"></div>
+        </div>
+    </div>
+
+    <!-- 主登录容器 -->
+    <div id="loginContainer" class="login-container">
+        <!-- HUD顶部 -->
+        <div class="hud-top">
+            <div class="hud-left">
+                <div class="hud-logo">
+                    <img src="images/warkai_dark_logo.png" alt="WarkAI Logo">
+                </div>
+                <div class="hud-title">WarkAI OS v2.5.0</div>
+            </div>
+            <div class="hud-center">
+                <div class="hud-status">系统状态: <span class="status-online">认证模式</span></div>
+            </div>
+            <div class="hud-right">
+                <div id="hudTime" class="hud-time">00:00:00</div>
+                <!-- 语言切换器 -->
+                <div class="language-switcher">
+                    <button class="lang-button active" data-lang="zh">中文</button>
+                    <button class="lang-button" data-lang="en">English</button>
+                    <button class="lang-button" data-lang="ja">日本語</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 返回按钮 -->
+        <div id="backButton" class="back-button">
+            <div class="back-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </div>
+            <span class="back-text">返回主控制台</span>
+        </div>
+
+        <!-- 登录主体 -->
+        <div class="login-main">
+            <div class="login-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <div class="title-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <circle cx="12" cy="16" r="1"></circle>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                        <h2>系统认证</h2>
+                    </div>
+                    <div class="panel-subtitle">请输入您的凭据以访问WarkAI系统</div>
+                </div>
+
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="username" class="form-label">用户名</label>
+                        <div class="input-container">
+                            <div class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <input type="text" id="username" name="username" class="form-input" placeholder="输入用户名" required>
+                            <div class="input-scan-line"></div>
+                            <div class="input-status" id="usernameStatus"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">密码</label>
+                        <div class="input-container">
+                            <div class="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <input type="password" id="password" name="password" class="form-input" placeholder="输入密码" required>
+                            <div class="input-scan-line"></div>
+                            <div class="input-status" id="passwordStatus"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-label">记住登录状态</span>
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="loginButton" class="login-button">
+                            <div class="button-content">
+                                <span class="button-text">启动系统</span>
+                                <div class="button-loader" id="buttonLoader"></div>
+                            </div>
+                            <div class="button-transform-effect"></div>
+                        </button>
+                    </div>
+
+                    <div class="form-footer">
+                        <a href="#" class="forgot-password">忘记密码？</a>
+                        <span class="separator">|</span>
+                        <a href="#" class="register-link">注册新账户</a>
+                    </div>
+                </form>
+
+                <!-- 错误提示 -->
+                <div id="errorMessage" class="error-message">
+                    <div class="error-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                    </div>
+                    <div class="error-text" id="errorText"></div>
+                    <div class="error-close" id="errorClose">×</div>
+                </div>
+
+                <!-- 成功提示 -->
+                <div id="successMessage" class="success-message">
+                    <div class="success-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="success-text">认证成功，正在进入系统...</div>
+                </div>
+            </div>
+
+            <!-- 系统信息面板 -->
+            <div class="system-info-panel">
+                <div class="info-header">
+                    <h3>系统信息</h3>
+                </div>
+                <div class="info-content">
+                    <div class="info-item">
+                        <span class="info-label">系统版本:</span>
+                        <span class="info-value">WarkAI OS v2.5.0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">构建版本:</span>
+                        <span class="info-value">Build 20250105.2300</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">安全级别:</span>
+                        <span class="info-value security-high">高级</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">在线用户:</span>
+                        <span class="info-value" id="onlineUsers">1,247</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">系统负载:</span>
+                        <span class="info-value system-load">
+                            <div class="load-bar">
+                                <div class="load-level" style="width: 35%"></div>
+                            </div>
+                            <span>35%</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部HUD界面 -->
+        <div class="hud-bottom">
+            <div class="hud-left">
+                <div class="hud-coordinates">
+                    <span class="coordinate">X: 42.195</span>
+                    <span class="coordinate">Y: 13.114</span>
+                    <span class="coordinate">Z: 08.848</span>
+                </div>
+            </div>
+            <div class="hud-center">
+                <div class="energy-display">
+                    <div class="energy-label">能量</div>
+                    <div class="energy-bar">
+                        <div class="energy-level"></div>
+                    </div>
+                    <div class="energy-value">100%</div>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="hud-info">WarkAI © 2025 | 人机智能新纪元</div>
+            </div>
+        </div>
+
+        <!-- 背景扫描线 -->
+        <div class="background-scan-lines"></div>
+        
+        <!-- 六边形背景 -->
+        <div class="hex-background">
+            <div class="hex hex-1"></div>
+            <div class="hex hex-2"></div>
+            <div class="hex hex-3"></div>
+            <div class="hex hex-4"></div>
+            <div class="hex hex-5"></div>
+            <div class="hex hex-6"></div>
+        </div>
+    </div>
+
+    <!-- 变形过渡动画覆盖层 -->
+    <div class="transform-overlay" id="transformOverlay">
+        <div class="transform-container">
+            <div class="transform-part" id="transformPart"></div>
+            <div class="transform-text" id="transformText">返回主控制台...</div>
+            <div class="transform-details">
+                <div class="detail-item">
+                    <div class="detail-label">系统</div>
+                    <div class="detail-value">WarkAI OS</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">模式</div>
+                    <div class="detail-value" id="transformMode">导航模式</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">状态</div>
+                    <div class="detail-value">变形序列激活</div>
+                </div>
+            </div>
+            <div class="transform-progress-container">
+                <div class="transform-progress" id="transformProgress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/data-visualization.js"></script>
+</body>
+</html>

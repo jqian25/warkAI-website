@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - 人機知能の新時代</title>
+    <link rel="stylesheet" href="css/video-player.css">
+    <link rel="stylesheet" href="css/gundam-style.css">
+    <link rel="stylesheet" href="css/hud.css">
+    <link rel="preload" href="css/pilot-module.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="css/game-page.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="css/features-menu.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="css/ai-assistant.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="js/startup.js"></script>
+</head>
+<body>
+    <!-- 起動シーケンスオーバーレイ -->
+    <div class="startup-sequence" id="startupSequence">
+        <div class="startup-container">
+            <div class="startup-logo">
+                <img src="images/warkai_logo.png" alt="WarkAI Logo" class="logo-startup">
+            </div>
+            <div class="startup-progress-container">
+                <div class="startup-progress" id="startupProgress"></div>
+            </div>
+            <div class="startup-text" id="startupText">システム起動中...</div>
+            <div class="startup-details" id="startupDetails">
+                <div class="detail-line">コアシステム初期化中...</div>
+                <div class="detail-line">AIエンジン読み込み中...</div>
+                <div class="detail-line">ARシステム校正中...</div>
+                <div class="detail-line">ロボット制御モジュール接続中...</div>
+                <div class="detail-line">WarkAI OS起動中...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- メインコンテンツエリア -->
+    <div class="main-container" id="mainContainer">
+        <!-- トップHUDインターフェース -->
+        <div class="hud-top">
+            <div class="hud-left">
+                <div class="hud-element hud-time" id="hudTime">00:00:00</div>
+                <div class="hud-element hud-status">システム状態: <span class="status-online">オンライン</span></div>
+            </div>
+            
+            <div class="hud-center">
+                <div class="hud-element hud-energy">
+                    <div class="energy-label">エネルギー</div>
+                    <div class="energy-bar">
+                        <div class="energy-level"></div>
+                    </div>
+                    <div class="energy-percentage">100%</div>
+                </div>
+            </div>
+            
+            <div class="hud-right">
+                <!-- 言語スイッチャー -->
+                <div class="language-switcher">
+                    <div class="lang-current" id="langCurrent">
+                        <span class="lang-flag">🇯🇵</span>
+                        <span class="lang-name">日本語</span>
+                        <span class="lang-arrow">▼</span>
+                    </div>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <div class="lang-option" onclick="switchLanguage('zh')">
+                            <span class="lang-flag">🇨🇳</span>
+                            <span class="lang-name">中国語</span>
+                        </div>
+                        <div class="lang-option" onclick="switchLanguage('en')">
+                            <span class="lang-flag">🇺🇸</span>
+                            <span class="lang-name">English</span>
+                        </div>
+                        <div class="lang-option" onclick="switchLanguage('ja')">
+                            <span class="lang-flag">🇯🇵</span>
+                            <span class="lang-name">日本語</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 機能メニュー -->
+                <div class="features-menu">
+                    <div class="features-trigger" id="featuresTrigger">
+                        <span class="features-icon">⚙️</span>
+                        <span class="features-text">機能</span>
+                        <span class="features-arrow">▼</span>
+                    </div>
+                    <div class="features-dropdown" id="featuresDropdown">
+                        <div class="menu-item" onclick="navigateToGame()">
+                            <span class="menu-icon">🎮</span>
+                            <span class="menu-text">ガンダムゲーム</span>
+                        </div>
+                        <div class="menu-item" onclick="navigateToGesture()">
+                            <span class="menu-icon">👋</span>
+                            <span class="menu-text">ジェスチャー控制</span>
+                        </div>
+                        <div class="menu-item" onclick="openAIAssistant()">
+                            <span class="menu-icon">🤖</span>
+                            <span class="menu-text">AIアシスタント</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- パイロットモジュール -->
+                <div class="pilot-module">
+                    <div class="pilot-trigger" id="pilotTrigger">
+                        <div class="pilot-avatar">
+                            <div class="avatar-ring"></div>
+                            <div class="avatar-icon">👤</div>
+                        </div>
+                        <span class="pilot-text">パイロットモジュール</span>
+                        <span class="pilot-arrow">▼</span>
+                    </div>
+                    <div class="pilot-dropdown" id="pilotDropdown">
+                        <div class="dropdown-header">
+                            <div class="pilot-info">
+                                <div class="pilot-name" id="pilotName">ゲストパイロット</div>
+                                <div class="pilot-status" id="pilotStatus">未認証</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu                            <div class="menu-item" onclick="showLogin()">
+                                <span class="menu-icon">🔐</span>
+                                <span class="menu-text">ログインシステム</span>
+                            </div>
+                            <div class="menu-item" onclick="showProfile()">
+                                <span class="menu-icon">👤</span>
+                                <span class="menu-text">プロフィール</span>
+                            </div>
+                            <div class="menu-item" onclick="showFeedback()">
+                                <span class="menu-icon">💬</span>
+                                <span class="menu-text">フィードバック</span>
+                            </div>
+                            <div class="menu-item" onclick="showCooperation()">
+                                <span class="menu-icon">🤝</span>
+                                <span class="menu-text">提携</span>
+                            </div>                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- タイトルエリア -->
+        <header>
+            <h1 class="main-title">WarkAI: 人機知能の新時代</h1>
+            <div class="subtitle">AI、AR、ロボティクスを融合し、未来の生産性を再構筑</div>
+        </header>
+
+        <!-- ビデオプレーヤー -->
+        <div class="video-player-container" id="videoPlayerContainer">
+            <video class="intro-video" id="introVideo" playsinline autoplay muted>
+                <source src="assets/intro-video-no-watermark.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+
+        <!-- ガンダムロボットナビゲーションエリア -->
+        <div class="gundam-navigator" id="gundamNavigator" style="display: none;">
+            <div class="gundam-container">
+                <img src="images/gundam_mecha.png" alt="Gundam Navigator" class="gundam-image">
+                
+                <div class="gundam-part head" id="navHead" data-target="pages/team-ja.html">
+                    <div class="part-highlight"></div>
+                    <div class="target-reticle"></div>
+                    <div class="part-label">チーム紹介とビジョン</div>
+                </div>
+                
+                <div class="gundam-part core" id="navCore" data-target="pages/summary-ja.html">
+                    <div class="part-highlight"></div>
+                    <div class="target-reticle"></div>
+                    <div class="part-label">エグゼクティブサマリーとビジネスモデル</div>
+                </div>
+                
+                <div class="gundam-part arms" id="navArms" data-target="pages/products-ja.html">
+                    <div class="part-highlight"></div>
+                    <div class="target-reticle"></div>
+                    <div class="part-label">コア製品ライン</div>
+                </div>
+                
+                <div class="gundam-part legs" id="navLegs" data-target="pages/market-ja.html">
+                    <div class="part-highlight"></div>
+                    <div class="target-reticle"></div>
+                    <div class="part-label">市場応用とロードマップ</div>
+                </div>
+                
+                <div class="gundam-part platform" id="navPlatform" data-target="pages/technology-ja.html">
+                    <div class="part-highlight"></div>
+                    <div class="target-reticle"></div>
+                    <div class="part-label">WarkAI OSコア技術とAIプラットフォーム</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作指示 -->
+        <div class="instruction-text">
+
+        </div>
+
+        <!-- コックピットターミナル -->
+        <div class="cockpit-terminal">
+            <div class="terminal-header">
+                <div class="terminal-title">GUNDAM-TERMINAL</div>
+                <div class="terminal-status">ACTIVE</div>
+            </div>
+            <div class="terminal-content" id="terminalContent">
+                <div class="terminal-line">// WarkAI OS v2.5.0 起動完了</div>
+                <div class="terminal-line">// おかえりなさい、パイロット</div>
+                <div class="terminal-line">// メカ状態: 最適</div>
+                <div class="terminal-line">// ミッション概要: WarkAIビジネスプラン探索</div>
+                <div class="terminal-line">// 表示するモジュールを選択してください</div>
+                <div class="terminal-line terminal-cursor">_</div>
+            </div>
+        </div>
+
+        <!-- ボトムHUDインターフェース -->
+        <div class="hud-bottom">
+            <div class="hud-element hud-coordinates">
+                <span class="coordinate">X: 42.195</span>
+                <span class="coordinate">Y: 13.114</span>
+                <span class="coordinate">Z: 08.848</span>
+            </div>
+            <div class="hud-element hud-system">WarkAI OS v2.5.0</div>
+        </div>
+
+        <!-- フッター -->
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 変形トランジションアニメーションオーバーレイ -->
+    <div class="transform-overlay" id="transformOverlay">
+        <div class="transform-container">
+            <div class="transform-part" id="transformPart"></div>
+            <div class="transform-text" id="transformText">変形中...</div>
+            <div class="transform-details">
+                <div class="detail-item">
+                    <div class="detail-label">システム</div>
+                    <div class="detail-value">WarkAI OS</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">モード</div>
+                    <div class="detail-value" id="transformMode">標準モード</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">状態</div>
+                    <div class="detail-value">変形シーケンス起動</div>
+                </div>
+            </div>
+            <div class="transform-progress-container">
+                <div class="transform-progress" id="transformProgress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ユーザーパネルモーダル -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container" id="modalContainer">
+            <!-- 動的コンテンツがここに挿入されます -->
+        </div>
+    </div>
+
+    <script src="js/test-account.js"></script>
+    <script src="js/hud-clock.js"></script>
+    <script src="js/language-switcher.js"></script>
+    <script src="js/pilot-module-ja.js"></script>
+    <script src="js/login-module.js"></script>
+    <script src="js/features-menu.js"></script>
+    <script src="js/ai-llm-engine.js"></script>
+    <script src="js/ai-assistant.js"></script>
+    <script src="js/mem0-storage.js"></script>
+    <script src="js/video-player-control.js"></script>
+    <script src="js/text-menu-handler.js"></script>
+    
+    <!-- Apply Gundam menu item styles -->
+    <script>
+    function applyGundamPartStyles() {
+        const gundamParts = document.querySelectorAll(".gundam-part");
+        
+        if (gundamParts.length === 0) {
+            console.log("[Inline Gundam] メニュー項目がまだ読み込まれていません、再試行中...");
+            setTimeout(applyGundamPartStyles, 500);
+            return;
+        }
+        
+        gundamParts.forEach((part) => {
+            part.style.border = "2px solid rgb(0, 163, 255)";
+            part.style.backgroundColor = "rgba(0, 163, 255, 0.15)";
+            part.style.boxShadow = "0 0 15px rgba(0, 163, 255, 0.5)";
+            part.style.zIndex = "100";
+            
+            const label = part.querySelector(".part-label");
+            if (label) {
+                label.style.opacity = "1";
+                label.style.display = "block";
+                label.style.visibility = "visible";
+                label.style.color = "rgb(0, 163, 255)";
+                label.style.fontSize = "0.85rem";
+                label.style.zIndex = "101";
+            }
+        });
+        
+        console.log("[Inline Gundam] メニュー項目のスタイルが正常に適用されました");
+    }
+    
+    document.addEventListener("DOMContentLoaded", applyGundamPartStyles);
+    window.addEventListener("load", applyGundamPartStyles);
+    setTimeout(applyGundamPartStyles, 1000);
+    setTimeout(applyGundamPartStyles, 2000);
+    setTimeout(applyGundamPartStyles, 3000);
+    </script>
+    
+    <script>
+    (function() {
+        function initLanguageSwitcher() {
+            const langCurrent = document.getElementById('langCurrent');
+            const languageSwitcher = document.querySelector('.language-switcher');
+            
+            if (!langCurrent || !languageSwitcher) {
+                setTimeout(initLanguageSwitcher, 100);
+                return;
+            }
+            
+            langCurrent.addEventListener('click', function(e) {
+                e.stopPropagation();
+                languageSwitcher.classList.toggle('active');
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!languageSwitcher.contains(e.target)) {
+                    languageSwitcher.classList.remove('active');
+                }
+            });
+            
+            const langOptions = document.querySelectorAll('.lang-option');
+            langOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const targetLang = this.getAttribute('data-lang');
+                    if (!targetLang) return;
+                    
+                    if (typeof switchLanguage === 'function') {
+                        switchLanguage(targetLang);
+                    }
+                    
+                    languageSwitcher.classList.remove('active');
+                });
+            });
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
+        } else {
+            initLanguageSwitcher();
+        }
+    })();
+    </script>
+</body>
+</html><!-- Force show mainContainer and terminal content after 3 seconds -->
+<script>
+(function() {
+    function showMainContainer() {
+        const mainContainer = document.getElementById('mainContainer');
+        const startupSequence = document.getElementById('startupSequence');
+        
+        if (mainContainer) {
+            mainContainer.style.cssText = 'opacity: 1 !important; display: flex !important; visibility: visible !important; pointer-events: auto !important; z-index: 1 !important;';
+            mainContainer.classList.add('active');
+        }
+        
+        if (startupSequence) {
+            startupSequence.style.cssText = 'opacity: 0 !important; display: none !important; visibility: hidden !important; pointer-events: none !important; z-index: -1 !important;';
+        }
+        
+        // 強制表示所有 terminal-line 元素
+        const terminalLines = document.querySelectorAll('.terminal-line');
+        terminalLines.forEach(line => {
+            line.style.cssText = 'opacity: 1 !important; transform: translateY(0) !important;';
+        });
+    }
+    
+    // 3秒後に主容器を表示
+    setTimeout(function() {
+        showMainContainer();
+    }, 3000);
+    
+    // 同時に DOMContentLoaded イベントをリッスン
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            showMainContainer();
+        });
+    }
+})()
+</script>

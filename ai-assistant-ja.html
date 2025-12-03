@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WarkAI - AIアシスタント</title>
+<link href="css/gundam-style.css" rel="stylesheet"/>
+<style>
+        .chat-container {
+            max-width: 900px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #000;
+            color: #00ffff;
+            font-family: 'Courier New', monospace;
+        }
+
+        .chat-header {
+            background: rgba(0, 255, 255, 0.1);
+            border-bottom: 2px solid #00ffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chat-header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        .chat-header p {
+            margin: 5px 0 0 0;
+            color: #00aa88;
+            font-size: 0.9em;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: rgba(255, 0, 255, 0.3);
+            border: 1px solid #ff00ff;
+            color: #ff00ff;
+        }
+
+        .message.assistant .message-avatar {
+            background: rgba(0, 255, 255, 0.3);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: rgba(255, 0, 255, 0.2);
+            border: 1px solid #ff00ff;
+            color: #ff00ff;
+        }
+
+        .message.assistant .message-content {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+        }
+
+        .message.system .message-content {
+            background: rgba(255, 255, 0, 0.1);
+            border: 1px solid #ffff00;
+            color: #ffff00;
+            text-align: center;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .chat-input-area {
+            border-top: 2px solid #00ffff;
+            padding: 20px;
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        .send-btn {
+            padding: 12px 25px;
+            background: rgba(0, 255, 255, 0.2);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: rgba(0, 255, 255, 0.4);
+            box-shadow: 0 0 15px #00ffff;
+        }
+
+        .send-btn:active {
+            transform: scale(0.95);
+        }
+
+        .faq-section {
+            padding: 15px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid #00ffff;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .faq-title {
+            color: #00ffff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .faq-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-left: 2px solid #00aa88;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .faq-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-left-color: #00ffff;
+        }
+
+        .faq-item-text {
+            color: #00aa88;
+            font-size: 0.9em;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ffff;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+            }
+            30% {
+                opacity: 1;
+            }
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 12px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .lang-btn.active {
+            background: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        @media (max-width: 768px) {
+            .message-content {
+                max-width: 100%;
+            }
+
+            .chat-header h1 {
+                font-size: 1.3em;
+            }
+        }
+
+        /* Scrollbar styling */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0;">
+<div class="language-selector">
+<button class="lang-btn active" onclick="setLanguage('zh')">中国語</button>
+<button class="lang-btn" onclick="setLanguage('en')">English</button>
+<button class="lang-btn" onclick="setLanguage('ja')">日本語</button>
+</div>
+<div class="chat-container">
+<div class="chat-header">
+<h1>🤖 WarkAI AIアシスタント</h1>
+<p>WarkAIプロジェクト、製品、チームに関するご質問にお答えします</p>
+</div>
+<div class="chat-messages" id="chatMessages">
+<div class="message system">
+<div class="message-content">
+                    WarkAI AIアシスタントへようこそ！弊社の会社、製品、チーム、ビジネスプランに関するご質問にお答えできます。
+                </div>
+</div>
+<div id="faqContainer"></div>
+</div>
+<div class="chat-input-area">
+<div class="input-group">
+<input class="chat-input" id="messageInput" onkeypress="if(event.key==='Enter') sendMessage()" placeholder="ご質問を入力してください..." type="text"/>
+<button class="send-btn" onclick="sendMessage()">送信</button>
+</div>
+</div>
+</div>
+<script src="js/warkai-knowledge-base.js"></script>
+<script>
+        let currentLanguage = localStorage.getItem('preferredLanguage') || 'zh';
+
+        const translations = {
+            zh: {
+                welcome: '欢迎使用WarkAI AI助手！我可以回答关于我们公司、产品、团队和商业计划的问题。',
+                faqTitle: '常见问题：',
+                placeholder: '输入您的问题...',
+                thinking: '思考中...'
+            },
+            en: {
+                welcome: 'Welcome to WarkAI AI Assistant! I can answer questions about our company, products, team, and business plan.',
+                faqTitle: 'Frequently Asked Questions:',
+                placeholder: 'Type your question...',
+                thinking: 'Thinking...'
+            },
+            ja: {
+                welcome: 'WarkAI AIアシスタントへようこそ！私たちの会社、製品、チーム、ビジネスプランについての質問にお答えできます。',
+                faqTitle: 'よくある質問：',
+                placeholder: 'ご質問を入力してください...',
+                thinking: '考え中...'
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            window.warkaiKB.setLanguage(lang);
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update placeholder
+            document.getElementById('messageInput').placeholder = translations[lang].placeholder;
+
+            // Reload FAQ
+            displayFAQ();
+        }
+
+        function displayFAQ() {
+            const container = document.getElementById('faqContainer');
+            const faqs = window.warkaiKB.getFAQs();
+            
+            container.innerHTML = `
+                <div class="faq-section">
+                    <div class="faq-title">${translations[currentLanguage].faqTitle}</div>
+                    ${faqs.map((faq, index) => `
+                        <div class="faq-item" onclick="askQuestion('${faq.q.replace(/'/g, "\\'")}')">
+                            <div class="faq-item-text">Q${index + 1}: ${faq.q}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Show typing indicator
+            const typingMsg = addMessage('', 'assistant');
+            typingMsg.innerHTML = `
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+
+            // Simulate processing delay
+            setTimeout(() => {
+                const answer = window.warkaiKB.getAnswer(message);
+                typingMsg.remove();
+                addMessage(answer, 'assistant');
+                scrollToBottom();
+            }, 500);
+        }
+
+        function askQuestion(question) {
+            document.getElementById('messageInput').value = question;
+            sendMessage();
+        }
+
+        function addMessage(text, sender) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            const avatar = sender === 'user' ? '👤' : '🤖';
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">${escapeHtml(text)}</div>
+            `;
+
+            messagesDiv.appendChild(messageDiv);
+            scrollToBottom();
+            return messageDiv;
+        }
+
+        function scrollToBottom() {
+            const messagesDiv = document.getElementById('chatMessages');
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            window.warkaiKB.setLanguage(currentLanguage);
+            displayFAQ();
+            document.getElementById('messageInput').focus();
+        });
+    </script>
+</body>
+</html>

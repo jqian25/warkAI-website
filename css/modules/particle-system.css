@@ -1,0 +1,191 @@
+/* 粒子系统模块 - Particle System Module */
+
+.particle-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #00ff88;
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat 3s linear infinite;
+    box-shadow: 0 0 6px #00ff88;
+}
+
+.particle.energy {
+    background: #00a3ff;
+    box-shadow: 0 0 8px #00a3ff;
+    animation: energyParticle 2.5s ease-out infinite;
+}
+
+.particle.spark {
+    background: #ffaa00;
+    box-shadow: 0 0 10px #ffaa00;
+    animation: sparkParticle 1.5s ease-out infinite;
+    width: 1px;
+    height: 8px;
+    border-radius: 2px;
+}
+
+.particle.plasma {
+    background: radial-gradient(circle, #ff0066, #ff0066, transparent);
+    width: 4px;
+    height: 4px;
+    animation: plasmaParticle 4s ease-in-out infinite;
+    box-shadow: 0 0 12px #ff0066;
+}
+
+/* 粒子动画 */
+@keyframes particleFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(90vh) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(10vh) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(0) scale(0);
+    }
+}
+
+@keyframes energyParticle {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1) rotate(90deg);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1.2) rotate(270deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) rotate(360deg);
+    }
+}
+
+@keyframes sparkParticle {
+    0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(-20px) rotate(180deg) scale(1.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-40px) rotate(360deg) scale(0);
+    }
+}
+
+@keyframes plasmaParticle {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    25% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    75% {
+        opacity: 0.6;
+        transform: scale(1.5);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+
+/* 粒子爆发效果 */
+.particle-burst {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+}
+
+.particle-burst .burst-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #00ff88;
+    border-radius: 50%;
+    animation: burstAnimation 0.8s ease-out forwards;
+    box-shadow: 0 0 8px #00ff88;
+}
+
+@keyframes burstAnimation {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) translate(var(--burst-x, 0), var(--burst-y, 0));
+    }
+}
+
+/* 粒子轨迹效果 */
+.particle-trail {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(to bottom, #00ff88, transparent);
+    border-radius: 2px;
+    animation: trailAnimation 2s linear infinite;
+    box-shadow: 0 0 6px #00ff88;
+}
+
+@keyframes trailAnimation {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px) rotate(45deg);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100px) rotate(45deg);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .particle {
+        width: 1px;
+        height: 1px;
+    }
+    
+    .particle.plasma {
+        width: 2px;
+        height: 2px;
+    }
+    
+    .particle-burst {
+        width: 50px;
+        height: 50px;
+    }
+}

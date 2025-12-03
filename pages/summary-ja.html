@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - エグゼクティブサマリーとビジネスモデル</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/summary.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div class="content-page">
+        <div class="hex-background"></div>
+        
+        <div class="page-header">
+            <img src="../images/warkai_logo.png" alt="WarkAI Logo" class="page-logo">
+            <h1 class="page-title">エグゼクティブサマリーとビジネスモデル</h1>
+            <button class="back-button" onclick="window.location.href='../index-ja.html'">ホームに戻る</button>
+        </div>
+        
+        <div class="content-container">
+            <div class="content-section">
+                <h2 class="section-title">企業ミッション</h2>
+                <div class="eva-terminal">
+                    <div class="eva-terminal-content">
+                        WarkAIは、AR、AI、ロボット技術を統合することで、世界の労働市場における構造的な危機を体系的に解決し、次世代の人間と機械の協調プラットフォームを構築し、「スーパー・インディビジュアル」の潜在能力を解放することを目指しています。私たちの核となる理念は「善をもって善を成す」であり、技術の平等を実現し、誰もがテクノロジーを通じて自身の能力を高め、より大きな価値を創造できるようにすることです。
+                    </div>
+                </div>
+                
+                <div class="hologram-container" id="missionHologram">
+                    <div class="hologram-content">
+                        <div class="hologram-title">WarkAI ミッション</div>
+                        <div class="hologram-item">AR、AI、ロボット技術の統合</div>
+                        <div class="hologram-item">労働市場の構造的危機の解決</div>
+                        <div class="hologram-item">人間と機械の協調プラットフォームの構築</div>
+                        <div class="hologram-item">「スーパー・インディビジュアル」の潜在能力の解放</div>
+                        <div class="hologram-item">「善をもって善を成す」、技術の平等</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">コア製品ライン</h2>
+                <div class="data-grid">
+                    <div class="data-card product-card" data-product="os">
+                        <div class="product-icon"><i class="product-os-icon"></i></div>
+                        <h3 class="data-card-title">インテリジェントプラットフォーム (WarkAI OS)</h3>
+                        <p>AI大規模モデルを核とするオペレーティングシステムで、人材マッチング、タスク管理、スキルアップトレーニングなどのサービスを提供します。</p>
+                        <div class="card-hover-effect"></div>
+                    </div>
+                    
+                    <div class="data-card product-card" data-product="hardware">
+                        <div class="product-icon"><i class="product-hardware-icon"></i></div>
+                        <h3 class="data-card-title">スマートハードウェア</h3>
+                        <p>ARグラス、ヘッドマウント型通信・撮影デバイス、スマートロボット（ロボットアームを含む）。</p>
+                        <div class="card-hover-effect"></div>
+                    </div>
+                    
+                    <div class="data-card product-card" data-product="solutions">
+                        <div class="product-icon"><i class="product-solutions-icon"></i></div>
+                        <h3 class="data-card-title">業界ソリューション</h3>
+                        <p>繊維、コールドチェーン、障害者支援、高齢者介護などの分野に特化した垂直統合型アプリケーション。</p>
+                        <div class="card-hover-effect"></div>
+                    </div>
+                    
+                    <div class="data-card product-card" data-product="seal">
+                        <div class="product-icon"><i class="product-seal-icon"></i></div>
+                        <h3 class="data-card-title">イノベーションアプリケーション</h3>
+                        <p>AIアザラシ占い大規模モデル、コンシューマー市場の開拓。</p>
+                        <div class="card-hover-effect"></div>
+                    </div>
+                </div>
+                
+                <div class="product-detail-modal" id="productDetailModal">
+                    <div class="modal-content">
+                        <span class="close-modal">&times;</span>
+                        <div class="modal-body" id="productModalBody">
+                            <!-- Content will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">市場機会</h2>
+                <div class="chart-container">
+                    <canvas id="marketSizeChart"></canvas>
+                </div>
+                
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h3 class="data-card-title">世界的な課題</h3>
+                        <ul class="challenge-list">
+                            <li><span class="challenge-icon labor-icon"></span>労働力不足：日本の介護士不足61万人、世界の製造業の生産性低下</li>
+                            <li><span class="challenge-icon aging-icon"></span>高齢化：シニア層の再就職の困難、社会扶養率の継続的な上昇</li>
+                            <li><span class="challenge-icon disability-icon"></span>障害者雇用の格差：健常者と比較して就職率が著しく低く、効果的な支援ツールの不足</li>
+                            <li><span class="challenge-icon skills-icon"></span>スキルミスマッチ：若年失業率の高さ、従来のトレーニングモデルは期間が長く、効率が低い</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="data-card">
+                        <h3 class="data-card-title">技術の窓</h3>
+                        <div class="tech-window">
+                            <div class="tech-timeline">
+                                <div class="timeline-point" style="left: 20%;">
+                                    <div class="point-label">現在</div>
+                                </div>
+                                <div class="timeline-point" style="left: 50%;">
+                                    <div class="point-label">3～5年</div>
+                                </div>
+                                <div class="timeline-point" style="left: 80%;">
+                                    <div class="point-label">5～10年</div>
+                                </div>
+                                <div class="timeline-tech ar" style="left: 20%; width: 30%;">
+                                    <div class="tech-label">ARグラスの黄金期</div>
+                                </div>
+                                <div class="timeline-tech ai" style="left: 10%; width: 70%;">
+                                    <div class="tech-label">AI大規模モデルの普及</div>
+                                </div>
+                                <div class="timeline-tech bci" style="left: 50%; width: 30%;">
+                                    <div class="tech-label">ブレイン・マシン・インターフェースの成熟</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">ビジネスモデル</h2>
+                <div class="business-model-container">
+                    <div class="business-model-visual">
+                        <div class="model-center">WarkAI</div>
+                        <div class="model-item hardware">
+                            <div class="model-icon"></div>
+                            <div class="model-label">ハードウェア販売/レンタル</div>
+                            <div class="model-value">70%</div>
+                        </div>
+                        <div class="model-item software">
+                            <div class="model-icon"></div>
+                            <div class="model-label">ソフトウェアサブスクリプション (SaaS)</div>
+                            <div class="model-value">20%</div>
+                        </div>
+                        <div class="model-item subsidy">
+                            <div class="model-icon"></div>
+                            <div class="model-label">政府補助金と協力配分</div>
+                            <div class="model-value">10%</div>
+                        </div>
+                        <div class="model-item services">
+                            <div class="model-icon"></div>
+                            <div class="model-label">エコシステム付加価値サービス</div>
+                            <div class="model-value">成長ポイント</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-card">
+                    <h3 class="data-card-title">財務ハイライト</h3>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    <div class="financial-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-label">粗利益率</div>
+                            <div class="highlight-value">57%-61%</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-label">損益分岐点</div>
+                            <div class="highlight-value">11ヶ月</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-label">2028年収益</div>
+                            <div class="highlight-value">7億元</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-label">2028年純利益</div>
+                            <div class="highlight-value">3.45億元</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-label">評価額の成長</div>
+                            <div class="highlight-value">38倍</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">資金調達計画</h2>
+                <div class="funding-container">
+                    <div class="funding-round">
+                        <div class="round-label">今回の資金調達ラウンド</div>
+                        <div class="round-value">シリーズA、800万～1000万米ドル</div>
+                    </div>
+                    
+                    <div class="funding-allocation">
+                        <div class="allocation-item research">
+                            <div class="allocation-percentage">40%</div>
+                            <div class="allocation-bar"><div class="allocation-fill" style="width: 40%;"></div></div>
+                            <div class="allocation-label">研究開発</div>
+                            <div class="allocation-detail">AIモデルの最適化、新ハードウェアの開発</div>
+                        </div>
+                        
+                        <div class="allocation-item marketing">
+                            <div class="allocation-percentage">30%</div>
+                            <div class="allocation-bar"><div class="allocation-fill" style="width: 30%;"></div></div>
+                            <div class="allocation-label">マーケティングと販売</div>
+                            <div class="allocation-detail">チャネル構築、主要顧客の開拓</div>
+                        </div>
+                        
+                        <div class="allocation-item supply">
+                            <div class="allocation-percentage">20%</div>
+                            <div class="allocation-bar"><div class="allocation-fill" style="width: 20%;"></div></div>
+                            <div class="allocation-label">サプライチェーンと生産</div>
+                            <div class="allocation-detail">コアコンポーネントの調達、生産能力の向上</div>
+                        </div>
+                        
+                        <div class="allocation-item operations">
+                            <div class="allocation-percentage">10%</div>
+                            <div class="allocation-bar"><div class="allocation-fill" style="width: 10%;"></div></div>
+                            <div class="allocation-label">運営</div>
+                            <div class="allocation-detail">チーム構築、日常経費</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+        </div>
+    </div>
+    
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="transition-animation">
+            <div class="gear-large gear-transition-1"></div>
+            <div class="gear-large gear-transition-2"></div>
+            <div class="gear-large gear-transition-3"></div>
+            <div class="part-transform" id="transformingPart"></div>
+        </div>
+    </div>
+    
+    <script src="../js/script.js"></script>
+    <script src="../js/summary.js"></script>
+</body>
+</html>

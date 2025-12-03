@@ -97,7 +97,7 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 1s ease;
 }
 
@@ -238,14 +238,14 @@ header {
     position: absolute;
     bottom: -40px;
     left: 50%;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(0);
     background-color: var(--secondary-bg);
     color: var(--text-primary);
     padding: 5px 15px;
     border-radius: 3px;
     font-size: 0.9rem;
     white-space: nowrap;
-    opacity: 0;
+    opacity: 1;
     transition: all 0.3s ease;
     border-left: 3px solid var(--accent-blue);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);

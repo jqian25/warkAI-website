@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gundam Simulation Engine</title>
+    <link rel="stylesheet" href="css/gundam-style.css">
+    <style>
+        body {
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            color: #00ffff;
+            overflow: hidden;
+        }
+        .simulation-container {
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(0, 10, 20, 0.8);
+            border: 2px solid #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .title {
+            font-size: 28px;
+            color: #00ffff;
+            text-shadow: 0 0 8px #00ffff;
+            margin-bottom: 10px;
+        }
+        .pilot-info {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+        .status-box {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 5px;
+            background: rgba(0, 20, 40, 0.5);
+        }
+        .status-line {
+            font-size: 16px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        .status-value {
+            font-weight: bold;
+        }
+        .online { color: #00ff00; text-shadow: 0 0 5px #00ff00; }
+        .operational { color: #00ff00; text-shadow: 0 0 5px #00ff00; }
+        .armed { color: #ff0000; text-shadow: 0 0 5px #ff0000; }
+        .mission-brief {
+            font-size: 16px;
+            color: #ffcc00;
+            margin-top: 20px;
+        }
+        .start-button {
+            background-color: #00ffff;
+            color: #000000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            margin-top: 30px;
+            box-shadow: 0 0 10px #00ffff;
+        }
+        .start-button:hover {
+            background-color: #00e6e6;
+            box-shadow: 0 0 15px #00ffff;
+        }
+        .start-button:disabled {
+            background-color: #333333;
+            color: #999999;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .game-area {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background-color: #111111;
+            color: #ffffff;
+            font-size: 30px;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="simulation-container" id="simulationContainer">
+        <div class="title">GUNDAM SIMULATION ENGINE</div>
+        <div class="pilot-info">Pilot: Demo Pilot</div>
+        
+        <div class="status-box">
+            <div class="status-line">
+                <span>System Status:</span>
+                <span class="status-value online">ONLINE</span>
+            </div>
+            <div class="status-line">
+                <span>Mecha Status:</span>
+                <span class="status-value operational">OPERATIONAL</span>
+            </div>
+            <div class="status-line">
+                <span>Weapons System:</span>
+                <span class="status-value armed">ARMED</span>
+            </div>
+        </div>
+        
+        <div class="mission-brief">Mission Brief: Defend against Zeon forces</div>
+        
+        <button class="start-button" id="startButton">START GAME</button>
+    </div>
+
+    <div class="game-area" id="gameArea">
+        SIMULATION RUNNING...
+    </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            const container = document.getElementById('simulationContainer');
+            const gameArea = document.getElementById('gameArea');
+            const button = this;
+
+            // 禁用按钮并显示加载状态
+            button.disabled = true;
+            button.textContent = 'LOADING...';
+
+            // 模拟游戏加载
+            setTimeout(() => {
+                // 隐藏启动界面
+                container.style.display = 'none';
+                
+                // 显示游戏界面
+                gameArea.style.display = 'flex';
+                
+                // 模拟游戏运行一段时间后结束
+                setTimeout(() => {
+                    gameArea.innerHTML = 'MISSION COMPLETE. RETURNING TO HANGAR...';
+                    
+                    // 模拟返回启动界面
+                    setTimeout(() => {
+                        gameArea.style.display = 'none';
+                        container.style.display = 'block';
+                        button.disabled = false;
+                        button.textContent = 'START GAME';
+                        gameArea.innerHTML = 'SIMULATION RUNNING...'; // 重置文本
+                    }, 3000);
+                }, 5000); // 游戏运行 5 秒
+            }, 1500); // 加载 1.5 秒
+        });
+    </script>
+</body>
+</html>

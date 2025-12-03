@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="legGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00a3ff" />
+      <stop offset="100%" stop-color="#0f3b7d" />
+    </linearGradient>
+  </defs>
+  <g fill="url(#legGradient)" stroke="#00a3ff" stroke-width="2">
+    <path d="M70,40 L50,60 L50,150 L70,170 L90,150 L90,60 Z" />
+    <path d="M130,40 L110,60 L110,150 L130,170 L150,150 L150,60 Z" />
+    <rect x="50" y="100" width="40" height="20" />
+    <rect x="110" y="100" width="40" height="20" />
+    <path d="M50,150 L40,160 L40,180 L60,180 L70,170" />
+    <path d="M150,150 L160,160 L160,180 L140,180 L130,170" />
+  </g>
+  <g fill="none" stroke="#00a3ff" stroke-width="1">
+    <line x1="50" y1="80" x2="90" y2="80" />
+    <line x1="50" y1="120" x2="90" y2="120" />
+    <line x1="110" y1="80" x2="150" y2="80" />
+    <line x1="110" y1="120" x2="150" y2="120" />
+    <line x1="70" y1="60" x2="70" y2="170" />
+    <line x1="130" y1="60" x2="130" y2="170" />
+  </g>
+  <g fill="#00a3ff" stroke="none">
+    <circle cx="70" cy="70" r="3" />
+    <circle cx="70" cy="130" r="3" />
+    <circle cx="130" cy="70" r="3" />
+    <circle cx="130" cy="130" r="3" />
+  </g>
+</svg>

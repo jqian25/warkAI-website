@@ -1,0 +1,582 @@
+// 驾驶员模块功能
+class PilotModule {
+    constructor() {
+        this.currentUser = null;
+        this.isLoggedIn = false;
+        this.init();
+    }
+
+    init() {
+        this.initEventListeners();
+        this.loadUserData();
+        this.updateUI();
+    }
+
+    initEventListeners() {
+        // 语言切换器事件
+        const langCurrent = document.getElementById('langCurrent');
+        const langDropdown = document.getElementById('langDropdown');
+        
+        if (langCurrent && langDropdown) {
+            langCurrent.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.querySelector('.language-switcher').classList.toggle('active');
+            });
+        }
+
+        // 驾驶员模块事件
+        const pilotTrigger = document.getElementById('pilotTrigger');
+        const pilotDropdown = document.getElementById('pilotDropdown');
+        
+        if (pilotTrigger && pilotDropdown) {
+            pilotTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.querySelector('.pilot-module').classList.toggle('active');
+            });
+        }
+
+        // 点击外部关闭下拉菜单
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.language-switcher')) {
+                document.querySelector('.language-switcher')?.classList.remove('active');
+            }
+            if (!e.target.closest('.pilot-module')) {
+                document.querySelector('.pilot-module')?.classList.remove('active');
+            }
+        });
+
+        // 模态框关闭事件
+        const modalOverlay = document.getElementById('modalOverlay');
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    this.closeModal();
+                }
+            });
+        }
+    }
+
+    loadUserData() {
+        // 从localStorage加载用户数据
+        const userData = localStorage.getItem('warkAI_user');
+        if (userData) {
+            try {
+                this.currentUser = JSON.parse(userData);
+                this.isLoggedIn = true;
+            } catch (e) {
+                console.error('用户数据解析失败:', e);
+                localStorage.removeItem('warkAI_user');
+            }
+        }
+    }
+
+    updateUI() {
+        const pilotName = document.getElementById('pilotName');
+        const pilotStatus = document.getElementById('pilotStatus');
+        
+        if (this.isLoggedIn && this.currentUser) {
+            if (pilotName) pilotName.textContent = this.currentUser.name || '驾驶员';
+            if (pilotStatus) {
+                pilotStatus.textContent = '已认证';
+                pilotStatus.classList.add('authenticated');
+            }
+        } else {
+            if (pilotName) pilotName.textContent = '访客驾驶员';
+            if (pilotStatus) {
+                pilotStatus.textContent = '未认证';
+                pilotStatus.classList.remove('authenticated');
+            }
+        }
+    }
+
+    showModal(content) {
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalContainer = document.getElementById('modalContainer');
+        
+        if (modalOverlay && modalContainer) {
+            modalContainer.innerHTML = content;
+            modalOverlay.classList.add('active');
+            
+            // 添加关闭按钮事件
+            const closeBtn = modalContainer.querySelector('.modal-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => this.closeModal());
+            }
+        }
+    }
+
+    closeModal() {
+        const modalOverlay = document.getElementById('modalOverlay');
+        if (modalOverlay) {
+            modalOverlay.classList.remove('active');
+        }
+    }
+
+    showProfile() {
+
+    showLogin() {
+        const loginContent = `
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span class="menu-icon">🔐</span>
+                    登录系统
+                </h2>
+                <p class="modal-subtitle">登录以访问更多功能</p>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">驾驶员姓名</label>
+                        <input type="text" class="form-input" id="loginName" placeholder="请输入您的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">邮箱地址</label>
+                        <input type="email" class="form-input" id="loginEmail" placeholder="请输入邮箱地址" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">密码</label>
+                        <input type="password" class="form-input" id="loginPassword" placeholder="请输入密码" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="form-button secondary" onclick="pilotModule.closeModal()">取消</button>
+                        <button type="submit" class="form-button">登录</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        this.showModal(loginContent);
+        
+        setTimeout(() => {
+            const form = document.getElementById('loginForm');
+            if (form) {
+                form.addEventListener('submit', (e) => this.submitLogin(e));
+            }
+        }, 100);
+    }
+
+    submitLogin(e) {
+        e.preventDefault();
+        const name = document.getElementById('loginName').value;
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        if (!name || !email || !password) {
+            alert('请填写所有必填项！');
+            return;
+        }
+        
+        const userData = {
+            name: name,
+            email: email,
+            password: password,
+            loginTime: new Date().toISOString()
+        };
+        
+        localStorage.setItem('warkAI_user', JSON.stringify(userData));
+        this.currentUser = userData;
+        this.isLoggedIn = true;
+        this.updateUI();
+        this.closeModal();
+        alert('登录成功！');
+    }
+        const profileContent = `
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span class="menu-icon">👤</span>
+                    个人中心
+                </h2>
+                <p class="modal-subtitle">管理您的驾驶员档案</p>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                ${this.isLoggedIn ? this.getProfileForm() : this.getLoginPrompt()}
+            </div>
+        `;
+        this.showModal(profileContent);
+        
+        // 添加表单提交事件
+        setTimeout(() => {
+            const form = document.getElementById('profileForm');
+            if (form) {
+                form.addEventListener('submit', (e) => this.submitProfile(e));
+            }
+        }, 100);
+    }
+
+    submitProfile(e) {
+        e.preventDefault();
+        const userName = document.getElementById('userName').value;
+        const userEmail = document.getElementById('userEmail').value;
+        const userCompany = document.getElementById('userCompany').value;
+        const userPosition = document.getElementById('userPosition').value;
+        
+        const userData = {
+            name: userName,
+            email: userEmail,
+            company: userCompany,
+            position: userPosition
+        };
+        
+        localStorage.setItem('warkAI_user', JSON.stringify(userData));
+        this.currentUser = userData;
+        this.isLoggedIn = true;
+        this.updateUI();
+        this.closeModal();
+        alert('个人信息已保存！');
+    }
+
+    getProfileForm() {
+        return `
+            <form id="profileForm">
+                <div class="form-group">
+                    <label class="form-label">驾驶员姓名</label>
+                    <input type="text" class="form-input" id="userName" value="${this.currentUser?.name || ''}" placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">邮箱地址</label>
+                    <input type="email" class="form-input" id="userEmail" value="${this.currentUser?.email || ''}" placeholder="请输入邮箱地址">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">公司/组织</label>
+                    <input type="text" class="form-input" id="userCompany" value="${this.currentUser?.company || ''}" placeholder="请输入公司或组织名称">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">职位</label>
+                    <input type="text" class="form-input" id="userPosition" value="${this.currentUser?.position || ''}" placeholder="请输入职位">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="form-button secondary" onclick="pilotModule.logout()">退出登录</button>
+                    <button type="submit" class="form-button">保存更改</button>
+                </div>
+            </form>
+        `;
+    }
+
+    getLoginPrompt() {
+        return `
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 48px; margin-bottom: 20px;">🔐</div>
+                <h3 style="color: #ffffff; margin-bottom: 16px;">请先登录系统</h3>
+                <p style="color: #aaaaaa; margin-bottom: 24px;">登录后可以管理个人信息、保存偏好设置</p>
+                <div class="modal-footer">
+                    <button type="button" class="form-button" onclick="window.location.href='login.html'">前往登录</button>
+                </div>
+            </div>
+        `;
+    }
+
+    submitFeedback(e) {
+        e.preventDefault();
+        const feedbackType = document.getElementById('feedbackType').value;
+        const feedbackTitle = document.getElementById('feedbackTitle').value;
+        const feedbackContent = document.getElementById('feedbackContent').value;
+        const feedbackEmail = document.getElementById('feedbackEmail').value;
+        
+        if (!feedbackTitle || !feedbackContent) {
+            alert('请填写标题和内容！');
+            return;
+        }
+        
+        const feedback = {
+            type: feedbackType,
+            title: feedbackTitle,
+            content: feedbackContent,
+            email: feedbackEmail,
+            timestamp: new Date().toISOString()
+        };
+        
+        // 保存反馈到localStorage
+        let feedbacks = JSON.parse(localStorage.getItem('warkAI_feedbacks') || '[]');
+        feedbacks.push(feedback);
+        localStorage.setItem('warkAI_feedbacks', JSON.stringify(feedbacks));
+        
+        this.closeModal();
+        alert('感谢您的反馈！我们会尽快处理。');
+    }
+
+    showFeedback() {
+        const feedbackContent = `
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span class="menu-icon">💬</span>
+                    意见反馈
+                </h2>
+                <p class="modal-subtitle">您的建议对我们很重要</p>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="feedbackForm">
+                    <div class="form-group">
+                        <label class="form-label">反馈类型</label>
+                        <select class="form-input" id="feedbackType">
+                            <option value="bug">问题报告</option>
+                            <option value="feature">功能建议</option>
+                            <option value="improvement">改进建议</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">标题</label>
+                        <input type="text" class="form-input" id="feedbackTitle" placeholder="请简要描述问题或建议">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">详细描述</label>
+                        <textarea class="form-input form-textarea" id="feedbackContent" placeholder="请详细描述您的反馈内容..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">联系邮箱 (可选)</label>
+                        <input type="email" class="form-input" id="feedbackEmail" value="${this.currentUser?.email || ''}" placeholder="如需回复请留下邮箱">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="form-button secondary" onclick="pilotModule.closeModal()">取消</button>
+                        <button type="submit" class="form-button">提交反馈</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        this.showModal(feedbackContent);
+        
+        // 添加表单提交事件
+        setTimeout(() => {
+            const form = document.getElementById('feedbackForm');
+            if (form) {
+                form.addEventListener('submit', (e) => this.submitFeedback(e));
+            }
+        }, 100);
+    }
+
+    submitCooperation(e) {
+        e.preventDefault();
+        const cooperationType = document.getElementById('cooperationType').value;
+        const coopCompany = document.getElementById('coopCompany').value;
+        const coopContact = document.getElementById('coopContact').value;
+        const coopEmail = document.getElementById('coopEmail').value;
+        const coopPhone = document.getElementById('coopPhone').value;
+        const coopDetails = document.getElementById('coopDetails').value;
+        
+        if (!coopEmail || !coopDetails) {
+            alert('请填写邮箱和合作意向！');
+            return;
+        }
+        
+        const cooperation = {
+            type: cooperationType,
+            company: coopCompany,
+            contact: coopContact,
+            email: coopEmail,
+            phone: coopPhone,
+            details: coopDetails,
+            timestamp: new Date().toISOString()
+        };
+        
+        // 保存合作信息到localStorage
+        let cooperations = JSON.parse(localStorage.getItem('warkAI_cooperations') || '[]');
+        cooperations.push(cooperation);
+        localStorage.setItem('warkAI_cooperations', JSON.stringify(cooperations));
+        
+        this.closeModal();
+        alert('感谢您的合作意向！我们会尽快与您联系。');
+    }
+
+    showCooperation() {
+        const cooperationContent = `
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span class="menu-icon">🤝</span>
+                    合作洽谈
+                </h2>
+                <p class="modal-subtitle">探讨合作机会，共创未来</p>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="cooperationForm">
+                    <div class="form-group">
+                        <label class="form-label">合作类型</label>
+                        <select class="form-input" id="cooperationType">
+                            <option value="technology">技术合作</option>
+                            <option value="business">商业合作</option>
+                            <option value="investment">投资洽谈</option>
+                            <option value="partnership">战略伙伴</option>
+                            <option value="other">其他合作</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">公司/组织名称</label>
+                        <input type="text" class="form-input" id="coopCompany" value="${this.currentUser?.company || ''}" placeholder="请输入公司或组织名称">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">联系人姓名</label>
+                        <input type="text" class="form-input" id="coopContact" value="${this.currentUser?.name || ''}" placeholder="请输入联系人姓名">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">联系邮箱</label>
+                        <input type="email" class="form-input" id="coopEmail" value="${this.currentUser?.email || ''}" placeholder="请输入联系邮箱" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">联系电话</label>
+                        <input type="tel" class="form-input" id="coopPhone" placeholder="请输入联系电话">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">合作意向详情</label>
+                        <textarea class="form-input form-textarea" id="coopDetails" placeholder="请详细描述您的合作意向、预期目标等..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="form-button secondary" onclick="pilotModule.closeModal()">取消</button>
+                        <button type="submit" class="form-button">提交申请</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        this.showModal(cooperationContent);
+        
+        // 添加表单提交事件
+        setTimeout(() => {
+            const form = document.getElementById('cooperationForm');
+            if (form) {
+                form.addEventListener('submit', (e) => this.submitCooperation(e));
+            }
+        }, 100);
+    }
+
+    submitFeedback(e) {
+        e.preventDefault();
+        
+        const formData = {
+            type: document.getElementById('feedbackType').value,
+            title: document.getElementById('feedbackTitle').value,
+            content: document.getElementById('feedbackContent').value,
+            email: document.getElementById('feedbackEmail').value,
+            timestamp: new Date().toISOString(),
+            user: this.currentUser?.name || '匿名用户'
+        };
+        
+        // 保存到localStorage (实际项目中应该发送到服务器)
+        const feedbacks = JSON.parse(localStorage.getItem('warkAI_feedbacks') || '[]');
+        feedbacks.push(formData);
+        localStorage.setItem('warkAI_feedbacks', JSON.stringify(feedbacks));
+        
+        // 显示成功消息
+        this.showSuccessMessage('反馈提交成功', '感谢您的反馈，我们会认真考虑您的建议！');
+    }
+
+    submitCooperation(e) {
+        e.preventDefault();
+        
+        const formData = {
+            type: document.getElementById('cooperationType').value,
+            company: document.getElementById('coopCompany').value,
+            contact: document.getElementById('coopContact').value,
+            email: document.getElementById('coopEmail').value,
+            phone: document.getElementById('coopPhone').value,
+            details: document.getElementById('coopDetails').value,
+            timestamp: new Date().toISOString()
+        };
+        
+        // 保存到localStorage (实际项目中应该发送到服务器)
+        const cooperations = JSON.parse(localStorage.getItem('warkAI_cooperations') || '[]');
+        cooperations.push(formData);
+        localStorage.setItem('warkAI_cooperations', JSON.stringify(cooperations));
+        
+        // 显示成功消息
+        this.showSuccessMessage('合作申请提交成功', '我们会尽快与您联系，讨论合作详情！');
+    }
+
+    showSuccessMessage(title, message) {
+        const successContent = `
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span style="color: #00ff88;">✓</span>
+                    ${title}
+                </h2>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; color: #00ff88; margin-bottom: 20px;">✓</div>
+                    <p style="color: #ffffff; font-size: 16px; margin-bottom: 24px;">${message}</p>
+                    <div class="modal-footer">
+                        <button type="button" class="form-button" onclick="pilotModule.closeModal()">确定</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        this.showModal(successContent);
+    }
+
+    logout() {
+        localStorage.removeItem('warkAI_user');
+        this.currentUser = null;
+        this.isLoggedIn = false;
+        this.updateUI();
+        this.closeModal();
+        
+        // 显示登出成功消息
+        this.showSuccessMessage('登出成功', '感谢使用WarkAI系统，期待您的再次访问！');
+    }
+}
+
+// 全局函数，供HTML调用
+function switchLanguage(lang) {
+    const config = getLanguageConfig();
+    const targetConfig = LanguageConfig[lang];
+    
+    if (!targetConfig) {
+        console.error('不支持的语言:', lang);
+        return;
+    }
+    
+    // 确定当前页面类型
+    const currentPath = window.location.pathname;
+    const currentFile = currentPath.split('/').pop();
+    
+    let pageType = 'index';
+    if (currentFile.includes('team')) pageType = 'team';
+    else if (currentFile.includes('summary')) pageType = 'summary';
+    else if (currentFile.includes('products')) pageType = 'products';
+    else if (currentFile.includes('market')) pageType = 'market';
+    else if (currentFile.includes('technology')) pageType = 'technology';
+    else if (currentFile.includes('login')) pageType = 'login';
+    
+    // 跳转到目标语言页面
+    const targetPage = targetConfig.pages[pageType];
+    if (targetPage && targetPage !== currentFile) {
+        window.location.href = targetPage;
+    }
+}
+
+function showLogin() {
+    pilotModule.showLogin();
+}
+
+function showProfile() {
+    pilotModule.showProfile();
+}
+
+function showFeedback() {
+    pilotModule.showFeedback();
+}
+
+function showCooperation() {
+    pilotModule.showCooperation();
+}
+
+// 初始化驾驶员模块
+let pilotModule;
+
+document.addEventListener('DOMContentLoaded', () => {
+    pilotModule = new PilotModule();
+    
+    // 更新语言切换器显示
+    const currentLang = getCurrentLanguage();
+    const langConfig = getLanguageConfig(currentLang);
+    
+    const langCurrent = document.getElementById('langCurrent');
+    if (langCurrent && langConfig) {
+        langCurrent.innerHTML = `
+            <span class="lang-flag">${langConfig.flag}</span>
+            <span class="lang-name">${langConfig.name}</span>
+            <span class="lang-arrow">▼</span>
+        `;
+    }
+});

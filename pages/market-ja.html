@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - 市場応用とロードマップ</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/market.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div class="content-page">
+        <div class="hex-background"></div>
+        
+        <div class="page-header">
+            <img src="../images/warkai_logo.png" alt="WarkAI Logo" class="page-logo">
+            <h1 class="page-title">市場応用とロードマップ</h1>
+            <button class="back-button" onclick="window.location.href='../index-ja.html'">ホームに戻る</button>
+        </div>
+        
+        <div class="content-container">
+            <div class="content-section">
+                <h2 class="section-title">市場の課題分析</h2>
+                <div class="eva-terminal">
+                    <div class="eva-terminal-content">
+                        現在の繊維産業は、労働力不足、技術継承の困難さ、生産効率の低さなど、複数の課題に直面しています。WarkAIは、AI+AR+ロボット技術の深い融合を通じて、繊維企業に全工程のスマート化アップグレードサービスを提供し、業界の課題を解決し、伝統的な製造業のデジタル変革を推進します。
+                    </div>
+                </div>
+                
+                <div class="market-challenges">
+                    <div class="challenge-card">
+                        <div class="challenge-icon labor-icon"></div>
+                        <div class="challenge-title">労働力不足</div>
+                        <div class="challenge-desc">
+                            <p>繊維産業は深刻な労働力不足の問題に直面しており、若者は繊維の仕事に就きたがらず、高齢化の傾向が顕著です。</p>
+                            <div class="challenge-stat">
+                                <div class="stat-value">-18.7%</div>
+                                <div class="stat-label">過去5年間の繊維産業従事者減少率</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="challenge-icon skill-icon"></div>
+                        <div class="challenge-title">技術継承の困難さ</div>
+                        <div class="challenge-desc">
+                            <p>繊維工程は複雑で、技術継承は経験豊富な熟練工に依存していますが、効果的な知識の蓄積と伝達メカニズムが不足しています。</p>
+                            <div class="challenge-stat">
+                                <div class="stat-value">8.2年</div>
+                                <div class="stat-label">繊維技術者の平均育成期間</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="challenge-icon efficiency-icon"></div>
+                        <div class="challenge-title">生産効率の低さ</div>
+                        <div class="challenge-desc">
+                            <p>伝統的な繊維生産方法は、手作業と経験による判断に依存しており、生産効率が低く、品質の変動が大きい。</p>
+                            <div class="challenge-stat">
+                                <div class="stat-value">35%</div>
+                                <div class="stat-label">国内繊維企業の平均設備稼働率</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="market-data">
+                    <h3 class="data-title">繊維産業の市場規模</h3>
+                    <div class="data-container">
+                        <div class="chart-container">
+                            <canvas id="marketSizeChart"></canvas>
+                        </div>
+                        <div class="data-insights">
+                            <div class="insight-item">
+                                <div class="insight-value">7.2兆</div>
+                                <div class="insight-label">2024年の中国繊維産業の総生産額</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-value">4.8%</div>
+                                <div class="insight-label">年平均成長率（2025-2030）</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-value">1.2兆</div>
+                                <div class="insight-label">スマートテキスタイル市場の潜在規模</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">繊維分野の応用シーン</h2>
+                <div class="application-scenarios">
+                    <div class="scenario-tabs">
+                        <div class="tab-buttons">
+                            <button class="tab-button active" data-tab="production">生産製造</button>
+                            <button class="tab-button" data-tab="quality">品質管理</button>
+                            <button class="tab-button" data-tab="training">技能訓練</button>
+                            <button class="tab-button" data-tab="management">スマート管理</button>
+                        </div>
+                        
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="production-tab">
+                                <div class="scenario-showcase">
+                                    <div class="scenario-image">
+                                        <img src="../images/textile_production.png" alt="纺织生产场景" class="scenario-img">
+                                        <div class="image-overlay">
+                                            <div class="overlay-text">スマート生産製造</div>
+                                        </div>
+                                    </div>
+                                    <div class="scenario-details">
+                                        <div class="scenario-description">
+                                            <p>WarkAIは、繊維生産製造プロセスにおいて、全工程のスマート化ソリューションを提供し、ARグラスを通じて作業員にリアルタイムの指導を提供し、協働ロボットを通じて反復作業を完了させ、AIシステムを通じて生産パラメータと工程プロセスを最適化します。</p>
+                                        </div>
+                                        <div class="scenario-features">
+                                            <div class="feature-item">
+                                                <div class="feature-icon guidance-icon"></div>
+                                                <div class="feature-title">ARリアルタイム工程指導</div>
+                                                <div class="feature-desc">ARグラスを通じて作業員にリアルタイムの工程パラメータと操作指導を提供</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon robot-icon"></div>
+                                                <div class="feature-title">協働ロボットの活用</div>
+                                                <div class="feature-desc">協働ロボットが反復的で危険な作業を完了し、生産効率を向上</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon process-icon"></div>
+                                                <div class="feature-title">工程パラメータの最適化</div>
+                                                <div class="feature-desc">AIシステムが生産データをリアルタイムで分析し、工程パラメータを最適化し、製品品質を向上</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon remote-icon"></div>
+                                                <div class="feature-title">遠隔専門家連携</div>
+                                                <div class="feature-desc">ヘッドマウント通信機器を通じて遠隔専門家と接続し、複雑な問題を解決</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane" id="quality-tab">
+                                <div class="scenario-showcase">
+                                    <div class="scenario-image">
+                                        <img src="../images/textile_quality.png" alt="纺织品質管理场景" class="scenario-img">
+                                        <div class="image-overlay">
+                                            <div class="overlay-text">スマート品質管理</div>
+                                        </div>
+                                    </div>
+                                    <div class="scenario-details">
+                                        <div class="scenario-description">
+                                            <p>WarkAIは、繊維品質管理プロセスにおいて、AI画像ベースの欠陥検出システムを提供し、全自動で高精度の品質検査を実現し、手動検査の労働強度と誤検出率を大幅に削減し、製品品質と一貫性を向上させます。</p>
+                                        </div>
+                                        <div class="scenario-features">
+                                            <div class="feature-item">
+                                                <div class="feature-icon vision-icon"></div>
+                                                <div class="feature-title">AI画像による欠陥検出</div>
+                                                <div class="feature-desc">深層学習に基づく画像システム、生地の欠陥を自動検出</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon realtime-icon"></div>
+                                                <div class="feature-title">リアルタイム品質監視</div>
+                                                <div class="feature-desc">生産ラインの品質状況をリアルタイムで監視し、異常をタイムリーに警告</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon analysis-icon"></div>
+                                                <div class="feature-title">品質データ分析</div>
+                                                <div class="feature-desc">品質データを深く分析し、品質問題の根本原因を特定</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon trace-icon"></div>
+                                                <div class="feature-title">全工程の品質トレーサビリティ</div>
+                                                <div class="feature-desc">品質データベースを構築し、全工程の品質トレーサビリティを実現</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane" id="training-tab">
+                                <div class="scenario-showcase">
+                                    <div class="scenario-image">
+                                        <img src="../images/textile_training.png" alt="纺织技能訓練场景" class="scenario-img">
+                                        <div class="image-overlay">
+                                            <div class="overlay-text">スマート技能訓練</div>
+                                        </div>
+                                    </div>
+                                    <div class="scenario-details">
+                                        <div class="scenario-description">
+                                            <p>WarkAI在纺织技能訓練环节提供基于AR/VR的沉浸式培训系统，结合AI教育アシスタント，实现技能的快速学习和有效传承，大幅缩短培训周期，提高培训效果。</p>
+                                        </div>
+                                        <div class="scenario-features">
+                                            <div class="feature-item">
+                                                <div class="feature-icon ar-icon"></div>
+                                                <div class="feature-title">AR/VR没入型訓練</div>
+                                                <div class="feature-desc">通过AR/VR技术提供沉浸式的技能訓練体验</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon ai-icon"></div>
+                                                <div class="feature-title">AI教育アシスタント</div>
+                                                <div class="feature-desc">AI系统提供个性化的学习指导和反馈</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon knowledge-icon"></div>
+                                                <div class="feature-title">ナレッジベースの構築</div>
+                                                <div class="feature-desc">専門家の経験を記録・蓄積し、構造化されたナレッジベースを形成</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon assessment-icon"></div>
+                                                <div class="feature-title">技能評価システム</div>
+                                                <div class="feature-desc">学習効果を客観的に評価し、具体的な改善提案を提供</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane" id="management-tab">
+                                <div class="scenario-showcase">
+                                    <div class="scenario-image">
+                                        <img src="../images/textile_management.png" alt="纺织スマート管理场景" class="scenario-img">
+                                        <div class="image-overlay">
+                                            <div class="overlay-text">スマート管理システム</div>
+                                        </div>
+                                    </div>
+                                    <div class="scenario-details">
+                                        <div class="scenario-description">
+                                            <p>WarkAIは、繊維管理プロセスにおいて、AIベースのスマート生産計画、在庫管理、エネルギー管理などのシステムを提供し、生産リソースの最適化、管理効率と意思決定レベルの向上、運営コストの削減を実現します。</p>
+                                        </div>
+                                        <div class="scenario-features">
+                                            <div class="feature-item">
+                                                <div class="feature-icon schedule-icon"></div>
+                                                <div class="feature-title">スマート生産計画システム</div>
+                                                <div class="feature-desc">AIアルゴリズムに基づく生産スケジューリングの最適化、設備稼働率の向上</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon inventory-icon"></div>
+                                                <div class="feature-title">スマート在庫管理</div>
+                                                <div class="feature-desc">予測的在庫管理、在庫コスト削減、回転率向上</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon energy-icon"></div>
+                                                <div class="feature-title">エネルギー管理システム</div>
+                                                <div class="feature-desc">エネルギー使用をリアルタイムで監視・最適化し、エネルギーコストを削減</div>
+                                            </div>
+                                            <div class="feature-item">
+                                                <div class="feature-icon decision-icon"></div>
+                                                <div class="feature-title">AIによる意思決定支援</div>
+                                                <div class="feature-desc">基于数据分析的管理决策支持系统</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">顧客価値とROI分析</h2>
+                <div class="value-analysis">
+                    <div class="value-metrics">
+                        <div class="metric-card">
+                            <div class="metric-icon productivity-icon"></div>
+                            <div class="metric-title">生産効率の向上</div>
+                            <div class="metric-value">41%</div>
+                            <div class="metric-desc">AR補助操作と協働ロボットの活用により、生産効率を大幅に向上</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon quality-icon"></div>
+                            <div class="metric-title">不良率の削減</div>
+                            <div class="metric-value">67%</div>
+                            <div class="metric-desc">AI画像検査と工程パラメータの最適化により、製品の不良率を大幅に削減</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon training-icon"></div>
+                            <div class="metric-title">訓練期間の短縮</div>
+                            <div class="metric-value">53%</div>
+                            <div class="metric-desc">AR/VRトレーニングとAI教育アシスタントにより、技能訓練期間を大幅に短縮</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-icon cost-icon"></div>
+                            <div class="metric-title">運営コストの削減</div>
+                            <div class="metric-value">28%</div>
+                            <div class="metric-desc">スマート管理システムを通じて、リソース配置を最適化し、運営コストを削減</div>
+                        </div>
+                    </div>
+                    
+                    <div class="roi-analysis">
+                        <h3 class="roi-title">投資回収期間</h3>
+                        <div class="roi-chart-container">
+                            <canvas id="roiChart"></canvas>
+                        </div>
+                        <div class="roi-insights">
+                            <div class="insight-item">
+                                <div class="insight-value">9-15ヶ月</div>
+                                <div class="insight-label">平均投資回収期間</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-value">3.8倍</div>
+                                <div class="insight-label">3年間の累積投資収益率</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">発展ロードマップ</h2>
+                <div class="roadmap">
+                    <div class="roadmap-timeline">
+                        <div class="timeline-track"></div>
+                        
+                        <div class="timeline-node current">
+                            <div class="node-year">2025</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">繊維分野でのブレイクスルー</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>繊維専用ARグラスとヘッドマウントレコーダーを発表</li>
+                                        <li>繊維産業向けAI画像検査システムを発表</li>
+                                        <li>建立首批纺织企业示范应用</li>
+                                        <li>シリーズA資金調達完了</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-node">
+                            <div class="node-year">2026</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">产品线扩展与市场拓展</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>推出协作机器人产品线</li>
+                                        <li>WarkAI OS 2.0バージョンにアップグレード</li>
+                                        <li>拓展コールドチェーン物流和障害者雇用支援场景</li>
+                                        <li>建立全国销售渠道网络</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-node">
+                            <div class="node-year">2027</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">技術アップグレードと国際化</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>次世代軽量ARグラスを発表</li>
+                                        <li>发布边缘计算版WarkAI OS</li>
+                                        <li>拓展东南亚和欧洲市场</li>
+                                        <li>シリーズB資金調達完了</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-node">
+                            <div class="node-year">2028</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">エコシステムの構築</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>建立开发者平台和应用商店</li>
+                                        <li>推出行业解决方案合作伙伴计划</li>
+                                        <li>拓展更多垂直行业应用</li>
+                                        <li>グローバル研究開発センターの設立</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-node">
+                            <div class="node-year">2030</div>
+                            <div class="node-dot"></div>
+                            <div class="node-content">
+                                <div class="node-title">グローバルリーダー</div>
+                                <div class="node-desc">
+                                    <ul>
+                                        <li>成为工业元宇宙领域グローバルリーダー</li>
+                                        <li>年間売上高50億元を達成</li>
+                                        <li>世界中の10,000社以上の企業顧客にサービスを提供</li>
+                                        <li>IPO上場完了</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-section">
+                <h2 class="section-title">他産業への展開</h2>
+                <div class="industry-expansion">
+                    <div class="expansion-card">
+                        <div class="expansion-icon coldchain-icon"></div>
+                        <div class="expansion-title">コールドチェーン物流</div>
+                        <div class="expansion-desc">
+                            <p>通过AI+AR+IoT技术的深度融合，为冷链企业提供全流程的温控管理和物流优化服务，确保食品、药品等温控产品的质量安全。</p>
+                            <div class="expansion-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">15%</div>
+                                    <div class="stat-label">製品ロス率の削減</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">23%</div>
+                                    <div class="stat-label">エネルギー消費の削減</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="expansion-card">
+                        <div class="expansion-icon disability-icon"></div>
+                        <div class="expansion-title">障害者雇用支援</div>
+                        <div class="expansion-desc">
+                            <p>ARグラスとAIアシスタントシステムを通じて、障害を持つ人々に作業補助と技能訓練サービスを提供し、仕事の障害を克服し、就職率と作業効率を向上させます。</p>
+                            <div class="expansion-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">47%</div>
+                                    <div class="stat-label">就職率の向上</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">62%</div>
+                                    <div class="stat-label">作業効率の向上</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="expansion-card">
+                        <div class="expansion-icon elderly-icon"></div>
+                        <div class="expansion-title">介護サービス</div>
+                        <div class="expansion-desc">
+                            <p>ARグラスとAIアシスタントシステムを通じて、高齢者に遠隔介護と再就職支援サービスを提供し、年齢の壁を克服し、遠隔介護と技能の継続を実現します。</p>
+                            <div class="expansion-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">38%</div>
+                                    <div class="stat-label">高齢者の再就職率</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">65%</div>
+                                    <div class="stat-label">介護コストの削減</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+        </div>
+    </div>
+    
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="transition-animation">
+            <div class="gear-large gear-transition-1"></div>
+            <div class="gear-large gear-transition-2"></div>
+            <div class="gear-large gear-transition-3"></div>
+            <div class="part-transform" id="transformingPart"></div>
+        </div>
+    </div>
+    
+    <script src="../js/script.js"></script>
+    <script src="../js/market.js"></script>
+</body>
+</html>

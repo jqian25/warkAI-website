@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WarkAI - ガンダムシミュレーションゲーム</title>
+<link href="css/gundam-style.css" rel="stylesheet"/>
+<link href="css/language-switcher.css" rel="stylesheet"/>
+<link href="css/pilot-module.css" rel="stylesheet"/>
+<link href="css/game-page.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+<!-- 起動シーケンスオーバーレイ -->
+<div class="startup-sequence" id="startupSequence">
+<div class="startup-container">
+<div class="startup-logo">
+<img alt="WarkAI Logo" class="logo-startup" src="images/warkai_logo.png"/>
+</div>
+<div class="startup-progress-container">
+<div class="startup-progress" id="startupProgress"></div>
+</div>
+<div class="startup-text" id="startupText">システム起動中...</div>
+<div class="startup-details" id="startupDetails">
+<div class="detail-line">ゲームエンジンを初期化中...</div>
+<div class="detail-line">ガンダムモデルを読み込み中...</div>
+<div class="detail-line">戦闘システムを調整中...</div>
+<div class="detail-line">マルチプレイヤーモードを接続中...</div>
+<div class="detail-line">ゲームモードを起動中...</div>
+</div>
+</div>
+</div>
+<!-- メインコンテンツエリア -->
+<div class="main-container" id="mainContainer">
+<!-- トップHUDインターフェース -->
+<div class="hud-top">
+<div class="hud-left">
+<div class="hud-element hud-time" id="hudTime">00:00:00</div>
+<div class="hud-element hud-status">システムステータス: <span class="status-online">オンライン</span></div>
+</div>
+<div class="hud-center">
+<div class="hud-element hud-energy">
+<div class="energy-label">エネルギー</div>
+<div class="energy-bar">
+<div class="energy-level"></div>
+</div>
+<div class="energy-percentage">100%</div>
+</div>
+</div>
+<div class="hud-right">
+<!-- 言語切り替え -->
+<div class="language-switcher">
+<div class="lang-current" id="langCurrent">
+<span class="lang-flag">🇯🇵</span>
+<span class="lang-name">日本語</span>
+<span class="lang-arrow">▼</span>
+</div>
+<div class="lang-dropdown" id="langDropdown">
+<div class="lang-option" onclick="switchLanguage('zh')">
+<span class="lang-flag">🇨🇳</span>
+<span class="lang-name">中国語</span>
+</div>
+<div class="lang-option" onclick="switchLanguage('en')">
+<span class="lang-flag">🇺🇸</span>
+<span class="lang-name">English</span>
+</div>
+<div class="lang-option" onclick="switchLanguage('ja')">
+<span class="lang-flag">🇯🇵</span>
+<span class="lang-name">日本語</span>
+</div>
+</div>
+</div>
+<!-- パイロットモジュール -->
+<div class="pilot-module">
+<div class="pilot-trigger" id="pilotTrigger">
+<div class="pilot-avatar">
+<div class="avatar-ring"></div>
+<div class="avatar-icon">👤</div>
+</div>
+<span class="pilot-text">パイロットモジュール</span>
+<span class="pilot-arrow">▼</span>
+</div>
+<div class="pilot-dropdown" id="pilotDropdown">
+<div class="dropdown-header">
+<div class="pilot-info">
+<div class="pilot-name" id="pilotName">テストパイロット</div>
+<div class="pilot-status" id="pilotStatus">認証済み</div>
+</div>
+</div>
+<div class="dropdown-menu">
+<div class="menu-item" onclick="showProfile()">
+<span class="menu-icon">👤</span>
+<span class="menu-text">プロフィール</span>
+</div>
+<div class="menu-item" onclick="showFeedback()">
+<span class="menu-icon">💬</span>
+<span class="menu-text">フィードバック</span>
+</div>
+<div class="menu-item" onclick="showCooperation()">
+<span class="menu-icon">🤝</span>
+<span class="menu-text">協力</span>
+</div>
+<div class="menu-item" onclick="goHome()">
+<span class="menu-icon">🏠</span>
+<span class="menu-text">ホーム</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ゲームタイトルエリア -->
+<header>
+<h1 class="main-title">ガンダムシミュレーション戦闘ゲーム</h1>
+<div class="subtitle">RX-78-2ガンダムを操縦し、宇宙でザク敵と戦闘する</div>
+</header>
+<!-- ゲームコンテナ -->
+<div class="game-container">
+<div class="game-frame">
+<iframe allow="fullscreen; accelerometer; gyroscope; magnetometer" allowfullscreen="" frameborder="0" id="gameFrame" src="game-simulation.html">
+</iframe>
+</div>
+</div>
+<!-- ゲーム説明 -->
+<div class="game-instructions">
+<div class="instructions-header">
+<h2>ゲーム説明</h2>
+</div>
+<div class="instructions-content">
+<div class="instruction-section">
+<h3>ゲーム目標</h3>
+<p>RX-78-2ガンダムを操縦して宇宙戦闘を行い、敵ザク機動兵器を倒す。</p>
+</div>
+<div class="instruction-section">
+<h3>操作方法</h3>
+<ul>
+<li><strong>WASD</strong> - ガンダムを移動</li>
+<li><strong>マウス移動</strong> - カメラビューを調整</li>
+<li><strong>左クリック</strong> - 武器を発射</li>
+<li><strong>スペース</strong> - ジャンプ/ブースト</li>
+<li><strong>Shift</strong> - スプリント</li>
+</ul>
+</div>
+<div class="instruction-section">
+<h3>ゲーム機能</h3>
+<ul>
+<li>3Dガンダム操縦体験</li>
+<li>リアルタイム宇宙戦闘</li>
+<li>リアルな物理エンジン</li>
+<li>複数の武器システム</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- ボトムHUDインターフェース -->
+<div class="hud-bottom">
+<div class="hud-element hud-coordinates">
+<span class="coordinate">X: 42.195</span>
+<span class="coordinate">Y: 13.114</span>
+<span class="coordinate">Z: 08.848</span>
+</div>
+<div class="hud-element hud-system">WarkAI OS v2.5.0</div>
+</div>
+<!-- フッター -->
+<footer>
+<div class="footer-content">
+<p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+</div>
+</footer>
+</div>
+<!-- モーダルコンテナ -->
+<div id="modalContainer"></div>
+<!-- スクリプト -->
+<script src="js/hud-clock.js"></script>
+<script src="js/language-switcher.js"></script>
+<script src="js/pilot-module-ja.js"></script>
+<script src="js/startup.js"></script>
+<script>
+        // ホームに戻る関数
+        function goHome() {
+            const currentLang = localStorage.getItem('selectedLanguage') || 'ja';
+            if (currentLang === 'zh') {
+                window.location.href = 'index.html';
+            } else if (currentLang === 'en') {
+                window.location.href = 'index-en.html';
+            } else if (currentLang === 'ja') {
+                window.location.href = 'index-ja.html';
+            }
+        }
+    </script>
+</body>
+</html>

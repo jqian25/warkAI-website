@@ -1,0 +1,330 @@
+/* 扎古变形动画样式 */
+
+.zaku-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 20px auto;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.zaku-container:hover {
+    transform: scale(1.05);
+}
+
+.zaku-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.3));
+}
+
+/* 眼睛闪烁效果 */
+.zaku-eye-glow {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #ff0000 0%, #ff4444 50%, transparent 70%);
+    border-radius: 50%;
+    animation: zakuEyeBlink 3s infinite;
+    z-index: 10;
+    pointer-events: none;
+}
+
+@keyframes zakuEyeBlink {
+    0%, 85% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
+    }
+    90%, 95% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.8);
+        box-shadow: 0 0 5px #ff0000;
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
+    }
+}
+
+/* 变形状态 */
+.zaku-container.transforming {
+    animation: zakuTransform 2s ease-in-out;
+}
+
+@keyframes zakuTransform {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        transform: scale(0.8) rotate(90deg);
+        filter: brightness(1.5) saturate(1.5);
+    }
+    50% {
+        transform: scale(0.6) rotate(180deg);
+        filter: brightness(2) saturate(2);
+    }
+    75% {
+        transform: scale(0.8) rotate(270deg);
+        filter: brightness(1.5) saturate(1.5);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        filter: brightness(1) saturate(1);
+    }
+}
+
+/* 变形粒子效果 */
+.transform-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #00ff88;
+    animation: particleFloat 1.5s ease-out forwards;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) translateY(-50px);
+    }
+}
+
+/* 变形模式指示器 */
+.transform-mode-indicator {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 255, 136, 0.2);
+    border: 1px solid #00ff88;
+    border-radius: 15px;
+    padding: 5px 15px;
+    font-size: 12px;
+    color: #00ff88;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.zaku-container:hover .transform-mode-indicator {
+    opacity: 1;
+}
+
+/* 机甲模式 */
+.zaku-container.mode-mecha .transform-mode-indicator::after {
+    content: "Mobile Suit Mode";
+}
+
+/* 战斗机模式 */
+.zaku-container.mode-jet .transform-mode-indicator::after {
+    content: "Fighter Mode";
+}
+
+/* 坦克模式 */
+.zaku-container.mode-tank .transform-mode-indicator::after {
+    content: "Tank Mode";
+}
+
+/* 变形能量环效果 */
+.energy-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border: 2px solid #00ff88;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.zaku-container.transforming .energy-ring {
+    animation: energyRingExpand 2s ease-out;
+}
+
+@keyframes energyRingExpand {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        border-width: 3px;
+    }
+    50% {
+        width: 300px;
+        height: 300px;
+        opacity: 0.8;
+        border-width: 2px;
+    }
+    100% {
+        width: 400px;
+        height: 400px;
+        opacity: 0;
+        border-width: 1px;
+    }
+}
+
+/* 扫描线效果 */
+.scan-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        transparent 0%,
+        rgba(0, 255, 136, 0.1) 50%,
+        transparent 100%
+    );
+    background-size: 100% 4px;
+    animation: scanLines 2s linear infinite;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 8;
+}
+
+.zaku-container:hover .scan-lines {
+    opacity: 1;
+}
+
+@keyframes scanLines {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+/* 机械音效指示器 */
+.sound-indicator {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #ff6600 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 15;
+    animation: soundPulse 0.5s ease-out;
+}
+
+.zaku-container.playing-sound .sound-indicator {
+    opacity: 1;
+}
+
+@keyframes soundPulse {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* 变形按钮 */
+.transform-controls {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.zaku-container:hover .transform-controls {
+    opacity: 1;
+}
+
+.transform-btn {
+    background: rgba(0, 255, 136, 0.2);
+    border: 1px solid #00ff88;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #00ff88;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.transform-btn:hover {
+    background: rgba(0, 255, 136, 0.4);
+    box-shadow: 0 0 10px #00ff88;
+}
+
+.transform-btn.active {
+    background: #00ff88;
+    color: #000;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .zaku-container {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .zaku-eye-glow {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .transform-mode-indicator {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+}
+
+/* 特殊效果：电火花 */
+.electric-spark {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #00ffff;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #00ffff;
+    animation: electricSpark 0.3s ease-out forwards;
+    z-index: 12;
+}
+
+@keyframes electricSpark {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) translate(20px, -20px);
+    }
+}

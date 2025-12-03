@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarkAI - Pilot Authentication System</title>
+    
+    <!-- 基础样式 -->
+    <link rel="stylesheet" href="css/gundam-style.css">
+    <link rel="stylesheet" href="css/pilot-module.css">
+    <link rel="stylesheet" href="css/language-switcher.css">
+    
+    <!-- 模块化动态效果样式 -->
+    <link rel="stylesheet" href="css/modules/particle-system.css">
+    <link rel="stylesheet" href="css/modules/tron-grid.css">
+    <link rel="stylesheet" href="css/modules/data-stream.css">
+    <link rel="stylesheet" href="css/modules/hologram.css">
+    <link rel="stylesheet" href="css/modules/energy-circuit.css">
+    <link rel="stylesheet" href="css/zaku-transform.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Orbitron', monospace;
+            color: #00ff88;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* HUD界面 */
+        .hud-interface {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(0, 20, 40, 0.9);
+            border-bottom: 2px solid #00ff88;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .hud-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .hud-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .hud-time {
+            font-size: 18px;
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .hud-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .energy-bar {
+            width: 100px;
+            height: 8px;
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .energy-fill {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00a3ff);
+            animation: energyFlow 2s ease-in-out infinite;
+        }
+
+        @keyframes energyFlow {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        /* 扎古变形器容器 */
+        .zaku-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-bottom: 40px;
+        }
+
+        /* 登录面板 */
+        .login-panel {
+            background: rgba(0, 20, 40, 0.8);
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 136, 0.4),
+                inset 0 0 30px rgba(0, 255, 136, 0.1);
+            animation: panelGlow 3s ease-in-out infinite;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        @keyframes panelGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 0 30px rgba(0, 255, 136, 0.4),
+                    inset 0 0 30px rgba(0, 255, 136, 0.1);
+            }
+            50% {
+                box-shadow: 
+                    0 0 50px rgba(0, 255, 136, 0.6),
+                    inset 0 0 50px rgba(0, 255, 136, 0.2);
+            }
+        }
+
+        .login-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #00ff88;
+            text-shadow: 0 0 15px #00ff88;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00a3ff;
+            font-size: 14px;
+            text-shadow: 0 0 8px #00a3ff;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 163, 255, 0.1);
+            border: 1px solid #00a3ff;
+            border-radius: 8px;
+            color: #00ff88;
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            box-shadow: inset 0 0 10px rgba(0, 163, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 
+                inset 0 0 15px rgba(0, 255, 136, 0.3),
+                0 0 15px rgba(0, 255, 136, 0.5);
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #00ff88, #00a3ff);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-family: 'Orbitron', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 20px;
+        }
+
+        .auth-button:hover {
+            background: linear-gradient(45deg, #00a3ff, #ff0066);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* 变形控制器 */
+        .transform-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .transform-btn {
+            padding: 10px 20px;
+            background: rgba(0, 163, 255, 0.2);
+            border: 1px solid #00a3ff;
+            border-radius: 6px;
+            color: #00a3ff;
+            font-family: 'Orbitron', monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .transform-btn:hover {
+            background: rgba(0, 163, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 163, 255, 0.6);
+        }
+
+        .transform-btn.active {
+            background: rgba(0, 255, 136, 0.3);
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        /* BGM控制器 */
+        .bgm-controller {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        .bgm-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 255, 136, 0.2);
+            border: 2px solid #00ff88;
+            color: #00ff88;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .bgm-btn:hover {
+            background: rgba(0, 255, 136, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+        }
+
+        /* 背景效果容器 */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hud-interface {
+                padding: 0 10px;
+                height: 50px;
+            }
+            
+            .hud-left, .hud-right {
+                gap: 15px;
+            }
+            
+            .login-panel {
+                padding: 30px 20px;
+                margin: 0 20px;
+            }
+            
+            .zaku-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .transform-controls {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .transform-btn {
+                padding: 8px 15px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HUD界面 -->
+    <div class="hud-interface">
+        <div class="hud-left">
+            <div class="hud-time" id="hudTime">00:00:00</div>
+            <div class="hud-status">
+                <span>System Status:</span>
+                <div class="status-indicator"></div>
+                <span>Online</span>
+            </div>
+            <div class="hud-status">
+                <span>Energy</span>
+                <div class="energy-bar">
+                    <div class="energy-fill"></div>
+                </div>
+                <span>100%</span>
+            </div>
+        </div>
+        <div class="hud-right">
+            <!-- 语言切换器 -->
+            <div class="language-switcher">
+                <button class="lang-btn" id="langBtn">
+                    🇺🇸 English <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <a href="login-enhanced.html" class="lang-option">🇨🇳 中文</a>
+                    <a href="login-enhanced-en.html" class="lang-option active">🇺🇸 English</a>
+                    <a href="login-enhanced-ja.html" class="lang-option">🇯🇵 日本語</a>
+                </div>
+            </div>
+            
+            <!-- 驾驶员模块 -->
+            <div class="pilot-module">
+                <button class="pilot-btn" id="pilotBtn">
+                    👤 Pilot Module <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="pilot-dropdown" id="pilotDropdown">
+                    <div class="pilot-status">
+                        <strong>Guest Pilot</strong><br>
+                        <small>Unauthenticated</small>
+                    </div>
+                    <div class="pilot-options">
+                        <a href="#" class="pilot-option">🔐 Login System</a>
+                        <a href="#" class="pilot-option">👤 Profile</a>
+                        <a href="#" class="pilot-option">💬 Feedback</a>
+                        <a href="#" class="pilot-option">🤝 Cooperation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BGM控制器 -->
+    <div class="bgm-controller">
+        <button class="bgm-btn" id="bgmBtn" title="Toggle Background Music">
+            🎵
+        </button>
+    </div>
+
+    <!-- 背景效果容器 -->
+    <div class="bg-effects">
+        <!-- TRON网格 -->
+        <div id="tronGrid" data-tron-grid></div>
+        
+        <!-- 数据流 -->
+        <div id="dataStream" data-data-stream></div>
+        
+        <!-- 粒子系统 -->
+        <div id="particleSystem" data-particle-system></div>
+        
+        <!-- 能量回路 -->
+        <div id="energyCircuit" data-energy-circuit></div>
+    </div>
+
+    <!-- 主要内容 -->
+    <div class="main-content">
+        <!-- 扎古变形器 -->
+        <div class="zaku-container">
+            <div id="zakuTransformer" data-zaku-transformer>
+                <img src="images/zaku_head.png" alt="Zaku Mobile Suit" class="zaku-image" id="zakuImage">
+            </div>
+        </div>
+
+        <!-- 变形控制器 -->
+        <div class="transform-controls">
+            <button class="transform-btn active" data-mode="ms">MS</button>
+            <button class="transform-btn" data-mode="jet">JET</button>
+            <button class="transform-btn" data-mode="tank">TANK</button>
+        </div>
+
+        <!-- 登录面板 -->
+        <div class="login-panel hologram-element">
+            <h2 class="login-title hologram-text">PILOT AUTHENTICATION</h2>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label class="input-label" for="pilotId">Pilot ID / Email</label>
+                    <input type="text" id="pilotId" class="input-field" placeholder="Enter your pilot identification" required>
+                </div>
+                
+                <div class="input-group">
+                    <label class="input-label" for="accessCode">Access Code</label>
+                    <input type="password" id="accessCode" class="input-field" placeholder="Enter your access code" required>
+                </div>
+                
+                <button type="submit" class="auth-button">
+                    AUTHENTICATE
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript模块 -->
+    <script src="js/modules/module-manager.js"></script>
+    <script src="js/modules/tron-grid.js"></script>
+    <script src="js/modules/data-stream.js"></script>
+    <script src="js/zaku-transform.js"></script>
+    <script src="js/pilot-module-en.js"></script>
+    
+    <script>
+        // 初始化时钟
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toTimeString().split(' ')[0];
+            document.getElementById('hudTime').textContent = timeString;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 语言切换器
+        document.getElementById('langBtn').addEventListener('click', function() {
+            const dropdown = document.getElementById('langDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // 驾驶员模块
+        document.getElementById('pilotBtn').addEventListener('click', function() {
+            const dropdown = document.getElementById('pilotDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // 点击外部关闭下拉菜单
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.language-switcher')) {
+                document.getElementById('langDropdown').style.display = 'none';
+            }
+            if (!event.target.closest('.pilot-module')) {
+                document.getElementById('pilotDropdown').style.display = 'none';
+            }
+        });
+
+        // 变形控制器
+        document.querySelectorAll('.transform-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 移除所有active类
+                document.querySelectorAll('.transform-btn').forEach(b => b.classList.remove('active'));
+                // 添加active类到当前按钮
+                this.classList.add('active');
+                
+                // 触发变形动画
+                const mode = this.dataset.mode;
+                const zakuImage = document.getElementById('zakuImage');
+                
+                switch(mode) {
+                    case 'ms':
+                        zakuImage.src = 'images/zaku_head.png';
+                        break;
+                    case 'jet':
+                        zakuImage.src = 'images/zaku_jet.png';
+                        break;
+                    case 'tank':
+                        zakuImage.src = 'images/zaku_tank.png';
+                        break;
+                }
+                
+                // 添加变形动画效果
+                zakuImage.style.transform = 'scale(0.8) rotateY(180deg)';
+                setTimeout(() => {
+                    zakuImage.style.transform = 'scale(1) rotateY(0deg)';
+                }, 300);
+            });
+        });
+
+        // BGM控制器
+        let bgmPlaying = false;
+        document.getElementById('bgmBtn').addEventListener('click', function() {
+            bgmPlaying = !bgmPlaying;
+            this.textContent = bgmPlaying ? '🔊' : '🎵';
+            this.title = bgmPlaying ? 'Pause Background Music' : 'Play Background Music';
+            
+            // 这里可以添加实际的音频播放逻辑
+            console.log('BGM:', bgmPlaying ? 'Playing' : 'Paused');
+        });
+
+        // 登录表单处理
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const pilotId = document.getElementById('pilotId').value;
+            const accessCode = document.getElementById('accessCode').value;
+            
+            // 简单验证
+            if (pilotId && accessCode) {
+                // 创建登录成功效果
+                const panel = document.querySelector('.login-panel');
+                panel.style.animation = 'none';
+                panel.style.background = 'rgba(0, 255, 136, 0.2)';
+                panel.style.borderColor = '#00ff88';
+                
+                setTimeout(() => {
+                    // 跳转到主页面
+                    window.location.href = 'index-en.html';
+                }, 1000);
+            }
+        });
+
+        // 初始化模块管理器
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Enhanced login page loaded with all modules');
+            
+            // 创建点击波纹效果
+            document.addEventListener('click', function(e) {
+                if (window.moduleManager) {
+                    const tronGrid = window.moduleManager.getModule('tron-grid', 'tronGrid');
+                    if (tronGrid && typeof tronGrid.createClickRipple === 'function') {
+                        tronGrid.createClickRipple(e.clientX, e.clientY);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
