@@ -419,3 +419,17 @@
     }
 })()
 </script>
+
+<script>
+    function autoAdjustPadding() {
+        const hud = document.querySelector('.hud-top');
+        if (hud) {
+            const realHeight = hud.offsetHeight;
+            document.body.style.paddingTop = realHeight + 'px';
+        }
+    }
+
+    window.addEventListener('load', autoAdjustPadding);
+    window.addEventListener('resize', autoAdjustPadding);
+    setInterval(autoAdjustPadding, 500);
+</script>
