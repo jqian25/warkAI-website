@@ -356,34 +356,50 @@ header {
 
 @media (max-width: 768px) {
     .hud-top {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        padding: 10px;
-        align-items: center;
+        display: flex !important;
+        flex-direction: column !important;
+        height: auto !important;
+        padding: 8px !important;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
     }
 
     .hud-row-1, .hud-row-2, .hud-row-3 {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-bottom: 10px;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        margin-bottom: 8px !important;
+        align-items: center !important;
     }
 
     .hud-left,
     .hud-center,
     .hud-right {
-        width: 100%;
-        justify-content: space-between;
-        gap: 10px;
+        display: none !important;
     }
 
     .hud-element {
-        font-size: 12px;
+        font-size: 11px !important;
+    }
+
+    .hud-time {
+        font-size: 12px !important;
+    }
+
+    .hud-energy {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+
+    .energy-bar {
+        width: 80px !important;
+        height: 6px !important;
     }
 
     .main-title {
-        font-size: 24px;
+        font-size: 20px !important;
+        margin-top: 10px !important;
     }
 
     .gundam-container {
