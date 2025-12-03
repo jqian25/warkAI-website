@@ -356,8 +356,9 @@ header {
 
 @media (max-width: 768px) {
     .hud-top {
-        height: 60px;
-        padding: 0 10px;
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px;
     }
 
     .hud-left,
@@ -371,12 +372,12 @@ header {
     }
 
     .main-title {
-        font-size: 32px;
+        font-size: 24px;
     }
 
     .gundam-container {
-        width: 300px;
-        height: 400px;
+        width: 90vw;
+        height: 60vh;
     }
 
     header {
