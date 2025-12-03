@@ -356,10 +356,18 @@ header {
 
 @media (max-width: 768px) {
     .hud-top {
+        display: flex;
         flex-direction: column;
         height: auto;
         padding: 10px;
-        align-items: flex-start;
+        align-items: center;
+    }
+
+    .hud-row-1, .hud-row-2, .hud-row-3 {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 10px;
     }
 
     .hud-left,
