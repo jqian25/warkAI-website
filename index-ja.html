@@ -359,7 +359,24 @@
             initLanguageSwitcher();
         }
     })();
-    </script>
+    function switchLanguage(lang) {
+    const currentPath = window.location.pathname;
+    let newPath;
+
+    if (lang === 'zh') {
+        newPath = currentPath.replace('-en.html', '.html').replace('-ja.html', '.html');
+        if (!newPath.endsWith('.html')) newPath = 'index.html';
+    } else if (lang === 'en') {
+        newPath = currentPath.replace('.html', '-en.html').replace('-ja.html', '-en.html');
+        if (!newPath.endsWith('-en.html')) newPath = 'index-en.html';
+    } else if (lang === 'ja') {
+        newPath = currentPath.replace('.html', '-ja.html').replace('-en.html', '-ja.html');
+        if (!newPath.endsWith('-ja.html')) newPath = 'index-ja.html';
+    }
+
+    window.location.href = newPath;
+}
+</script>
 </body>
 </html><!-- Force show mainContainer and terminal content after 3 seconds -->
 <script>
