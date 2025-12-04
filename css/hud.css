@@ -408,7 +408,12 @@ header {
 
     /* ========== 强力修复：手机端高达导航变大 ========== */
     /* 1. 外框：解除限制，允许内容撑开高度 */
-    #gundamNavigator, 
+    #gundamNavigator {
+        margin: 16px auto 24px !important;
+        padding-bottom: 20px !important;
+        overflow-x: hidden !important;
+    }
+    
     .gundam-container {
         display: flex !important;
         flex-direction: column !important;
@@ -417,6 +422,8 @@ header {
         padding-top: 40px !important;
         padding-bottom: 60px !important;
         position: static !important;
+        transform: scale(0.85) !important;
+        transform-origin: top center !important;
     }
 
     /* 2. 图片：居中，大小适中 */
@@ -503,10 +510,20 @@ header {
     .gundam-container {
         width: 150px;
         height: 250px;
+        transform: scale(0.75) !important;
+        transform-origin: top center !important;
     }
     
     header {
         margin-top: 60px;
         padding: 15px 8px;
+    }
+}
+
+/* 特别窄的手机屏幕 (< 414px) 细调 */
+@media (max-width: 414px) {
+    .gundam-container {
+        transform: scale(0.75) !important;
+        transform-origin: top center !important;
     }
 }
