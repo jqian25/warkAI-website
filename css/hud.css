@@ -406,69 +406,59 @@ header {
         margin-top: 10px !important;
     }
 
-    /* ========== 强力修复：手机端高达导航变大 ========== */
-    /* 1. 外框：解除限制，允许内容撑开高度 */
-    #gundamNavigator {
-        margin: 16px auto 24px !important;
-        padding-bottom: 20px !important;
-        overflow-x: hidden !important;
-    }
-    
+    /* ========== 终极修复：指名道姓强制排列 ========== */
+    /* 1. 强制容器竖着排 */
+    #gundamNavigator, 
     .gundam-container {
         display: flex !important;
         flex-direction: column !important;
         height: auto !important;
-        min-height: auto !important;
-        padding-top: 40px !important;
-        padding-bottom: 60px !important;
-        position: static !important;
-        transform: scale(0.85) !important;
-        transform-origin: top center !important;
+        padding-top: 20px !important;
+        padding-bottom: 100px !important;
+        position: relative !important;
     }
 
-    /* 2. 图片：居中，大小适中 */
+    /* 2. 图片强制变小居中 */
     .gundam-image {
         position: relative !important;
-        width: 180px !important;
+        display: block !important;
+        width: 140px !important;
         height: auto !important;
-        margin: 0 auto 30px auto !important;
+        margin: 0 auto 20px auto !important;
+        transform: none !important;
         left: auto !important;
         top: auto !important;
-        transform: none !important;
-        display: block !important;
     }
 
-    /* 3. 每一个方块（手臂、腿等）：强制变成大宽条 */
-    .gundam-part {
+    /* 3. 【重点】点名每一个方块，强制它们变成宽按钮 */
+    #navHead, 
+    #navCore, 
+    #navArms, 
+    #navLegs, 
+    #navPlatform {
         position: relative !important;
-        top: auto !important;
+        display: block !important;
+        width: 90% !important;
+        max-width: 400px !important;
+        margin: 10px auto !important;
         left: auto !important;
+        top: auto !important;
         right: auto !important;
         bottom: auto !important;
-        width: 90% !important;
-        max-width: none !important;
-        margin: 10px auto !important;
         transform: none !important;
         opacity: 1 !important;
     }
 
-    /* 4. 里面的文字框：加大字号，加宽边框 */
+    /* 4. 确保里面的字能看清 */
     .part-label {
-        font-size: 18px !important;
-        line-height: 1.5 !important;
-        padding: 20px !important;
-        text-align: center !important;
-        background: rgba(4, 16, 32, 0.95) !important;
-        border: 2px solid #00a3ff !important;
-        border-radius: 10px !important;
-        box-shadow: 0 0 20px rgba(0, 163, 255, 0.5) !important;
         width: 100% !important;
-        white-space: normal !important;
-    }
-    
-    /* 5. 隐藏一些可能导致干扰的多余线条（如果有的话） */
-    .connection-line, svg {
-        display: none !important;
+        padding: 15px !important;
+        background: rgba(4, 16, 32, 0.95) !important;
+        border: 1px solid #00a3ff !important;
+        box-shadow: 0 0 15px rgba(0, 163, 255, 0.4) !important;
+        text-align: center !important;
+        font-size: 16px !important;
+        border-radius: 8px !important;
     }
 
     header {
