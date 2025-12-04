@@ -406,66 +406,62 @@ header {
         margin-top: 10px !important;
     }
 
-    /* ========== 高达导航图手机端修复："乖乖排队"方案 ========== */
-    /* 1. 调整外层容器，让它变成垂直排列 */
-    .gundam-navigator, 
+    /* ========== 强力修复：手机端高达导航变大 ========== */
+    /* 1. 外框：解除限制，允许内容撑开高度 */
+    #gundamNavigator, 
     .gundam-container {
-        height: auto !important;
-        min-height: auto !important;
         display: flex !important;
         flex-direction: column !important;
-        padding: 20px 15px !important;
-        position: relative !important;
-        margin-top: 20px !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding-top: 40px !important;
+        padding-bottom: 60px !important;
+        position: static !important;
     }
 
-    /* 2. 处理中间的高达图片 */
+    /* 2. 图片：居中，大小适中 */
     .gundam-image {
         position: relative !important;
-        width: 120px !important;
+        width: 180px !important;
         height: auto !important;
-        margin: 0 auto 20px auto !important;
-        display: block !important;
-        opacity: 0.8 !important;
-        top: auto !important;
+        margin: 0 auto 30px auto !important;
         left: auto !important;
-        right: auto !important;
+        top: auto !important;
         transform: none !important;
+        display: block !important;
     }
 
-    /* 3. 重置所有"身体部位"方块的位置 */
+    /* 3. 每一个方块（手臂、腿等）：强制变成大宽条 */
     .gundam-part {
         position: relative !important;
         top: auto !important;
         left: auto !important;
         right: auto !important;
         bottom: auto !important;
+        width: 90% !important;
+        max-width: none !important;
+        margin: 10px auto !important;
         transform: none !important;
-        width: 100% !important;
-        margin-bottom: 15px !important;
-        height: auto !important;
+        opacity: 1 !important;
     }
 
-    /* 4. 把里面的文字框美化成"科技感按钮" */
+    /* 4. 里面的文字框：加大字号，加宽边框 */
     .part-label {
-        display: block !important;
-        background: rgba(4, 16, 32, 0.9) !important;
-        border: 1px solid #00a3ff !important;
-        box-shadow: 0 0 10px rgba(0, 163, 255, 0.3) !important;
-        padding: 18px !important;
-        border-radius: 8px !important;
-        color: #fff !important;
+        font-size: 18px !important;
+        line-height: 1.5 !important;
+        padding: 20px !important;
         text-align: center !important;
-        font-size: 16px !important;
-        font-weight: bold !important;
+        background: rgba(4, 16, 32, 0.95) !important;
+        border: 2px solid #00a3ff !important;
+        border-radius: 10px !important;
+        box-shadow: 0 0 20px rgba(0, 163, 255, 0.5) !important;
         width: 100% !important;
-        box-sizing: border-box !important;
+        white-space: normal !important;
     }
     
-    /* 5. 鼠标点上去（或手指按住）的效果 */
-    .part-label:active {
-        background: rgba(0, 163, 255, 0.2) !important;
-        transform: scale(0.98);
+    /* 5. 隐藏一些可能导致干扰的多余线条（如果有的话） */
+    .connection-line, svg {
+        display: none !important;
     }
 
     header {
