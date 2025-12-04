@@ -406,9 +406,66 @@ header {
         margin-top: 10px !important;
     }
 
+    /* ========== 高达导航图手机端修复："乖乖排队"方案 ========== */
+    /* 1. 调整外层容器，让它变成垂直排列 */
+    .gundam-navigator, 
     .gundam-container {
-        width: 90vw;
-        height: 60vh;
+        height: auto !important;
+        min-height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 20px 15px !important;
+        position: relative !important;
+        margin-top: 20px !important;
+    }
+
+    /* 2. 处理中间的高达图片 */
+    .gundam-image {
+        position: relative !important;
+        width: 120px !important;
+        height: auto !important;
+        margin: 0 auto 20px auto !important;
+        display: block !important;
+        opacity: 0.8 !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+    }
+
+    /* 3. 重置所有"身体部位"方块的位置 */
+    .gundam-part {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        margin-bottom: 15px !important;
+        height: auto !important;
+    }
+
+    /* 4. 把里面的文字框美化成"科技感按钮" */
+    .part-label {
+        display: block !important;
+        background: rgba(4, 16, 32, 0.9) !important;
+        border: 1px solid #00a3ff !important;
+        box-shadow: 0 0 10px rgba(0, 163, 255, 0.3) !important;
+        padding: 18px !important;
+        border-radius: 8px !important;
+        color: #fff !important;
+        text-align: center !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* 5. 鼠标点上去（或手指按住）的效果 */
+    .part-label:active {
+        background: rgba(0, 163, 255, 0.2) !important;
+        transform: scale(0.98);
     }
 
     header {
