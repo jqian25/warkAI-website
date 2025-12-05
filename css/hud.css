@@ -49,8 +49,19 @@
     box-shadow: 0 0 20px rgba(0, 163, 255, 0.3);
 }
 
+.language-switcher {
+    order: 3; /* 强制语言选择器在最右边 */
+    margin-left: auto; /* 强制推到最右边 */
+}
+
 .hud-left,
 .hud-center,
+.hud-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
 .hud-right {
     display: flex;
     align-items: center;
