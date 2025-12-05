@@ -1,306 +1,276 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WarkAI - 人机智能新纪元</title>
-    <link rel="stylesheet" href="css/video-player.css">
-    <link rel="stylesheet" href="css/gundam-style.css">
-    <link rel="stylesheet" href="css/hud.css">
-    <link rel="stylesheet" href="css/language-switcher.css">
-    <link rel="stylesheet" href="css/terminal-interactive.css">
-    <!-- 延迟加载非首屏正样式 -->
-    <link rel="preload" href="css/pilot-module.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="css/game-page.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="css/features-menu.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="css/ai-assistant.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <!-- 异步加载anime.js -->
-    <script src="js/startup.js"></script>
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="js/terminal-interactive.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WarkAI - The New Era of Human-Machine Intelligence</title>
+<link href="css/video-player.css" rel="stylesheet"/>
+<link href="css/gundam-style.css" rel="stylesheet"/>
+<link href="css/hud.css" rel="stylesheet"/>
+<link as="style" href="css/pilot-module.css" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
+<link as="style" href="css/game-page.css" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
+<link as="style" href="css/features-menu.css" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
+<link as="style" href="css/ai-assistant.css" onload="this.onload=null;this.rel='stylesheet'" rel="preload"/>
+<script async="" src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="js/startup.js"></script>
     <link rel="stylesheet" href="css/responsive-unified.css">
 </head>
 <body>
-    <!-- 启动序列覆盖层 -->
-    <div class="startup-sequence" id="startupSequence">
-        <div class="startup-container">
-            <div class="startup-logo">
-                <img src="images/warkai_logo.png" alt="WarkAI Logo" class="logo-startup">
-            </div>
-            <div class="startup-progress-container">
-                <div class="startup-progress" id="startupProgress"></div>
-            </div>
-            <div class="startup-text" id="startupText">系统启动中...</div>
-            <div class="startup-details" id="startupDetails">
-                <div class="detail-line">初始化核心系统...</div>
-                <div class="detail-line">加载AI引擎...</div>
-                <div class="detail-line">校准AR系统...</div>
-                <div class="detail-line">连接机器人控制模块...</div>
-                <div class="detail-line">激活WarkAI OS...</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 主内容区域 -->
-    <div class="main-container" id="mainContainer">
-        <!-- 顶部HUD界面 -->
-        <div class="hud-top">
-            <div class="hud-row-1">
-                <div class="hud-element hud-time" id="hudTime">00:00:00</div>
-                <div class="hud-element hud-status">系统状态: <span class="status-online">在线</span></div>
-            </div>
-            <div class="hud-row-2">
-                <div class="hud-element hud-energy">
-                    <div class="energy-label">能量</div>
-                    <div class="energy-bar">
-                        <div class="energy-level"></div>
-                    </div>
-                    <div class="energy-percentage">100%</div>
-                </div>
-            </div>
-            <div class="hud-row-3">
-                <!-- 语言切换器 -->
-                <div class="language-switcher">
-                    <div class="lang-current" id="langCurrent">
-                        <span class="lang-flag">🇨🇳</span>
-                        <span class="lang-name">中文</span>
-                        <span class="lang-arrow">▼</span>
-                    </div>
-                    <div class="lang-dropdown" id="langDropdown">
-                        <div class="lang-option" data-lang="zh">
-                            <span class="lang-flag">🇨🇳</span>
-                            <span class="lang-name">中文</span>
-                        </div>
-                        <div class="lang-option" data-lang="en">
-                            <span class="lang-flag">🇺🇸</span>
-                            <span class="lang-name">English</span>
-                        </div>
-                        <div class="lang-option" data-lang="ja">
-                            <span class="lang-flag">🇯🇵</span>
-                            <span class="lang-name">日本語</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 功能菜单 -->
-                <div class="features-menu">
-                    <div class="features-trigger" id="featuresTrigger">
-                        <span class="features-icon">⚙️</span>
-                        <span class="features-text">功能</span>
-                        <span class="features-arrow">▼</span>
-                    </div>
-                    <div class="features-dropdown" id="featuresDropdown">
-                        <div class="menu-item" onclick="navigateToGame()">
-                            <span class="menu-icon">🎮</span>
-                            <span class="menu-text">高达游戏</span>
-                        </div>
-                        <div class="menu-item" onclick="navigateToGesture()">
-                            <span class="menu-icon">👋</span>
-                            <span class="menu-text">手势控制</span>
-                        </div>
-                        <div class="menu-item" onclick="openAIAssistant()">
-                            <span class="menu-icon">🤖</span>
-                            <span class="menu-text">AI助手</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 驾驶员模块 -->
-                <div class="pilot-module">
-                    <div class="pilot-trigger" id="pilotTrigger">
-                        <div class="pilot-avatar">
-                            <div class="avatar-ring"></div>
-                            <div class="avatar-icon">👤</div>
-                        </div>
-                        <span class="pilot-text">驾驶员模块</span>
-                        <span class="pilot-arrow">▼</span>
-                    </div>
-                    <div class="pilot-dropdown" id="pilotDropdown">
-                        <div class="dropdown-header">
-                            <div class="pilot-info">
-                                <div class="pilot-name" id="pilotName">访客驾驶员</div>
-                                <div class="pilot-status" id="pilotStatus">未认证</div>
-                            </div>
-                        </div>
-                        <div class="dropdown-menu">
-                            <div class="menu-item" onclick="showLogin()">
-                                <span class="menu-icon">🔐</span>
-                                <span class="menu-text">登录系统</span>
-                            </div>
-                            <div class="menu-item" onclick="showProfile()">
-                                <span class="menu-icon">👤</span>
-                                <span class="menu-text">个人中心</span>
-                            </div>
-                            <div class="menu-item" onclick="showFeedback()">
-                                <span class="menu-icon">💬</span>
-                                <span class="menu-text">意见反馈</span>
-                            </div>
-                            <div class="menu-item" onclick="showCooperation()">
-                                <span class="menu-icon">🤝</span>
-                                <span class="menu-text">合作洽谈</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 标题区域 -->
-        <header>
-            <h1 class="main-title">WarkAI: 人机智能新纪元</h1>
-            <div class="subtitle">融合AI、AR与机器人技术，重塑未来生产力</div>
-        </header>
-
-        <!-- 视频播放器 -->
-        <div class="video-player-container" id="videoPlayerContainer">
-            <video class="intro-video" id="introVideo" playsinline autoplay muted>
-                <source src="assets/intro-video-no-watermark.mp4" type="video/mp4">
+<!-- Startup Sequence Overlay -->
+<div class="startup-sequence" id="startupSequence">
+<div class="startup-container">
+<div class="startup-logo">
+<img alt="WarkAI Logo" class="logo-startup" src="images/warkai_logo.png"/>
+</div>
+<div class="startup-progress-container">
+<div class="startup-progress" id="startupProgress"></div>
+</div>
+<div class="startup-text" id="startupText">System Starting...</div>
+<div class="startup-details" id="startupDetails">
+<div class="detail-line">Initializing Core System...</div>
+<div class="detail-line">Loading AI Engine...</div>
+<div class="detail-line">Calibrating AR System...</div>
+<div class="detail-line">Connecting Robot Control Module...</div>
+<div class="detail-line">Activating WarkAI OS...</div>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="main-container" id="mainContainer">
+<!-- Top HUD Interface -->
+<div class="hud-top">
+<div class="hud-row-1">
+<div class="hud-element hud-time" id="hudTime">00:00:00</div>
+<div class="hud-element hud-status">System Status: <span class="status-online">Online</span></div>
+</div>
+<div class="hud-row-2">
+<div class="hud-element hud-energy">
+<div class="energy-label">Energy</div>
+<div class="energy-bar">
+<div class="energy-level"></div>
+</div>
+<div class="energy-percentage">100%</div>
+</div>
+</div>
+<div class="hud-row-3">
+<!-- Language Switcher -->
+<div class="language-switcher">
+<div class="lang-current" id="langCurrent">
+<span class="lang-flag">🇺🇸</span>
+<span class="lang-name">English</span>
+<span class="lang-arrow">▼</span>
+</div>
+<div class="lang-dropdown" id="langDropdown">
+<div class="lang-option" onclick="window.location.href='index-zh.html'">
+<span class="lang-flag">🇨🇳</span>
+<span class="lang-name">Chinese</span>
+</div>
+<div class="lang-option" onclick="window.location.href='index.html'">
+<span class="lang-flag">🇺🇸</span>
+<span class="lang-name">English</span>
+</div>
+<div class="lang-option" onclick="window.location.href='index-ja.html'">
+<span class="lang-flag">🇯🇵</span>
+<span class="lang-name">Japanese</span>
+</div>
+</div>
+</div>
+<!-- Features Menu -->
+<div class="features-menu">
+<div class="features-trigger" id="featuresTrigger">
+<span class="features-icon">⚙️</span>
+<span class="features-text">Features</span>
+<span class="features-arrow">▼</span>
+</div>
+<div class="features-dropdown" id="featuresDropdown">
+<div class="menu-item" onclick="navigateToGame()">
+<span class="menu-icon">🎮</span>
+<span class="menu-text">Gundam Game</span>
+</div>
+<div class="menu-item" onclick="navigateToGesture()">
+<span class="menu-icon">👋</span>
+<span class="menu-text">Gesture Control</span>
+</div>
+<div class="menu-item" onclick="openAIAssistant()">
+<span class="menu-icon">🤖</span>
+<span class="menu-text">AI Assistant</span>
+</div>
+</div>
+</div>
+<!-- Pilot Module -->
+<div class="pilot-module">
+<div class="pilot-trigger" id="pilotTrigger">
+<div class="pilot-avatar">
+<div class="avatar-ring"></div>
+<div class="avatar-icon">👤</div>
+</div>
+<span class="pilot-text">Pilot Module</span>
+<span class="pilot-arrow">▼</span>
+</div>
+<div class="pilot-dropdown" id="pilotDropdown">
+<div class="dropdown-header">
+<div class="pilot-info">
+<div class="pilot-name" id="pilotName">Guest Pilot</div>
+<div class="pilot-status" id="pilotStatus">Unauthenticated</div>
+</div>
+</div>
+<div class="dropdown-menu">
+<div class="menu-item" onclick="showLogin()">
+<span class="menu-icon">🔐</span>
+<span class="menu-text">Login System</span>
+</div>
+<div class="menu-item" onclick="showProfile()">
+<span class="menu-icon">👤</span>
+<span class="menu-text">Profile</span>
+</div>
+<div class="menu-item" onclick="showFeedback()">
+<span class="menu-icon">💬</span>
+<span class="menu-text">Feedback</span>
+</div>
+<div class="menu-item" onclick="showCooperation()">
+<span class="menu-icon">🤝</span>
+<span class="menu-text">Cooperation</span>
+</div> </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Title Area -->
+<header>
+<h1 class="main-title">WarkAI: Global Talent Dispatch & AR/AI Workforce Solutions</h1>
+<div class="subtitle">Focusing on North America, Japan, and Europe for Remote Work & Cross-Border Staffing</div>
+</header>
+<!-- Video Player -->
+<div class="video-player-container" id="videoPlayerContainer">
+<video autoplay="" class="intro-video" id="introVideo" muted="" playsinline="">
+<source src="assets/intro-video-no-watermark.mp4" type="video/mp4"/>
                 Your browser does not support the video tag.
             </video>
-            <div class="video-overlay"></div>
-        </div>
-
-        <!-- 高达机器人导航区域 -->
-        <div class="gundam-navigator" id="gundamNavigator" style="display: none;">
-
-            <div class="gundam-container">
-                <img src="images/gundam_mecha.png" alt="Gundam Navigator" class="gundam-image">
-                
-                <div class="gundam-part head" id="navHead" data-target="pages/team.html">
-                    <div class="part-highlight"></div>
-                    <div class="target-reticle"></div>
-                    <div class="part-label">团队介绍与愿景</div>
-                </div>
-                
-                <div class="gundam-part core" id="navCore" data-target="pages/summary.html">
-                    <div class="part-highlight"></div>
-                    <div class="target-reticle"></div>
-                    <div class="part-label">执行摘要与商业模式</div>
-                </div>
-                
-                <div class="gundam-part arms" id="navArms" data-target="pages/products.html">
-                    <div class="part-highlight"></div>
-                    <div class="target-reticle"></div>
-                    <div class="part-label">核心产品线</div>
-                </div>
-                
-                <div class="gundam-part legs" id="navLegs" data-target="pages/market.html">
-                    <div class="part-highlight"></div>
-                    <div class="target-reticle"></div>
-                    <div class="part-label">市场应用与路线图</div>
-                </div>
-                
-                <div class="gundam-part platform" id="navPlatform" data-target="pages/technology.html">
-                    <div class="part-highlight"></div>
-                    <div class="target-reticle"></div>
-                    <div class="part-label">WarkAI OS 核心技术与AI平台</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 操作指引 -->
-        <div class="instruction-text">
-
-        </div>
-
-        <!-- 驾驶舱终端 -->
-        <div class="cockpit-terminal">
-            <div class="terminal-header">
-                <div class="terminal-title">GUNDAM-TERMINAL</div>
-                <div class="terminal-status">ACTIVE</div>
-            </div>
-            <div class="terminal-content" id="terminalContent">
-                <div class="terminal-line">// WarkAI OS v2.5.0 启动完成</div>
-                <div class="terminal-line">// 欢迎回来，驾驶员</div>
-                <div class="terminal-line">// 机体状态: 最佳</div>
-                <div class="terminal-line">// 任务简报: 探索WarkAI商业计划书</div>
-                <div class="terminal-line">// 请选择要查看的模块</div>
-                <div class="terminal-line"></div>
-                <div class="terminal-line">【导航菜单】</div>
-                <div class="terminal-line">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
-                <div class="terminal-line">🔴 头部 → <a href="/pages/team.html" style="color: #00ff00; text-decoration: none;">团队介绍与愿景</a></div>
-                <div class="terminal-line">🟡 核心 → <a href="/pages/summary.html" style="color: #00ff00; text-decoration: none;">执行摘要与商业模式</a></div>
-                <div class="terminal-line">🟢 手臂 → <a href="/pages/products.html" style="color: #00ff00; text-decoration: none;">核心产品线</a></div>
-                <div class="terminal-line">🔵 腿部 → <a href="/pages/market.html" style="color: #00ff00; text-decoration: none;">市场应用与路线图</a></div>
-                <div class="terminal-line">🟣 平台 → <a href="/pages/technology.html" style="color: #00ff00; text-decoration: none;">WarkAI OS核心与应用平台</a></div>
-                <div class="terminal-line">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
-                <div class="terminal-line terminal-cursor">_</div>
-            </div>
-        </div>
-
-        <!-- 底部HUD界面 -->
-        <div class="hud-bottom">
-            <div class="hud-element hud-coordinates">
-                <span class="coordinate">X: 42.195</span>
-                <span class="coordinate">Y: 13.114</span>
-                <span class="coordinate">Z: 08.848</span>
-            </div>
-            <div class="hud-element hud-system">WarkAI OS v2.5.0</div>
-        </div>
-
-        <!-- 页脚 -->
-        <footer>
-            <div class="footer-content">
-                <p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
-            </div>
-        </footer>
-    </div>
-
-    <!-- 变形过渡动画覆盖层 -->
-    <div class="transform-overlay" id="transformOverlay">
-        <div class="transform-container">
-            <div class="transform-part" id="transformPart"></div>
-            <div class="transform-text" id="transformText">变形中...</div>
-            <div class="transform-details">
-                <div class="detail-item">
-                    <div class="detail-label">系统</div>
-                    <div class="detail-value">WarkAI OS</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">模式</div>
-                    <div class="detail-value" id="transformMode">标准模式</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">状态</div>
-                    <div class="detail-value">变形序列激活</div>
-                </div>
-            </div>
-            <div class="transform-progress-container">
-                <div class="transform-progress" id="transformProgress"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 用户面板模态框 -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-container" id="modalContainer">
-            <!-- 动态内容将在这里插入 -->
-        </div>
-      <!-- 脚本 -->
-    <script src="js/startup.js"></script>
-    <script src="js/gundam-script.js?v=3"></script>
-    <script src="js/i18n-init.js"></script>
-    <script src="js/transform-animations.js"></script>
-    <script src="js/test-account.js"></script>
-    <script src="js/hud-clock.js"></script>
-    <script src="js/language-config.js"></script>
-    <script src="js/language-switcher.js"></script>
-    <script src="js/login-module.js"></script>
-    <script src="js/pilot-module.js"></script>
-    <script src="js/features-menu.js"></script>
-    <script src="js/ai-llm-engine.js"></script>
-    <script src="js/ai-assistant.js"></script>
-    <script src="js/mem0-storage.js"></script>
-    <script src="js/video-player-control.js"></script>
-    <script src="js/text-menu-handler.js"></script>
-    
-    <!-- 应用菜单项样式的 inline script -->
-    <script>
+<div class="video-overlay"></div>
+</div>
+<!-- Gundam Robot Navigation Area -->
+<div class="gundam-navigator" id="gundamNavigator" style="display: none;">
+<div class="gundam-container">
+<img alt="Gundam Navigator" class="gundam-image" src="images/gundam_mecha.png"/>
+<div class="gundam-part head" data-target="pages/team-en.html" id="navHead">
+<div class="part-highlight"></div>
+<div class="target-reticle"></div>
+<div class="part-label">Global Team & Vision</div>
+</div>
+<div class="gundam-part core" data-target="pages/summary-en.html" id="navCore">
+<div class="part-highlight"></div>
+<div class="target-reticle"></div>
+<div class="part-label">Global Staffing & Business Model</div>
+</div>
+<div class="gundam-part arms" data-target="pages/products-en.html" id="navArms">
+<div class="part-highlight"></div>
+<div class="target-reticle"></div>
+<div class="part-label">AR/AI Workforce Solutions</div>
+</div>
+<div class="gundam-part legs" data-target="pages/market-en.html" id="navLegs">
+<div class="part-highlight"></div>
+<div class="target-reticle"></div>
+<div class="part-label">Target Markets: NA, JP, EU</div>
+</div>
+<div class="gundam-part platform" data-target="pages/technology-en.html" id="navPlatform">
+<div class="part-highlight"></div>
+<div class="target-reticle"></div>
+<div class="part-label">AI-Powered Talent Matching & Dispatch</div>
+</div>
+</div>
+</div>
+<!-- Operation Instructions -->
+<div class="instruction-text">
+</div>
+<!-- Cockpit Terminal -->
+<div class="cockpit-terminal">
+<div class="terminal-header">
+<div class="terminal-title">GUNDAM-TERMINAL</div>
+<div class="terminal-status">ACTIVE</div>
+</div>
+<div class="terminal-content" id="terminalContent">
+<div class="terminal-line">// WarkAI OS v2.5.0 Startup Complete</div>
+<div class="terminal-line">// Welcome back, Pilot</div>
+<div class="terminal-line">// Mecha Status: Optimal</div>
+<div class="terminal-line">// Mission Brief: Explore WarkAI Business Plan</div>
+<div class="terminal-line">// Please select module to view</div>
+<div class="terminal-line"></div>
+<div class="terminal-line">[NAVIGATION MENU]</div>
+<div class="terminal-line">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
+<div class="terminal-line">🔴 Head → <a href="/pages/team-en.html" style="color: #00ff00; text-decoration: none;">Global Team & Vision</a></div>
+<div class="terminal-line">🟡 Core → <a href="/pages/summary-en.html" style="color: #00ff00; text-decoration: none;">Global Staffing & Business Model</a></div>
+<div class="terminal-line">🟢 Arms → <a href="/pages/products-en.html" style="color: #00ff00; text-decoration: none;">AR/AI Workforce Solutions</a></div>
+<div class="terminal-line">🔵 Legs → <a href="/pages/market-en.html" style="color: #00ff00; text-decoration: none;">Target Markets: NA, JP, EU</a></div>
+<div class="terminal-line">🟣 Platform → <a href="/pages/technology-en.html" style="color: #00ff00; text-decoration: none;">AI-Powered Talent Matching & Dispatch</a></div>
+<div class="terminal-line">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
+<div class="terminal-line terminal-cursor">_</div>
+</div>
+</div>
+<!-- Bottom HUD Interface -->
+<div class="hud-bottom">
+<div class="hud-element hud-coordinates">
+<span class="coordinate">X: 42.195</span>
+<span class="coordinate">Y: 13.114</span>
+<span class="coordinate">Z: 08.848</span>
+</div>
+<div class="hud-element hud-system">WarkAI OS v2.5.0</div>
+</div>
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<p>© 2025 WarkAI Technology Co., Ltd. All Rights Reserved.</p>
+</div>
+</footer>
+</div>
+<!-- Transform Transition Animation Overlay -->
+<div class="transform-overlay" id="transformOverlay">
+<div class="transform-container">
+<div class="transform-part" id="transformPart"></div>
+<div class="transform-text" id="transformText">Transforming...</div>
+<div class="transform-details">
+<div class="detail-item">
+<div class="detail-label">System</div>
+<div class="detail-value">WarkAI OS</div>
+</div>
+<div class="detail-item">
+<div class="detail-label">Mode</div>
+<div class="detail-value" id="transformMode">Standard Mode</div>
+</div>
+<div class="detail-item">
+<div class="detail-label">Status</div>
+<div class="detail-value">Transform Sequence Activated</div>
+</div>
+</div>
+<div class="transform-progress-container">
+<div class="transform-progress" id="transformProgress"></div>
+</div>
+</div>
+</div>
+<!-- User Panel Modal -->
+<div class="modal-overlay" id="modalOverlay">
+<div class="modal-container" id="modalContainer">
+<!-- Dynamic content will be inserted here -->
+</div>
+</div>
+<script src="js/test-account.js"></script>
+<script src="js/hud-clock.js"></script>
+<script src="js/language-switcher.js"></script>
+<script src="js/pilot-module-en.js"></script>
+<script src="js/login-module.js"></script>
+<script src="js/features-menu.js"></script>
+<script src="js/ai-llm-engine.js"></script>
+<script src="js/ai-assistant.js"></script>
+<script src="js/mem0-storage.js"></script>
+<script src="js/video-player-control.js"></script>
+<script src="js/text-menu-handler.js"></script>
+<!-- Apply Gundam menu item styles -->
+<script>
     function applyGundamPartStyles() {
         const gundamParts = document.querySelectorAll(".gundam-part");
         
         if (gundamParts.length === 0) {
-            console.log("[Inline Gundam] 菜单项还没有加载，延迟重试...");
+            console.log("[Inline Gundam] Menu items not loaded yet, retrying...");
             setTimeout(applyGundamPartStyles, 500);
             return;
         }
@@ -322,7 +292,7 @@
             }
         });
         
-        console.log("[Inline Gundam] 菜单项样式应用成功");
+        console.log("[Inline Gundam] Menu item styles applied successfully");
     }
     
     document.addEventListener("DOMContentLoaded", applyGundamPartStyles);
@@ -331,11 +301,8 @@
     setTimeout(applyGundamPartStyles, 2000);
     setTimeout(applyGundamPartStyles, 3000);
     </script>
-    
-    <script>
+<script>
     (function() {
-        console.log('[Inline] Language Switcher initialization');
-        
         function initLanguageSwitcher() {
             const langCurrent = document.getElementById('langCurrent');
             const languageSwitcher = document.querySelector('.language-switcher');
@@ -381,9 +348,8 @@
         }
     })();
     </script>
-</body>
-</html>
-<!-- Force show mainContainer and terminal content after 3 seconds -->
+
+<!-- Force show mainContainer after 3 seconds -->
 <script>
 (function() {
     function showMainContainer() {
@@ -391,35 +357,71 @@
         const startupSequence = document.getElementById('startupSequence');
         
         if (mainContainer) {
-            mainContainer.style.cssText = 'opacity: 1 !important; display: flex !important; visibility: visible !important; pointer-events: auto !important; z-index: 1 !important;';
+            mainContainer.style.cssText = `
+                opacity: 1 !important;
+                display: flex !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
+                z-index: 1 !important;
+            `;
             mainContainer.classList.add('active');
         }
         
         if (startupSequence) {
-            startupSequence.style.cssText = 'opacity: 0 !important; display: none !important; visibility: hidden !important; pointer-events: none !important; z-index: -1 !important;';
+            startupSequence.style.cssText = `
+                opacity: 0 !important;
+                display: none !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+                z-index: -1 !important;
+            `;
         }
+    }
+    
+    // 3秒后显示主容器
+    setTimeout(function() {
+        showMainContainer();
         
         // 强制显示所有 terminal-line 元素
         const terminalLines = document.querySelectorAll('.terminal-line');
         terminalLines.forEach(line => {
             line.style.cssText = 'opacity: 1 !important; transform: translateY(0) !important;';
         });
-    }
-    
-    // 3秒后显示主容器
-    setTimeout(function() {
-        showMainContainer();
     }, 3000);
     
     // 同时监听 DOMContentLoaded 事件
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             showMainContainer();
+            
+            // 强制显示所有 terminal-line 元素
+            const terminalLines = document.querySelectorAll('.terminal-line');
+            terminalLines.forEach(line => {
+                line.style.cssText = 'opacity: 1 !important; transform: translateY(0) !important;';
+            });
         });
     }
 })()
-</script>
+function switchLanguage(lang) {
+    const currentPath = window.location.pathname;
+    let newPath;
 
+    if (lang === 'zh') {
+        newPath = currentPath.replace('-en.html', '.html').replace('-ja.html', '.html');
+        if (!newPath.endsWith('.html')) newPath = 'index.html';
+    } else if (lang === 'en') {
+        newPath = currentPath.replace('.html', '-en.html').replace('-ja.html', '-en.html');
+        if (!newPath.endsWith('-en.html')) newPath = 'index-en.html';
+    } else if (lang === 'ja') {
+        newPath = currentPath.replace('.html', '-ja.html').replace('-en.html', '-ja.html');
+        if (!newPath.endsWith('-ja.html')) newPath = 'index-ja.html';
+    }
+
+    window.location.href = newPath;
+}
+</script>
+</body>
+</html>
 <script>
     function autoAdjustPadding() {
         const hud = document.querySelector('.hud-top');
