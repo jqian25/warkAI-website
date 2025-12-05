@@ -422,15 +422,19 @@ header {
     .gundam-image {
         position: relative !important;
         display: block !important;
-        width: 100% !important;
-        height: 300px !important;
-        max-width: none !important;
-        margin: 0 auto 20px auto !important;
+        width: 100vw !important;
+        height: 350px !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+        margin-left: calc(-50vw + 50%) !important;
         transform: none !important;
         left: auto !important;
         top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
         object-fit: cover !important;
         object-position: center !important;
+        padding: 0 !important;
     }
 
     /* 3. 【重点】点名每一个方块，强制它们变成宽按钮 */

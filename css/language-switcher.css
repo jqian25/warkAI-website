@@ -215,11 +215,14 @@
     .language-switcher {
         margin-right: 0;
         margin-bottom: 10px;
+        width: 100%;
     }
     
     .lang-current {
         min-width: 100px;
         padding: 6px 12px;
+        width: 100%;
+        justify-content: space-between;
     }
     
     .lang-name {
@@ -227,11 +230,17 @@
     }
     
     /* 手机端：强制隐藏下拉菜单，只在 active 时显示 */
-        .lang-dropdown {
+    .lang-dropdown {
         display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;
+        position: fixed !important;
+        top: auto !important;
+        left: 10px !important;
+        right: 10px !important;
+        width: auto !important;
+        z-index: 10000 !important;
     }
     
     .language-switcher.active .lang-dropdown {
@@ -246,5 +255,10 @@
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;
+    }
+    
+    .lang-option {
+        display: flex !important;
+        padding: 12px 16px !important;
     }
 }
