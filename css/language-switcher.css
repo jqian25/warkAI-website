@@ -227,20 +227,22 @@
     }
     
     /* 手机端：强制隐藏下拉菜单，只在 active 时显示 */
-    .lang-dropdown {
+        .lang-dropdown {
+        display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;
     }
     
     .language-switcher.active .lang-dropdown {
+        display: block !important;
         opacity: 1 !important;
         visibility: visible !important;
         pointer-events: auto !important;
     }
     
-    /* 移除悬停显示效果 */
     .language-switcher:hover .lang-dropdown {
+        display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;

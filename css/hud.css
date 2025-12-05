@@ -418,18 +418,19 @@ header {
         position: relative !important;
     }
 
-    /* 2. 图片强制变小居中 */
+    /* 2. 图片占满屏幕宽度并设置最小高度 */
     .gundam-image {
         position: relative !important;
         display: block !important;
         width: 100% !important;
-        height: auto !important;
-        max-width: 100% !important;
-        margin: 0 auto 30px auto !important;
+        height: 300px !important;
+        max-width: none !important;
+        margin: 0 auto 20px auto !important;
         transform: none !important;
         left: auto !important;
         top: auto !important;
-        object-fit: contain !important;
+        object-fit: cover !important;
+        object-position: center !important;
     }
 
     /* 3. 【重点】点名每一个方块，强制它们变成宽按钮 */
